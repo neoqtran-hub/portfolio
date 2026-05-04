@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>neo by design — Senior Product Designer</title>
+<style>
+  /* ============================================
+     CONFIG FONT
+     ============================================ */
+  @font-face {
+    font-family: 'Config';
+    src: url('fonts/Config-Light.ttf') format('truetype');
+    font-weight: 300; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Config';
+    src: url('fonts/Config-Regular.ttf') format('truetype');
+    font-weight: 400; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Config';
+    src: url('fonts/Config-Medium.ttf') format('truetype');
+    font-weight: 500; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Config';
+    src: url('fonts/Config-SemiBold.ttf') format('truetype');
+    font-weight: 600; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Config';
+    src: url('fonts/Config-Bold.ttf') format('truetype');
+    font-weight: 700; font-style: normal; font-display: swap;
+  }
+
+  /* ============================================
+     RESET & BASE
+     ============================================ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Config', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #1a1a1a;
+    background: #f4f4f2;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+  :root {
+    --purple: #9B51E0;
+    --purple-strong: #9B51E0;
+    --ink: #1a1a1a;
+    --ink-soft: #2a2a2a;
+    --muted: #8a8a8a;
+    --muted-soft: #b8b8b8;
+    --bg: #f4f4f2;
+    --card-radius: 28px;
+    --pill-radius: 999px;
+  }
+
+  /* ============================================
+     LIQUID GLASS NAV
+     ============================================ */
+  .nav-wrap {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: calc(100% - 64px);
+    max-width: 1280px;
+    pointer-events: none;
+    transition: top 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+                width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+                max-width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  /* Scrolled state: full-width, flush to edge */
+  body.scrolled .nav-wrap {
+    top: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+  .nav {
+    pointer-events: auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 40px;
+    border-radius: var(--pill-radius);
+    background: rgba(255,255,255,0.45);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.9) inset,
+      0 -1px 0 rgba(255,255,255,0.4) inset,
+      0 10px 30px -8px rgba(20, 20, 40, 0.12),
+      0 24px 50px -20px rgba(20, 20, 40, 0.18);
+    overflow: hidden;
+    transition: background 0.35s ease,
+                box-shadow 0.35s ease,
+                border-radius 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+                border-color 0.35s ease;
+  }
+  /* Scrolled state: full-width bar, no shadow, no rounded corners */
+  body.scrolled .nav {
+    border-radius: 0;
+    background: rgba(255,255,255,0.85);
+    border-color: transparent;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    box-shadow: none;
+  }
+  body.scrolled .nav::before { opacity: 0; }
+  body.scrolled .nav::after { display: none; }
+  /* refraction sheen */
+  .nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      rgba(255,255,255,0.55) 0%,
+      rgba(255,255,255,0.05) 40%,
+      rgba(255,255,255,0.0) 60%,
+      rgba(155, 81, 224, 0.10) 100%
+    );
+    pointer-events: none;
+  }
+  /* refraction smear that follows hover */
+  .nav::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: var(--mx, 50%);
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(255,255,255,0.75) 0%,
+      rgba(155, 81, 224, 0.20) 40%,
+      transparent 70%
+    );
+    transform: translateX(-50%);
+    filter: blur(22px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  .nav:hover::after { opacity: 1; }
+  .nav:hover { background: rgba(255,255,255,0.55); }
+
+  .brand {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    position: relative;
+    z-index: 2;
+  }
+  .brand .neo {
+    color: var(--purple-strong);
+    font-weight: 600;
+  }
+  .brand .by {
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    position: relative;
+    z-index: 2;
+  }
+  .nav-link {
+    position: relative;
+    padding: 8px 18px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--muted);
+    border-radius: var(--pill-radius);
+    transition: color 0.25s ease;
+  }
+  .nav-link:hover { color: var(--purple-strong); }
+  .nav-link.active { color: var(--purple-strong); }
+  .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--purple-strong);
+  }
+  .nav-link.icon {
+    padding: 8px 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+  }
+  .nav-link.icon img {
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+    transition: opacity 0.25s ease;
+  }
+  .nav-link.icon:hover img { opacity: 1; }
+
+  /* ============================================
+     HERO
+     ============================================ */
+  .hero {
+    position: relative;
+    padding: 180px 32px 80px;
+    overflow: hidden;
+    background-color: #f4f4f2;
+    background-image: url('Assets/Hero.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+  }
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 {
+    font-size: clamp(30px, 4.4vw, 52px);
+    font-weight: 500;
+    line-height: 1.28;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    /* sized to fit the longest cycle word ("constraints") on one line */
+    max-width: 1080px;
+    margin: 0 auto;
+    white-space: nowrap;
+  }
+  .hero h1 .line3 {
+    display: block;
+    white-space: nowrap;
+  }
+  .hero h1 .chaos {
+    color: var(--purple);
+    font-weight: 500;
+    display: inline-block;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .hero h1 .chaos.is-out {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  @media (max-width: 1100px) {
+    .hero h1 { white-space: normal; }
+    .hero h1 .line3 { white-space: normal; }
+  }
+
+  .brands {
+    margin-top: 96px;
+    text-align: center;
+  }
+  .brands-label {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 36px;
+    font-weight: 400;
+  }
+  .brands-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 36px 56px;
+    align-items: center;
+    justify-items: center;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    opacity: 0.55;
+    filter: grayscale(1);
+    transition: opacity 0.3s ease, filter 0.3s ease;
+  }
+  .brand-logo img {
+    max-height: 100%;
+    width: auto;
+    object-fit: contain;
+  }
+  .brand-logo:hover {
+    opacity: 0.9;
+    filter: grayscale(0.5);
+  }
+  /* Per-logo height tweaks for visual balance */
+  .brand-logo.lg { height: 44px; }
+  .brand-logo.sm { height: 28px; }
+  .brand-logo.xs { height: 22px; }
+
+  /* ============================================
+     CASE STUDIES
+     ============================================ */
+  .case-studies {
+    padding: 40px 32px 120px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .case-studies h2 {
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 40px;
+    letter-spacing: -0.01em;
+  }
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+  .case-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .case { display: block; }
+  .case-card {
+    position: relative;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    aspect-ratio: 16/8;
+    background: #e5e5e3;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
+  }
+  .case-card.compact { aspect-ratio: 4/3; }
+  .case-card .case-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+  .case-card-overlay {
+    position: absolute;
+    inset: 0;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2;
+  }
+  .case:hover .case-card {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+  }
+  .case-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    z-index: 2;
+  }
+  .case-tag {
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 8px 18px;
+    border-radius: var(--pill-radius);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .case-brand-pill {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 8px 16px;
+    border-radius: var(--pill-radius);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+    height: 40px;
+  }
+  .case-brand-pill img {
+    height: 22px;
+    width: auto;
+    object-fit: contain;
+  }
+  .case-cta {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 14px 22px;
+    border-radius: var(--pill-radius);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
+  .case-cta .arrow { transition: transform 0.3s ease; }
+  .case:hover .case-cta .arrow { transform: translateX(6px); }
+
+  .case-title {
+    margin-top: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .case-meta {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+  .case-title-block { margin-top: 16px; }
+  .case-title-block .label {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .case-title-block .meta {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* Card backgrounds */
+  .bg-squatch {
+    background: linear-gradient(135deg, #b8c4a8 0%, #6a7a5c 60%, #4a5a40 100%);
+    position: relative;
+  }
+  .bg-squatch::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 200px 120px at 30% 60%, rgba(40,50,40,0.35), transparent 60%),
+      radial-gradient(ellipse 320px 200px at 80% 80%, rgba(30,40,30,0.4), transparent 60%);
+    pointer-events: none;
+  }
+  /* Squatch laptop mock */
+  .squatch-laptop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+    width: 70%;
+    aspect-ratio: 16/10;
+    background: linear-gradient(180deg, #f8f5ee, #e8e3d5);
+    border-radius: 8px 8px 4px 4px;
+    box-shadow:
+      0 30px 60px -20px rgba(0,0,0,0.5),
+      0 0 0 6px #2a2a2a;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .squatch-laptop-content {
+    padding: 8px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 8px;
+    height: 100%;
+  }
+  .squatch-block {
+    background: linear-gradient(135deg, #d4c8a8, #8a7a5a);
+    border-radius: 4px;
+  }
+  .squatch-block.tall { grid-row: span 2; }
+  .squatch-side {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .bg-aci {
+    background: linear-gradient(135deg, #1d6b3a 0%, #2a8a4a 50%, #1d6b3a 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .aci-hero-logo {
+    position: absolute;
+    top: 50%;
+    left: 6%;
+    transform: translateY(-50%);
+    width: 36%;
+    max-width: 380px;
+    z-index: 1;
+    filter: brightness(0) invert(1);
+  }
+  .aci-mock {
+    position: absolute;
+    right: 4%;
+    top: 12%;
+    width: 55%;
+    height: 80%;
+    z-index: 1;
+  }
+  .aci-card {
+    position: absolute;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px -15px rgba(0,0,0,0.35);
+    overflow: hidden;
+  }
+  .aci-card.green {
+    top: 0;
+    right: 25%;
+    width: 50%;
+    height: 60%;
+    background: #e8f5ec;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .aci-card.white {
+    bottom: 0;
+    right: 0;
+    width: 65%;
+    height: 55%;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .aci-card-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #2a2a2a;
+    margin-bottom: 8px;
+  }
+  .aci-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5fcf7f, #1d6b3a);
+    margin: 8px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .aci-line {
+    height: 4px;
+    background: #d4d4d4;
+    border-radius: 2px;
+    margin: 4px auto;
+    max-width: 80%;
+  }
+  .aci-line.short { max-width: 50%; }
+  .aci-confirm-text {
+    font-size: 9px;
+    color: #4a4a4a;
+    margin-top: 4px;
+  }
+
+  .bg-grey { background: #b8b8b8; }
+
+  /* ============================================
+     CONTACT FORM (footer on every page)
+     ============================================ */
+  .contact-section {
+    background: #F9F9F7;
+  }
+  .contact {
+    padding: 80px 32px 100px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .contact-heading h2 {
+    font-size: clamp(32px, 3.4vw, 42px);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .contact-heading p {
+    font-size: 20px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+  }
+  .contact-form .field {
+    border-bottom: 1px solid #d8d8d6;
+    padding: 14px 4px;
+  }
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--ink);
+    outline: none;
+    resize: none;
+  }
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder {
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .contact-form textarea {
+    min-height: 140px;
+    padding-top: 4px;
+  }
+  .contact-submit {
+    margin-top: 28px;
+    background: #1f1f1f;
+    color: #fff;
+    padding: 18px 28px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 500;
+    width: 100%;
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+  .contact-submit:hover {
+    background: #000;
+    transform: translateY(-1px);
+  }
+  .contact-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+    padding: 0 8px;
+  }
+  .contact-links a {
+    font-size: 14px;
+    color: var(--muted);
+    transition: color 0.25s ease;
+  }
+  .contact-links a:hover {
+    color: var(--purple-strong);
+  }
+
+  @media (max-width: 900px) {
+    .contact { padding: 60px 20px 80px; }
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .contact-links { flex-wrap: wrap; gap: 16px; justify-content: flex-start; }
+  }
+
+  /* ============================================
+     RESPONSIVE
+     ============================================ */
+  @media (max-width: 900px) {
+    .nav-wrap { width: calc(100% - 24px); top: 16px; }
+    .nav { padding: 12px 40px; }
+    .nav-links { gap: 2px; }
+    .nav-link { padding: 8px 12px; font-size: 14px; }
+    .brand { font-size: 16px; }
+    .hero { padding: 130px 20px 60px; }
+    .brands-grid { grid-template-columns: repeat(5, 1fr); gap: 18px 24px; max-width: 520px; }
+    .brand-logo { height: 18px; }
+    .brand-logo.lg { height: 22px; }
+    .brand-logo.sm { height: 14px; }
+    .brand-logo.xs { height: 11px; }
+    .case-row-2 { grid-template-columns: 1fr; }
+    .case-card { aspect-ratio: 4/3; }
+    .case-card-overlay { padding: 16px; }
+    .case-cta { padding: 12px 16px; font-size: 13px; }
+    .case-studies { padding: 40px 20px 80px; }
+    .case-title { flex-direction: column; gap: 4px; align-items: flex-start; }
+  }
+  @media (max-width: 560px) {
+    .brands-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     STICKY LIQUID GLASS NAV
+     ============================================ -->
+<div class="nav-wrap">
+  <nav class="nav" id="nav">
+    <a href="index.html" class="brand"><span class="neo">neo</span> <span class="by">by design</span></a>
+    <ul class="nav-links">
+      <li><a href="#work" class="nav-link active">Work</a></li>
+      <li><a href="#play" class="nav-link">Play</a></li>
+      <li><a href="#me" class="nav-link">Me</a></li>
+      <li>
+        <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener" class="nav-link icon" aria-label="LinkedIn">
+          <img src="Assets/linkedin.png" alt="LinkedIn">
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+
+<!-- ============================================
+     HERO
+     ============================================ -->
+<section class="hero" id="work">
+  <div class="hero-inner">
+    <h1>
+      I'm a Senior Product Designer working<br>
+      alongside designers and builders, turning<br>
+      <span class="line3"><span class="chaos" id="cycle-word">chaos</span> into final product that converts</span>
+    </h1>
+
+    <div class="brands">
+      <p class="brands-label">Brands I've Worked With</p>
+      <div class="brands-grid">
+
+        <!-- Row 1 -->
+        <div class="brand-logo lg" title="Dr. Squatch">
+          <img src="Assets/drsquatch-horizontal-logo-reversed 1.png" alt="Dr. Squatch">
+        </div>
+        <div class="brand-logo" title="Ring">
+          <img src="Assets/Ring.png" alt="Ring">
+        </div>
+        <div class="brand-logo" title="BODi by Beachbody">
+          <img src="Assets/bodi-by-bb-logo 1.png" alt="BODi by Beachbody">
+        </div>
+        <div class="brand-logo lg" title="American Century Investments">
+          <img src="Assets/American Century.png" alt="American Century Investments">
+        </div>
+        <div class="brand-logo" title="Simpluris">
+          <img src="Assets/Simpluris.png" alt="Simpluris">
+        </div>
+
+        <!-- Row 2 -->
+        <div class="brand-logo sm" title="LAist">
+          <img src="Assets/LAist.png" alt="LAist">
+        </div>
+        <div class="brand-logo" title="Kareo">
+          <img src="Assets/Kareo.png" alt="Kareo">
+        </div>
+        <div class="brand-logo" title="Dexcare">
+          <img src="Assets/Dexcare.png" alt="Dexcare">
+        </div>
+        <div class="brand-logo" title="Spring Theory">
+          <img src="Assets/Springtheory.png" alt="Spring Theory">
+        </div>
+        <div class="brand-logo" title="Evolus">
+          <img src="Assets/logo 1.png" alt="Evolus">
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================
+     CASE STUDIES
+     ============================================ -->
+<section class="case-studies">
+  <h2>Case Studies</h2>
+
+  <div class="case-grid">
+
+    <!-- ---- Dr. Squatch (full-width) ---- -->
+    <a href="drsquatch.html" class="case">
+      <div class="case-card">
+        <!-- Replace src with project image when ready -->
+        <img class="case-image" src="Assets/cards/drsquatch.jpg" alt="" onerror="this.style.display='none'">
+        <div class="case-card-overlay">
+          <div class="case-top">
+            <span class="case-tag">E-Commerce</span>
+            <span class="case-brand-pill">
+              <img src="Assets/drsquatch-horizontal-logo-reversed 1.svg" alt="Dr. Squatch">
+            </span>
+          </div>
+          <div class="case-cta">
+            <span>View Project</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-title">
+        <span>Dr.Squatch</span>
+        <span class="case-meta">CMS Migration · Growth · Features · Design System</span>
+      </div>
+    </a>
+
+    <!-- ---- American Century (full-width) ---- -->
+    <a href="american-century.html" class="case">
+      <div class="case-card">
+        <img class="case-image" src="Assets/cards/american-century.jpg" alt="" onerror="this.style.display='none'">
+        <div class="case-card-overlay">
+          <div class="case-top">
+            <span class="case-tag">Fintech</span>
+            <span class="case-brand-pill">
+              <img src="Assets/american century.svg" alt="American Century Investments">
+            </span>
+          </div>
+          <div class="case-cta">
+            <span>View Project</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-title">
+        <span>American Century Investments</span>
+        <span class="case-meta">CMS Migration · Features · Dashboard · Design System</span>
+      </div>
+    </a>
+
+    <!-- ---- Beachbody x 2 (two-column row) ---- -->
+    <div class="case-row-2">
+      <a href="beachbody.html" class="case">
+        <div class="case-card compact">
+          <img class="case-image" src="Assets/cards/beachbody-1.jpg" alt="" onerror="this.style.display='none'">
+          <div class="case-card-overlay">
+            <div class="case-top">
+              <span class="case-tag">Fitness</span>
+              <span class="case-brand-pill">
+                <img src="Assets/bodi-by-bb-logo 2.svg" alt="BODi by Beachbody">
+              </span>
+            </div>
+            <div class="case-cta">
+              <span>View Project</span>
+              <span class="arrow">→</span>
+            </div>
+          </div>
+        </div>
+        <div class="case-title-block">
+          <div class="label">Beachbody</div>
+          <div class="meta">Mobile App · Web App · Video Player</div>
+        </div>
+      </a>
+
+      <a href="ring.html" class="case">
+        <div class="case-card compact">
+          <img class="case-image" src="Assets/cards/beachbody-2.jpg" alt="" onerror="this.style.display='none'">
+          <div class="case-card-overlay">
+            <div class="case-top">
+              <span class="case-tag">Fitness</span>
+              <span class="case-brand-pill">
+                <img src="Assets/ring.svg" alt="Ring">
+              </span>
+            </div>
+            <div class="case-cta">
+              <span>View Project</span>
+              <span class="arrow">→</span>
+            </div>
+          </div>
+        </div>
+        <div class="case-title-block">
+          <div class="label">Beachbody</div>
+          <div class="meta">Mobile App · Web App · Video Player</div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================
+     LET'S WORK TOGETHER (footer on every page)
+     ============================================ -->
+<section class="contact-section" id="contact">
+ <div class="contact">
+  <div class="contact-grid">
+    <div class="contact-heading">
+      <h2>Let's Work Together</h2>
+      <p>Good Design Starts with a Good Intention.</p>
+    </div>
+    <form class="contact-form" onsubmit="event.preventDefault();">
+      <div class="field">
+        <input type="text" name="name" placeholder="Name" required>
+      </div>
+      <div class="field">
+        <input type="email" name="email" placeholder="Email" required>
+      </div>
+      <div class="field">
+        <textarea name="message" placeholder="Message" required></textarea>
+      </div>
+      <button type="submit" class="contact-submit">Make Good Work Together!</button>
+      <div class="contact-links">
+        <a href="#" target="_blank" rel="noopener">Linkedin</a>
+        <a href="#">neoqtran@gmail.com</a>
+        <a href="#" target="_blank" rel="noopener">CV</a>
+      </div>
+    </form>
+  </div>
+ </div>
+</section>
+
+
+<script>
+  // Liquid glass refraction follows mouse
+  const nav = document.getElementById('nav');
+  if (nav) {
+    nav.addEventListener('mousemove', (e) => {
+      const rect = nav.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      nav.style.setProperty('--mx', x + '%');
+    });
+  }
+
+  // Toggle scrolled state for nav (full-width when scrolled)
+  function handleNavScroll() {
+    document.body.classList.toggle('scrolled', window.scrollY > 8);
+  }
+  handleNavScroll();
+  window.addEventListener('scroll', handleNavScroll, { passive: true });
+
+  // Cycle hero word: chaos → frictions → constraints
+  const cycleWord = document.getElementById('cycle-word');
+  if (cycleWord) {
+    const words = ['chaos', 'frictions', 'constraints'];
+    let i = 0;
+    setInterval(() => {
+      cycleWord.classList.add('is-out');
+      setTimeout(() => {
+        i = (i + 1) % words.length;
+        cycleWord.textContent = words[i];
+        cycleWord.classList.remove('is-out');
+      }, 400);
+    }, 2400);
+  }
+</script>
+
+</body>
+</html>

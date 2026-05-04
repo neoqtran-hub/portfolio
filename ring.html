@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ring — Neo Tran</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="container">
+    <a href="index.html" class="logo">Neo Tran</a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html#process">Process</a></li>
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- ============================================
+     CASE STUDY HERO
+     ============================================ -->
+<section class="case-hero">
+  <div class="container">
+    <a href="index.html" class="back-link">&larr; All Projects</a>
+
+    <div class="case-hero-inner" style="background: var(--ring-gradient);">
+      <span class="company-tag">Ring (Amazon)</span>
+      <h1>Building Global Components for Headless CMS Migration</h1>
+      <p class="role">Product Designer — CMS Migration, Design System, Global Components</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================
+     OVERVIEW BAR
+     ============================================ -->
+<section class="case-overview">
+  <div class="container">
+    <div class="overview-grid">
+      <div class="overview-item">
+        <label>Company</label>
+        <p>Ring (Amazon)</p>
+      </div>
+      <div class="overview-item">
+        <label>Role</label>
+        <p>Product Designer</p>
+      </div>
+      <div class="overview-item">
+        <label>Scope</label>
+        <p>Headless CMS Migration, Global Component Library, Design System</p>
+      </div>
+      <div class="overview-item">
+        <label>Platforms</label>
+        <p>Responsive Web</p>
+      </div>
+      <div class="overview-item">
+        <label>Tools</label>
+        <p>Sketch, Design Specs</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================
+     DESIGN PROCESS PHASES
+     ============================================ -->
+<section class="case-body">
+  <div class="container">
+
+    <!-- PHASE 1: DISCOVER -->
+    <div class="phase-block" data-phase="discover">
+      <div class="phase-label"><span class="phase-icon">1</span> Discover</div>
+      <h2>Auditing Ring's web component ecosystem</h2>
+      <p>Ring was migrating their website's components to a new headless CMS. The first step was auditing every existing component — cataloging inconsistencies, identifying legacy patterns that needed updating, and understanding which components were truly "global" (used across multiple pages and contexts) versus page-specific. This audit became the foundation for the new component library.</p>
+
+      <div class="insight-callout">
+        <div class="callout-label">Problem Statement</div>
+        <p>The legacy CMS had accumulated years of one-off components with inconsistent styling. Developers couldn't tell which styles were current vs deprecated, leading to visual inconsistencies across Ring's web properties.</p>
+      </div>
+
+      <div class="image-showcase">
+        <div class="image-placeholder">
+          <div class="placeholder-icon">&#128269;</div>
+          <span>Replace: Component audit / legacy system analysis</span>
+          <span class="size-hint">(Recommended: 1200x800px)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 2: IDEATE -->
+    <div class="phase-block" data-phase="ideate">
+      <div class="phase-label"><span class="phase-icon">2</span> Ideate</div>
+      <h2>Defining the global component architecture</h2>
+      <p>I worked with the team to define which components should be global — navigation, hero sections, product cards, CTAs, footers — and established a hierarchy of atomic, molecular, and organism-level components. Each component needed to be flexible enough to work across Ring's diverse page types while remaining visually consistent.</p>
+
+      <div class="image-showcase">
+        <div class="image-placeholder">
+          <div class="placeholder-icon">&#128204;</div>
+          <span>Replace: Component architecture / planning diagram</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 3: DESIGN -->
+    <div class="phase-block" data-phase="design">
+      <div class="phase-label"><span class="phase-icon">3</span> Design</div>
+      <h2>Design system with detailed developer specs</h2>
+      <p>I built global components using a design system in Sketch with detailed spec sheets for every property — sizing, typography, spacing, and styling. A key innovation was creating a dual-track documentation system: each component had both "legacy styles" (what currently existed) and "new styles" (the target state), allowing developers to easily identify what needed to change and follow the migration path.</p>
+
+      <div class="image-showcase">
+        <div class="image-placeholder">
+          <div class="placeholder-icon">&#127912;</div>
+          <span>Replace: Design system specs with sizing/typography/spacing</span>
+          <span class="size-hint">(Recommended: 1600x900px)</span>
+        </div>
+      </div>
+
+      <div class="insight-callout">
+        <div class="callout-label">Headless CMS Approach</div>
+        <p>By designing components that were content-agnostic and purely structural, we enabled the headless CMS to serve content dynamically while the design system ensured every rendering was visually consistent — regardless of what content was plugged in.</p>
+      </div>
+    </div>
+
+    <!-- PHASE 4: ITERATE -->
+    <div class="phase-block" data-phase="iterate">
+      <div class="phase-label"><span class="phase-icon">4</span> Iterate</div>
+      <h2>Testing component flexibility across page types</h2>
+      <p>We validated each global component against multiple page contexts — product pages, campaign landing pages, support pages — to ensure flexibility. Working directly with developers, I iterated on spacing and responsive breakpoints to handle edge cases that only surfaced when real content was plugged into the system.</p>
+
+      <div class="image-showcase">
+        <div class="image-placeholder">
+          <div class="placeholder-icon">&#128260;</div>
+          <span>Replace: Component testing across page types</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 5: HANDOFF -->
+    <div class="phase-block" data-phase="handoff">
+      <div class="phase-label"><span class="phase-icon">5</span> Handoff</div>
+      <h2>Legacy-to-new migration specs for developers</h2>
+      <p>The handoff was uniquely structured around the migration itself. Each component's documentation included a clear "before and after" — legacy style tokens mapped to new tokens, with redlines showing exactly what changed. This allowed developers to migrate components incrementally without breaking the live site, making the entire CMS migration smooth and predictable.</p>
+
+      <div class="image-showcase">
+        <div class="image-placeholder">
+          <div class="placeholder-icon">&#128230;</div>
+          <span>Replace: Migration specs / legacy vs new comparison</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="skills-used">
+      <span class="skill-tag">Sketch</span>
+      <span class="skill-tag">Design Systems</span>
+      <span class="skill-tag">Headless CMS</span>
+      <span class="skill-tag">Component Architecture</span>
+      <span class="skill-tag">Developer Specs</span>
+      <span class="skill-tag">Migration Strategy</span>
+      <span class="skill-tag">Responsive Web</span>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- Next Project -->
+<section class="next-project">
+  <div class="container">
+    <p class="next-label">Next Project</p>
+    <a href="american-century.html">American Century Investments &rarr;</a>
+  </div>
+</section>
+
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <h2>Let's work together</h2>
+    <p>I'm always open to discussing product design, design systems, or collaboration opportunities.</p>
+    <div class="contact-links">
+      <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank">LinkedIn</a>
+      <a href="https://www.behance.net/neotran902b" target="_blank">Behance</a>
+      <a href="http://www.instagram.com/foldflydesign" target="_blank">Instagram</a>
+      <a href="https://foldfly.com" target="_blank">foldfly.com</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

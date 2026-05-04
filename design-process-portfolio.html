@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neo Tran — Product Design Process Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ========================================
+   EDIT GUIDE:
+   - To swap images: search for "src=" and replace URLs
+   - To edit text: find the section by its data-section attribute
+   - Colors: edit the CSS custom properties below
+   - Each case study section has class "case-study"
+   ======================================== */
+
+:root {
+  --color-bg: #FAFAF8;
+  --color-surface: #FFFFFF;
+  --color-text: #1A1A1A;
+  --color-text-secondary: #6B7280;
+  --color-accent: #2563EB;
+  --color-accent-light: #EFF6FF;
+  --color-border: #E5E7EB;
+  --color-tag-bg: #F3F4F6;
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --max-width: 1200px;
+  --section-padding: 100px 0;
+
+  /* Project accent colors - easy to customize per project */
+  --aci-color: #3BAA6E;
+  --beachbody-color: #4361EE;
+  --ring-color: #1DA1F2;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Layout ---- */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 768px) {
+  .container { padding: 0 48px; }
+}
+
+/* ---- Navigation ---- */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(250, 250, 248, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+  padding: 16px 0;
+}
+
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav .logo {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+nav .nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+nav .nav-links a {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+
+nav .nav-links a:hover { color: var(--color-text); }
+
+/* Mobile nav */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--color-text);
+}
+
+.nav-toggle svg { display: block; }
+
+@media (max-width: 640px) {
+  .nav-toggle { display: block; }
+  nav .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: rgba(250, 250, 248, 0.98);
+    backdrop-filter: blur(12px);
+    padding: 16px 24px;
+    gap: 16px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  nav .nav-links.open { display: flex; }
+}
+
+/* ---- Hero ---- */
+.hero {
+  padding: 160px 0 80px;
+  text-align: center;
+}
+
+.hero-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 24px;
+}
+
+.hero h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 24px;
+  color: var(--color-text);
+}
+
+.hero .subtitle {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--color-text-secondary);
+  max-width: 680px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
+
+.hero .tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 6px 16px;
+  background: var(--color-tag-bg);
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+/* ---- Process Overview ---- */
+.process-overview {
+  padding: var(--section-padding);
+}
+
+.process-overview h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 3.5vw, 42px);
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.process-overview .section-desc {
+  text-align: center;
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  margin: 0 auto 60px;
+  font-size: 16px;
+}
+
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+}
+
+.process-step {
+  text-align: center;
+  padding: 32px 20px;
+  background: var(--color-surface);
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.process-step:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--color-accent);
+  color: white;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.process-step h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.process-step p {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* ---- Section Headers ---- */
+.section-header {
+  text-align: center;
+  padding: 80px 0 40px;
+}
+
+.section-header h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 3.5vw, 42px);
+  margin-bottom: 12px;
+}
+
+.section-header p {
+  color: var(--color-text-secondary);
+  max-width: 560px;
+  margin: 0 auto;
+  font-size: 16px;
+}
+
+/* ---- Case Study Cards ---- */
+.case-study {
+  padding: 60px 0 100px;
+}
+
+.case-study-card {
+  background: var(--color-surface);
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+.case-study-hero {
+  position: relative;
+  padding: 48px;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: white;
+  overflow: hidden;
+}
+
+.case-study-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
+  z-index: 1;
+}
+
+.case-study-hero > * { position: relative; z-index: 2; }
+
+.case-study-hero .company-tag {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.9;
+  margin-bottom: 12px;
+}
+
+.case-study-hero h3 {
+  font-family: var(--font-heading);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+.case-study-hero .role {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.case-study-body {
+  padding: 48px;
+}
+
+@media (max-width: 640px) {
+  .case-study-hero { padding: 32px 24px; min-height: 240px; }
+  .case-study-body { padding: 32px 24px; }
+}
+
+/* ---- Process Phase Blocks ---- */
+.phase-block {
+  margin-bottom: 56px;
+}
+
+.phase-block:last-child { margin-bottom: 0; }
+
+.phase-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 12px;
+}
+
+.phase-label .phase-icon {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent-light);
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.phase-block h4 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.phase-block p {
+  color: var(--color-text-secondary);
+  font-size: 15px;
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+
+/* ---- Image Placeholders ---- */
+/*
+  IMAGE SWAP GUIDE:
+  Replace the placeholder gradient with your actual screenshot.
+  Simply change the <img> src attribute.
+  Recommended image sizes: 1200x800 or 1600x900
+*/
+.image-showcase {
+  margin: 24px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.image-showcase img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.image-placeholder {
+  width: 100%;
+  aspect-ratio: 16/9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  color: #9CA3AF;
+  border-radius: 12px;
+  border: 2px dashed #D1D5DB;
+  background: #F9FAFB;
+}
+
+.image-placeholder .placeholder-icon {
+  font-size: 32px;
+  opacity: 0.4;
+}
+
+.image-placeholder span {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+@media (max-width: 640px) {
+  .image-grid { grid-template-columns: 1fr; }
+}
+
+.image-grid .image-showcase { margin: 0; }
+
+/* ---- Insight Callout ---- */
+.insight-callout {
+  background: var(--color-accent-light);
+  border-left: 3px solid var(--color-accent);
+  padding: 20px 24px;
+  border-radius: 0 12px 12px 0;
+  margin: 24px 0;
+}
+
+.insight-callout .callout-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 6px;
+}
+
+.insight-callout p {
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+/* ---- Skills Tags in Case Study ---- */
+.skills-used {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-border);
+}
+
+.skills-used .skill-tag {
+  padding: 4px 12px;
+  background: var(--color-tag-bg);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+/* ---- Outcome Metrics ---- */
+.outcome-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.metric {
+  text-align: center;
+  padding: 24px 16px;
+  background: var(--color-bg);
+  border-radius: 12px;
+}
+
+.metric .metric-value {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 4px;
+}
+
+.metric .metric-label {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+/* ---- Footer ---- */
+footer {
+  padding: 80px 0;
+  text-align: center;
+  border-top: 1px solid var(--color-border);
+}
+
+footer h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(24px, 3vw, 36px);
+  margin-bottom: 16px;
+}
+
+footer p {
+  color: var(--color-text-secondary);
+  margin-bottom: 32px;
+  font-size: 16px;
+}
+
+footer .contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+footer .contact-links a {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15px;
+  transition: opacity 0.2s;
+}
+
+footer .contact-links a:hover { opacity: 0.7; }
+
+/* ---- Divider ---- */
+.divider {
+  width: 60px;
+  height: 3px;
+  background: var(--color-accent);
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+/* ---- Animations ---- */
+@media (prefers-reduced-motion: no-preference) {
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     NAVIGATION
+     ============================================ -->
+<nav>
+  <div class="container">
+    <a href="#" class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Neo Tran</a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#process">Process</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- ============================================
+     HERO SECTION
+     Edit: Update headline, subtitle, and tags
+     ============================================ -->
+<section class="hero" data-section="hero">
+  <div class="container">
+    <p class="hero-label">Product Design Portfolio</p>
+    <h1>Design that bridges<br>research to handoff</h1>
+    <p class="subtitle">I'm a digital product designer who works across a broad range of disciplines — from user research and ideation through prototyping, design systems, and developer handoff. I help companies establish design systems as well as refine and elevate existing ones.</p>
+    <div class="tags">
+      <span class="tag">Design Systems</span>
+      <span class="tag">Figma &amp; Prototyping</span>
+      <span class="tag">CMS Migration</span>
+      <span class="tag">Cross-Platform (iOS, Android, Web)</span>
+      <span class="tag">PM &amp; Engineering Collaboration</span>
+      <span class="tag">User Research</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================
+     DESIGN PROCESS OVERVIEW
+     Edit: Update step titles and descriptions
+     ============================================ -->
+<section class="process-overview" id="process" data-section="process-overview">
+  <div class="container">
+    <h2>My Design Process</h2>
+    <p class="section-desc">A structured, repeatable approach from discovery to delivery — adaptable to each project's unique constraints.</p>
+
+    <div class="process-steps">
+      <div class="process-step fade-in">
+        <div class="step-number">1</div>
+        <h3>Discover</h3>
+        <p>Stakeholder interviews, user research, competitive audits, and problem framing</p>
+      </div>
+      <div class="process-step fade-in">
+        <div class="step-number">2</div>
+        <h3>Ideate</h3>
+        <p>Wireframes, user flows, information architecture, and concept exploration</p>
+      </div>
+      <div class="process-step fade-in">
+        <div class="step-number">3</div>
+        <h3>Design</h3>
+        <p>High-fidelity UI in Figma, design system components, interactive prototypes</p>
+      </div>
+      <div class="process-step fade-in">
+        <div class="step-number">4</div>
+        <h3>Iterate</h3>
+        <p>Usability testing, stakeholder feedback, cross-functional reviews with PM &amp; Eng</p>
+      </div>
+      <div class="process-step fade-in">
+        <div class="step-number">5</div>
+        <h3>Handoff</h3>
+        <p>Dev-ready specs, redlines, component documentation, and QA support</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================
+     CASE STUDIES
+     ============================================ -->
+<div id="work">
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     CASE STUDY 1: AMERICAN CENTURY INVESTMENTS
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<section class="case-study" data-section="american-century">
+  <div class="container">
+
+    <div class="case-study-card">
+      <!-- HERO IMAGE: Replace background with your screenshot -->
+      <div class="case-study-hero" style="background: linear-gradient(135deg, var(--aci-color), #2D8B5A);">
+        <span class="company-tag">American Century Investments</span>
+        <h3>Modernizing Financial Tools Through Design Systems &amp; CMS Migration</h3>
+        <p class="role">Product Designer — Design System, Client Portal, CMS Migration, App Features</p>
+      </div>
+
+      <div class="case-study-body">
+
+        <!-- PHASE: DISCOVER -->
+        <div class="phase-block" data-phase="discover">
+          <div class="phase-label"><span class="phase-icon">1</span> Discover</div>
+          <h4>Understanding the legacy landscape</h4>
+          <p>American Century Investments needed to modernize their digital presence across web and mobile platforms. The existing system relied on a legacy CMS with inconsistent components, making it difficult for content teams and developers to work efficiently. I began by auditing the existing client portal, landing pages, and internal ESG dashboard to map pain points across user journeys.</p>
+
+          <div class="insight-callout">
+            <div class="callout-label">Key Finding</div>
+            <p>The lack of a unified design system meant each platform (Android, iOS, desktop web) had divergent UI patterns — creating confusion for users who used multiple devices and slowing down the engineering team significantly.</p>
+          </div>
+
+          <!-- IMAGE: Replace with your research/audit screenshot -->
+          <div class="image-showcase">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">&#128269;</div>
+              <span>Replace: Research audit / legacy system screenshot</span>
+              <span style="font-size:11px; opacity:0.6;">(Recommended: 1200x800px)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE: IDEATE -->
+        <div class="phase-block" data-phase="ideate">
+          <div class="phase-label"><span class="phase-icon">2</span> Ideate</div>
+          <h4>Mapping the Contentful migration &amp; component architecture</h4>
+          <p>Working closely with PMs and engineers, I mapped out the component architecture needed for the Contentful CMS migration. This involved creating information architecture for landing pages, defining reusable content blocks, and establishing a shared vocabulary between design, product, and engineering teams.</p>
+
+          <!-- IMAGE: Replace with your wireframes/IA screenshot -->
+          <div class="image-grid">
+            <div class="image-showcase">
+              <div class="image-placeholder">
+                <div class="placeholder-icon">&#128221;</div>
+                <span>Replace: Wireframes / user flows</span>
+              </div>
+            </div>
+            <div class="image-showcase">
+              <div class="image-placeholder">
+                <div class="placeholder-icon">&#128204;</div>
+                <span>Replace: Information architecture</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE: DESIGN -->
+        <div class="phase-block" data-phase="design">
+          <div class="phase-label"><span class="phase-icon">3</span> Design</div>
+          <h4>Building a cross-platform design system in Figma</h4>
+          <p>I led the creation of a comprehensive design system that unified the experience across Android, iOS, and desktop web. Every component was built in Figma with auto-layout, variants, and detailed documentation for developer handoff. Key features I designed included the Transaction Confirmation flow, client dashboard, and investment tools — each requiring careful attention to accessibility and financial data visualization.</p>
+
+          <!-- IMAGE: Replace with your Figma design system / UI screenshot -->
+          <div class="image-showcase">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">&#127912;</div>
+              <span>Replace: Design system components / Figma library</span>
+              <span style="font-size:11px; opacity:0.6;">(Recommended: 1600x900px)</span>
+            </div>
+          </div>
+
+          <div class="image-grid">
+            <div class="image-showcase">
+              <div class="image-placeholder">
+                <div class="placeholder-icon">&#128241;</div>
+                <span>Replace: Mobile app screens (iOS/Android)</span>
+              </div>
+            </div>
+            <div class="image-showcase">
+              <div class="image-placeholder">
+                <div class="placeholder-icon">&#128187;</div>
+                <span>Replace: Desktop dashboard UI</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="insight-callout">
+            <div class="callout-label">Design System Impact</div>
+            <p>The unified component library eliminated duplicate work across platforms, allowing engineers to reference a single source of truth — reducing design-to-dev handoff time and ensuring pixel-perfect consistency across 3 platforms.</p>
+          </div>
+        </div>
+
+        <!-- PHASE: ITERATE -->
+        <div class="phase-block" data-phase="iterate">
+          <div class="phase-label"><span class="phase-icon">4</span> Iterate</div>
+          <h4>Cross-functional reviews with PM &amp; Engineering</h4>
+          <p>Each feature went through multiple rounds of review with product managers and engineering leads. For the CMS migration specifically, I worked hand-in-hand with front-end developers to ensure every Contentful component matched the design specs for sizing, typography, spacing, and responsive behavior. Regular critiques helped us catch edge cases early — like how transaction confirmation modals behaved on smaller screens.</p>
+
+          <!-- IMAGE: Replace with iteration/feedback screenshot -->
+          <div class="image-showcase">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">&#128260;</div>
+              <span>Replace: Before/after iteration comparison or feedback notes</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE: HANDOFF -->
+        <div class="phase-block" data-phase="handoff">
+          <div class="phase-label"><span class="phase-icon">5</span> Handoff</div>
+          <h4>Developer-ready specs &amp; Figma documentation</h4>
+          <p>Every component shipped with detailed redline specs, interaction notes, and responsive breakpoints documented directly in Figma. I created handoff documentation that mapped each design system component to its Contentful content model, making it easy for developers to implement components that were both visually consistent and content-flexible.</p>
+
+          <!-- IMAGE: Replace with handoff documentation screenshot -->
+          <div class="image-showcase">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">&#128230;</div>
+              <span>Replace: Figma handoff specs / developer documentation</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SKILLS USED -->
+        <div class="skills-used">
+          <span class="skill-tag">Figma</span>
+          <span class="skill-tag">Design Systems</span>
+          <span class="skill-tag">Contentful CMS</span>
+          <span class="skill-tag">iOS &amp; Android</span>
+          <span class="skill-tag">Responsive Web</span>
+          <span class="skill-tag">Developer Handoff</span>
+          <span class="skill-tag">Prototyping</span>
+          <span class="skill-tag">Dashboard Design</span>
+          <span class="skill-tag">Cross-functional Collaboration</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     CASE STUDY 2: BEACHBODY ON DEMAND
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<section class="case-study" data-section="beachbody">
+  <div class="container">
+
+    <div class="case-study-card">
+      <div class="case-study-hero" style="background: linear-gradient(135deg, var(--beachbody-color), #6C3AED);">
+        <span class="company-tag">Beachbody on Demand</span>
+        <h3>Pioneering a Live Workout Experience Across Every Screen</h3>
+        <p class="role">Product Designer — BODcast Experience, Live Video Player, Cross-Platform App Design</p>
+      </div>
+
+      <div class="case-study-body">
+
+        <!-- PHASE: DISCOVER -->
+        <div class="phase-block" data-phase="discover">
+          <div class="phase-label"><span class="phase-icon">1</span> Discover</div>
+          <h4>Defining the live fitness experience from scratch</h4>
+          <p>Beachbody was launching BODcast — a brand new live workout experience that had never existed before. Users could join real-time classes from live studios, see other participants, interact with trainers, and work out together from home. The challenge was designing an experience that felt as energizing as being in a physical class, across Android, iOS, and browser web simultaneously.</p>
+
+          <div class="insight-callout">
+            <div class="callout-label">Core Challenge</div>
+            <p>No existing pattern existed for this type of experience. We were building something from zero — a live multi-participant video workout with studio integration, music playback, real-time casting, and social interaction — all while the user is physically exercising and needs glanceable, minimal-friction UI.</p>
+          </div>
+
+          <!-- IMAGE: Replace with research/competitive analysis screenshot -->
+          <div class="image-showcase">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">&#128269;</div>
+              <span>Replace: Research / competitive landscape analysis</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE: IDEATE -->
+        <div class="phase-block" data-phase="ideate">
+          <div class="phase-label"><span class="phase-icon">2</span> Ideate</div>
+          <h4>Exploring live video player concepts &amp; interaction models</h4>
+          <p>I explored dozens of concepts for the live class interface — how to show the trainer prominently while still displaying a grid of fellow participants, how to handle music controls during an intense workout, and how the "casting" feature (switching your view to the studio camera) should work. Every decision had to account for the fact that users are mid-exercise — large tap targets, high contrast, minimal cognitive load.</p>
+
+          <!-- IMAGE: Replace with wireframes/concepts -->
+          <div class="image-grid">
+            <div class="image-showcase">
+              <div class="image-placeholder">
+                <div class="placeholder-icon">&#128221;</div>
+                <span>Replace: Early wireframes / concepts</span>
+              </div>
+            </div>
+            <div class="image-showcase">
+              <div class="image-placeholder">
+                <div class="placeholder-icon">&#128161;</div>
+                <span>Replace: User flow / interaction model</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE: DESIGN -->
+        <div class="phase-block" data-phase="design">
+          <div class="phase-label"><span class="phase-icon">3</span> Design</div>
+          <h4>Designing the live class video player &amp; participant grid</h4>
+          <p>The final design featured a bold, immersive video player with the trainer front-and-center, surrounded by a dynamic participant grid showing fellow workout-goers in real time. I designed the music overlay (featuring track info from the studio's playlist), the "Leave Class" flow, and the casting control that let users switch between their camera and the studio view. The entire system was designed in Figma with detailed prototypes demonstrating transitions and states.</p>
+
+          <!-- IMAGE: Replace with your BODcast UI design -->
+          <div class="image-showcase">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">&#127912;</div>
+              <span>Replace: Live class video player UI (the blue hero screenshot from your site)</span>
+              <span style="font-size:11px; opacity:0.6;">(Recommended: 1600x900px)</span>
+            </div>
+          </div>
+
+          <div class="image-grid">
+            <div class="image-showcase">
+              <div class="image-placeholder">
+                <div class="placeholder-icon">&#128241;</div>
+                <span>Replace: Mobile live class experience</span>
+              </div>
+            </div>
+            <div class="image-showcase">
+              <div class="image-placeholder">
+                <div class="placeholder-icon">&#128187;</div>
+                <span>Replace: Browser web experience</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE: ITERATE -->
+        <div class="phase-block" data-phase="iterate">
+          <div class="phase-label"><span class="phase-icon">4</span> Iterate</div>
+          <h4>Coordinating with live studios &amp; real-world testing</h4>
+          <p>This wasn't just a digital product — it had to work in tandem with actual live studios. I worked closely with the studio operations team and engineers to iterate on the experience based on real class tests. We refined the participant grid layout, adjusted the trainer video sizing for different screen ratios, and optimized the casting transition so it felt seamless rather than jarring during a high-energy workout.</p>
+
+          <!-- IMAGE: Replace with iteration screenshot -->
+          <div class="image-showcase">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">&#128260;</div>
+              <span>Replace: Iteration comparison / testing feedback</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE: HANDOFF -->
+        <div class="phase-block" data-phase="handoff">
+          <div class="phase-label"><span class="phase-icon">5</span> Handoff</div>
+          <h4>Cross-platform specs for Android, iOS, and Web</h4>
+          <p>Because this shipped simultaneously on three platforms, handoff documentation was critical. I created platform-specific specs in Figma that accounted for native patterns (iOS navigation bars vs Android material patterns) while maintaining visual consistency. The live video player component specs included detailed state management documentation — connecting, buffering, live, reconnecting, and ended states — all with pixel-perfect specifications.</p>
+
+          <!-- IMAGE: Replace with handoff specs -->
+          <div class="image-showcase">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">&#128230;</div>
+              <span>Replace: Platform-specific handoff documentation</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SKILLS USED -->
+        <div class="skills-used">
+          <span class="skill-tag">Figma</span>
+          <span class="skill-tag">Prototyping</span>
+          <span class="skill-tag">Live Video UI</span>
+          <span class="skill-tag">iOS &amp; Android</span>
+          <span class="skill-tag">Browser Web</span>
+          <span class="skill-tag">0-to-1 Product Design</span>
+          <span class="skill-tag">Cross-functional Collaboration</span>
+          <span class="skill-tag">Interaction Design</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     CASE STUDY 3: RING
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<section class="case-study" data-section="ring">
+  <div class="container">
+
+    <div class="case-study-card">
+      <div class="case-study-hero" style="background: linear-gradient(135deg, #1A1A2E, #16213E);">
+        <span class="company-tag">Ring (Amazon)</span>
+        <h3>Building Global Components for Headless CMS Migration</h3>
+        <p class="role">Product Designer — CMS Migration, Design System, Global Components</p>
+      </div>
+
+      <div class="case-study-body">
+
+        <!-- PHASE: DISCOVER -->
+        <div class="phase-block" data-phase="discover">
+          <div class="phase-label"><span class="phase-icon">1</span> Discover</div>
+          <h4>Auditing Ring's web component ecosystem</h4>
+          <p>Ring was migrating their website's components to a new headless CMS. The first step was auditing every existing component — cataloging inconsistencies, identifying legacy patterns that needed updating, and understanding which components were truly "global" (used across multiple pages and contexts) versus page-specific. This audit became the foundation for the new component library.</p>
+
+          <div class="insight-callout">
+            <div class="callout-label">Problem Statement</div>
+            <p>The legacy CMS had accumulated years of one-off components with inconsistent styling. Developers couldn't tell which styles were current vs deprecated, leading to visual inconsistencies across Ring's web properties.</p>
+          </div>
+
+          <!-- IMAGE: Replace with audit/discovery screenshot -->
+          <div class="image-showcase">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">&#128269;</div>
+              <span>Replace: Component audit / legacy system analysis</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE: IDEATE -->
+        <div class="phase-block" data-phase="ideate">
+          <div class="phase-label"><span class="phase-icon">2</span> Ideate</div>
+          <h4>Defining the global component architecture</h4>
+          <p>I worked with the team to define which components should be global — navigation, hero sections, product cards, CTAs, footers — and established a hierarchy of atomic, molecular, and organism-level components. Each component needed to be flexible enough to work across Ring's diverse page types while remaining visually consistent.</p>
+
+          <!-- IMAGE: Replace with component architecture / planning -->
+          <div class="image-showcase">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">&#128204;</div>
+              <span>Replace: Component architecture / planning diagram</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE: DESIGN -->
+        <div class="phase-block" data-phase="design">
+          <div class="phase-label"><span class="phase-icon">3</span> Design</div>
+          <h4>Design system with detailed developer specs</h4>
+          <p>I built global components using a design system in Sketch with detailed spec sheets for every property — sizing, typography, spacing, and styling. A key innovation was creating a dual-track documentation system: each component had both "legacy styles" (what currently existed) and "new styles" (the target state), allowing developers to easily identify what needed to change and follow the migration path.</p>
+
+          <!-- IMAGE: Replace with design system specs -->
+          <div class="image-showcase">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">&#127912;</div>
+              <span>Replace: Design system specs with sizing/typography/spacing</span>
+              <span style="font-size:11px; opacity:0.6;">(Recommended: 1600x900px)</span>
+            </div>
+          </div>
+
+          <div class="insight-callout">
+            <div class="callout-label">Headless CMS Approach</div>
+            <p>By designing components that were content-agnostic and purely structural, we enabled the headless CMS to serve content dynamically while the design system ensured every rendering was visually consistent — regardless of what content was plugged in.</p>
+          </div>
+        </div>
+
+        <!-- PHASE: ITERATE -->
+        <div class="phase-block" data-phase="iterate">
+          <div class="phase-label"><span class="phase-icon">4</span> Iterate</div>
+          <h4>Testing component flexibility across page types</h4>
+          <p>We validated each global component against multiple page contexts — product pages, campaign landing pages, support pages — to ensure flexibility. Working directly with developers, I iterated on spacing and responsive breakpoints to handle edge cases that only surfaced when real content was plugged into the system.</p>
+
+          <!-- IMAGE: Replace with iteration/testing screenshots -->
+          <div class="image-showcase">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">&#128260;</div>
+              <span>Replace: Component testing across page types</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE: HANDOFF -->
+        <div class="phase-block" data-phase="handoff">
+          <div class="phase-label"><span class="phase-icon">5</span> Handoff</div>
+          <h4>Legacy-to-new migration specs for developers</h4>
+          <p>The handoff was uniquely structured around the migration itself. Each component's documentation included a clear "before and after" — legacy style tokens mapped to new tokens, with redlines showing exactly what changed. This allowed developers to migrate components incrementally without breaking the live site, making the entire CMS migration smooth and predictable.</p>
+
+          <!-- IMAGE: Replace with handoff documentation -->
+          <div class="image-showcase">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">&#128230;</div>
+              <span>Replace: Migration specs / legacy vs new comparison</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SKILLS USED -->
+        <div class="skills-used">
+          <span class="skill-tag">Sketch</span>
+          <span class="skill-tag">Design Systems</span>
+          <span class="skill-tag">Headless CMS</span>
+          <span class="skill-tag">Component Architecture</span>
+          <span class="skill-tag">Developer Specs</span>
+          <span class="skill-tag">Migration Strategy</span>
+          <span class="skill-tag">Responsive Web</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- end #work -->
+
+
+<!-- ============================================
+     FOOTER / CONTACT
+     ============================================ -->
+<footer id="contact" data-section="contact">
+  <div class="container">
+    <h2>Let's work together</h2>
+    <p>I'm always open to discussing product design, design systems, or collaboration opportunities.</p>
+    <div class="contact-links">
+      <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank">LinkedIn</a>
+      <a href="https://www.behance.net/neotran902b" target="_blank">Behance</a>
+      <a href="http://www.instagram.com/foldflydesign" target="_blank">Instagram</a>
+      <a href="https://foldfly.com" target="_blank">foldfly.com</a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ============================================
+     SCROLL ANIMATION SCRIPT
+     ============================================ -->
+<script>
+// Fade-in on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

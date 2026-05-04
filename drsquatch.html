@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Squatch — Case Study | neo by design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  /* ============================================
+     CONFIG FONT
+     ============================================ */
+  @font-face { font-family:'Config'; src:url('fonts/Config-Light.ttf') format('truetype'); font-weight:300; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('fonts/Config-Regular.ttf') format('truetype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('fonts/Config-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('fonts/Config-SemiBold.ttf') format('truetype'); font-weight:600; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('fonts/Config-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
+
+  /* ============================================
+     RESET & BASE
+     ============================================ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Config', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #1a1a1a;
+    background: #f4f4f2;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+  :root {
+    --purple: #9B51E0;
+    --purple-strong: #9B51E0;
+    --ink: #1a1a1a;
+    --ink-soft: #2a2a2a;
+    --muted: #8a8a8a;
+    --muted-soft: #b8b8b8;
+    --bg: #f4f4f2;
+    --card-radius: 28px;
+    --pill-radius: 999px;
+    /* heights used by the sticky sub-nav math */
+    --global-nav-h: 80px;   /* top offset (nav top 24px + ~56px height) */
+    --subnav-h: 64px;
+  }
+
+  /* ============================================
+     GLOBAL LIQUID GLASS NAV (same as homepage)
+     ============================================ */
+  .nav-wrap {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: calc(100% - 64px);
+    max-width: 1280px;
+    pointer-events: none;
+    transition: top 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+                width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+                max-width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  body.scrolled .nav-wrap {
+    top: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+  .nav {
+    pointer-events: auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 40px;
+    border-radius: var(--pill-radius);
+    background: rgba(255,255,255,0.45);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.9) inset,
+      0 -1px 0 rgba(255,255,255,0.4) inset,
+      0 4px 6px -1px rgba(0,0,0,0.1),
+      0 2px 4px -2px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: background 0.35s ease,
+                box-shadow 0.35s ease,
+                border-radius 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+                border-color 0.35s ease;
+  }
+  body.scrolled .nav {
+    border-radius: 0;
+    background: rgba(255,255,255,0.85);
+    border-color: transparent;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    box-shadow: none;
+  }
+  body.scrolled .nav::before { opacity: 0; }
+  body.scrolled .nav::after { display: none; }
+  .nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.05) 40%, rgba(255,255,255,0) 60%, rgba(155,81,224,0.10) 100%);
+    pointer-events: none;
+  }
+  .nav::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: var(--mx, 50%);
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.75) 0%, rgba(155,81,224,0.20) 40%, transparent 70%);
+    transform: translateX(-50%);
+    filter: blur(22px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  .nav:hover::after { opacity: 1; }
+  .nav:hover { background: rgba(255,255,255,0.55); }
+  .brand { font-size: 18px; font-weight: 500; letter-spacing: -0.01em; position: relative; z-index: 2; }
+  .brand .neo { color: var(--purple-strong); font-weight: 600; }
+  .brand .by { color: var(--ink); font-weight: 400; }
+  .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; position: relative; z-index: 2; }
+  .nav-link { position: relative; padding: 8px 18px; font-size: 16px; font-weight: 500; color: var(--muted); border-radius: var(--pill-radius); transition: color .25s ease; }
+  .nav-link:hover { color: var(--purple-strong); }
+  .nav-link.active { color: var(--purple-strong); }
+  .nav-link.active::after {
+    content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%);
+    width: 4px; height: 4px; border-radius: 50%; background: var(--purple-strong);
+  }
+  .nav-link.icon { padding: 8px 12px; display: flex; align-items: center; }
+  .nav-link.icon img { width: 18px; height: 18px; opacity: 0.7; transition: opacity .25s ease; }
+  .nav-link.icon:hover img { opacity: 1; }
+
+  /* ============================================
+     CASE PAGE LAYOUT
+     ============================================ */
+  .case-page {
+    padding: 110px 32px 0;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .hero-image {
+    width: 100%;
+    aspect-ratio: 16/8;
+    border-radius: var(--card-radius);
+    background: #b8b8b8;
+    overflow: hidden;
+    position: relative;
+  }
+  .hero-image img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .case-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    margin-top: 18px;
+  }
+  .case-meta-row .title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .case-meta-row .meta {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .case-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .case-tags .chip {
+    background: #fff;
+    padding: 8px 16px;
+    border-radius: var(--pill-radius);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+
+  /* ============================================
+     SECTIONS WITH PER-SECTION STICKY HEADERS
+     ============================================ */
+  .sections {
+    margin-top: 32px;
+  }
+  .section {
+    background: transparent;
+    border-radius: 20px;
+    padding: 0;
+    margin-bottom: 32px;
+    min-height: 720px; /* placeholder so scroll feels real */
+    overflow: visible;
+    position: relative;
+  }
+  /* Per-section sticky header — iOS liquid-glass refraction; content scrolls visibly under it */
+  .section-header {
+    position: sticky;
+    top: var(--global-nav-h);
+    z-index: 5;
+    height: 80px;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    border-radius: 20px;
+    overflow: hidden;
+    /* glass fill */
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.7);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.95) inset,
+      0 -1px 0 rgba(255,255,255,0.5) inset,
+      0 1px 2px rgba(0,0,0,0.04),
+      0 8px 24px -16px rgba(0,0,0,0.10);
+  }
+  /* refraction sheen */
+  .section-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      rgba(255,255,255,0.55) 0%,
+      rgba(255,255,255,0.05) 35%,
+      rgba(255,255,255,0) 60%,
+      rgba(155,81,224,0.06) 100%
+    );
+    pointer-events: none;
+  }
+  .section-header h2 {
+    color: var(--ink);
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .stepper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .stepper li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .stepper li:not(:first-child)::before {
+    content: '';
+    display: inline-block;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: #c8c8c6;
+  }
+  .stepper a {
+    padding: 4px 6px;
+    font-size: 16px;
+    color: var(--muted-soft);
+    font-weight: 400;
+    transition: color .25s ease;
+  }
+  .stepper a:hover { color: var(--ink); }
+  .stepper a.active { color: var(--ink); font-weight: 400; }
+
+  .section-body {
+    padding: 24px 40px 40px;
+  }
+  .sub-section {
+    padding: 24px 0;
+  }
+  .sub-section h3 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-style: italic;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+  .sub-section h3,
+  .sub-section p,
+  .sub-section .placeholder-block {
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .sub-section p {
+    color: #4a4a4a;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .sub-section p + p {
+    margin-top: 1.4em;
+  }
+  .placeholder-block {
+    margin-top: 24px;
+    height: 280px;
+    background: #f2f2f0;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted-soft);
+    font-size: 13px;
+  }
+
+  /* Highlight for emphasized phrases — works anywhere on the page */
+  .hl {
+    background-color: rgba(242, 201, 76, 0.3);
+    padding: 0 0.15em;
+    border-radius: 2px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  /* Inlined Problem→Solution diagram (namespaced under .ps-frame) */
+  .ps-frame {
+    max-width: 988px;
+    margin: 32px auto 0;
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid #ececea;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    --ps-problem-bg: #FFE0DB; --ps-problem-text: #D94F3D;
+    --ps-goal-bg: #E2DEFF;    --ps-goal-text: #5B4FCF;
+    --ps-solution-bg: #D4F2EC;--ps-solution-text: #1E7A68;
+    --ps-detail-bg: #FDEEC8;  --ps-detail-text: #A06A00;
+  }
+  .ps-frame .ps-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-style: italic;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 28px;
+  }
+  .ps-frame .ps-section-heading {
+    font-family: 'Config', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #BBBBBB;
+    margin-bottom: 20px;
+  }
+  .ps-frame .ps-track {
+    display: grid;
+    grid-template-columns: 1fr 24px 1fr 24px 1fr 24px 1fr;
+    gap: 0;
+    align-items: start;
+    margin-bottom: 28px;
+  }
+  .ps-frame .ps-track:last-of-type { margin-bottom: 0; }
+  .ps-frame .ps-arrow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 22px;
+    color: #CCCCCC;
+    font-size: 16px;
+    user-select: none;
+  }
+  .ps-frame .ps-card-stack { display: flex; flex-direction: column; gap: 8px; }
+  .ps-frame .ps-card {
+    border-radius: 14px;
+    padding: 8px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    border: 1px solid #ececea;
+    background: #F8F8F6;
+    color: var(--ink);
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .ps-frame .ps-chip {
+    font-family: 'Config', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .ps-frame .ps-card.problem  .ps-chip { color: var(--ps-problem-text); }
+  .ps-frame .ps-card.goal     .ps-chip { color: var(--ps-goal-text); }
+  .ps-frame .ps-card.solution .ps-chip { color: var(--ps-solution-text); }
+  .ps-frame .ps-card.detail   .ps-chip { color: var(--ps-detail-text); }
+  .ps-frame .ps-divider {
+    height: 1px;
+    background: rgba(44,35,24,0.06);
+    margin: 32px 0 36px;
+  }
+  @media (max-width: 700px) {
+    .ps-frame {
+      padding: 20px;
+    }
+    .ps-frame .ps-track {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      gap: 8px;
+      padding-left: 12px;
+      border-left: 2px solid rgba(44,35,24,0.1);
+    }
+    .ps-frame .ps-arrow { display: none; }
+    .ps-frame .ps-card { font-size: 12px; }
+  }
+
+  /* Caption under a figure */
+  .sub-section .figure-caption {
+    max-width: 988px;
+    margin: 12px auto 0;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* Inline figure (e.g. Hotjar screenshot) with expand button */
+  .sub-section .figure {
+    max-width: 988px;
+    margin: 24px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #ececea;
+    background: #fff;
+    position: relative;
+  }
+  .sub-section .figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .figure .expand-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    color: #3a3a3a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    opacity: 0;
+    padding: 0;
+  }
+  .figure:hover .expand-btn,
+  .figure:focus-within .expand-btn {
+    opacity: 1;
+  }
+  .expand-btn:hover {
+    color: #000;
+    transform: scale(1.08);
+  }
+  .expand-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 1.75;
+  }
+  /* Always show on touch devices */
+  @media (hover: none) {
+    .figure .expand-btn { opacity: 1; }
+  }
+
+  /* Lightbox overlay */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,15,15,0.40);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .lightbox.is-open {
+    display: flex;
+    opacity: 1;
+  }
+  .lightbox img {
+    max-width: 80vw;
+    max-height: 80vh;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  }
+  .lightbox-close {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+  }
+  .lightbox-close:hover {
+    background: rgba(255,255,255,0.22);
+  }
+  .lightbox-close svg { width: 20px; height: 20px; }
+
+  /* Lighthouse / Driftwood frameworks */
+  .frameworks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 32px auto 0;
+    max-width: 988px;
+  }
+  .framework-card {
+    background: #fff;
+    border: 1px solid #ececea;
+    border-radius: 16px;
+    padding: 24px 28px 26px;
+    position: relative;
+    overflow: hidden;
+  }
+  .framework-card .name {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-style: italic;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+  .framework-card.lighthouse .name { color: #B36A14; }
+  .framework-card.driftwood .name { color: #235952; }
+  .framework-card .desc {
+    font-size: 14px;
+    line-height: 1.55;
+    color: #4a4a4a;
+    margin-bottom: 18px;
+  }
+  .framework-card .problem-label {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #b0b0ae;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .framework-card .problem {
+    font-size: 13px;
+    color: #6a6a68;
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .framework-card.lighthouse::after {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(212,136,42,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .framework-card.driftwood::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: -30px;
+    width: 100px; height: 100px;
+    background: radial-gradient(circle, rgba(58,112,104,0.10) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  @media (max-width: 720px) {
+    .frameworks { grid-template-columns: 1fr; }
+  }
+
+  .case-page-bottom { padding-bottom: 80px; }
+
+  /* ============================================
+     CONTACT (reused from homepage)
+     ============================================ */
+  .contact-section { background: #F9F9F7; }
+  .contact { padding: 80px 32px 100px; max-width: 1280px; margin: 0 auto; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .contact-heading h2 { font-size: clamp(32px, 3.4vw, 42px); font-weight: 700; color: var(--ink); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; }
+  .contact-heading p { font-size: 20px; color: var(--muted); }
+  .contact-form { display: flex; flex-direction: column; }
+  .contact-form .field { border-bottom: 1px solid #d8d8d6; padding: 14px 4px; }
+  .contact-form input, .contact-form textarea { width: 100%; border: none; background: transparent; font-family: inherit; font-size: 16px; color: var(--ink); outline: none; resize: none; }
+  .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--muted); }
+  .contact-form textarea { min-height: 140px; padding-top: 4px; }
+  .contact-submit { margin-top: 28px; background: #1f1f1f; color: #fff; padding: 18px 28px; border-radius: 14px; font-size: 15px; font-weight: 500; width: 100%; transition: background .25s ease, transform .25s ease; }
+  .contact-submit:hover { background: #000; transform: translateY(-1px); }
+  .contact-links { display: flex; justify-content: space-between; margin-top: 24px; padding: 0 8px; }
+  .contact-links a { font-size: 14px; color: var(--muted); transition: color .25s ease; }
+  .contact-links a:hover { color: var(--purple-strong); }
+
+  /* ============================================
+     RESPONSIVE
+     ============================================ */
+  @media (max-width: 900px) {
+    :root { --global-nav-h: 70px; }
+    .nav-wrap { width: calc(100% - 24px); top: 16px; }
+    .nav { padding: 12px 40px; }
+    .nav-links { gap: 2px; }
+    .nav-link { padding: 8px 12px; font-size: 14px; }
+    .brand { font-size: 16px; }
+    .case-page { padding: 90px 16px 0; }
+    .case-meta-row { flex-direction: column; gap: 6px; align-items: flex-start; }
+    .section { min-height: 520px; }
+    .section-header {
+      height: auto;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 18px 20px;
+    }
+    .section-header h2 { font-size: 22px; }
+    .section-body { padding: 20px 20px 32px; }
+    .stepper { justify-content: flex-start; gap: 6px; }
+    .stepper a { font-size: 14px; }
+    .contact { padding: 60px 20px 80px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Global Nav -->
+<div class="nav-wrap">
+  <nav class="nav" id="nav">
+    <a href="index.html" class="brand"><span class="neo">neo</span> <span class="by">by design</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#work" class="nav-link active">Work</a></li>
+      <li><a href="index.html#play" class="nav-link">Play</a></li>
+      <li><a href="index.html#me" class="nav-link">Me</a></li>
+      <li>
+        <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener" class="nav-link icon" aria-label="LinkedIn">
+          <img src="Assets/linkedin.png" alt="LinkedIn">
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+
+<!-- Case Page -->
+<main class="case-page">
+
+  <!-- Hero image -->
+  <div class="hero-image">
+    <img src="Assets/cards/drsquatch.jpg" alt="Dr. Squatch project hero" onerror="this.style.display='none'">
+  </div>
+
+  <!-- Title meta row -->
+  <div class="case-meta-row">
+    <div class="title">Dr.Squatch</div>
+    <div class="meta">CMS Migration · Growth · Features · Design System</div>
+  </div>
+
+  <!-- Tag chips -->
+  <div class="case-tags">
+    <span class="chip">E-Commerce</span>
+    <span class="chip">DTC</span>
+    <span class="chip">Design System</span>
+    <span class="chip">Headless CMS</span>
+    <span class="chip">Conversion Rate Optimizations</span>
+    <span class="chip">End to End Process</span>
+    <span class="chip">UX Framework</span>
+  </div>
+
+
+  <!-- ============================================
+       SECTIONS — each has its own sticky header
+       ============================================ -->
+  <div class="sections">
+
+    <section class="section" id="ux-framework">
+      <header class="section-header">
+        <h2>UX Framework</h2>
+        <ul class="stepper">
+          <li><a href="#ux-problem" data-sub-id="ux-problem">Problem</a></li>
+          <li><a href="#ux-solutions" data-sub-id="ux-solutions">Solutions</a></li>
+        </ul>
+      </header>
+      <div class="section-body">
+        <div class="sub-section" id="ux-problem">
+          <h3>Diagnosis</h3>
+
+          <p>I didn't start with Figma. I started by walking the site.</p>
+
+          <p>My first weeks were a <span class="hl">heuristic walkthrough</span> of the full experience. I paired that with team conversations, a <span class="hl">competitive audit</span> of other DTC personal care brands, and <span class="hl">scroll depth data</span> from Hotjar.</p>
+
+          <p>The pattern was clear. Users were landing, engaging, and stopping. <span class="hl">Not bouncing. Stopping.</span> Traffic wasn't the problem. What happened after the click was.</p>
+
+          <p>Two issues kept surfacing.</p>
+
+          <p><strong>No path forward.</strong> Pages were built in isolation. Users who drifted off the critical path hit dead ends with nowhere to go. <span class="hl">Discoverability was accidental.</span></p>
+
+          <p><strong>Not enough to decide.</strong> Dr. Squatch sells a product that needs a little convincing. But the right information wasn't showing up at the right moments. Users hit decision points <span class="hl">without enough confidence to act</span>.</p>
+
+          <p>These weren't isolated UX problems. They were symptoms of a site that had scaled without a connective framework underneath it.</p>
+
+          <div class="figure">
+            <img src="Assets/Diagnosis hotjar.jpg" alt="Hotjar scroll-depth and engagement data from the Dr. Squatch site audit">
+            <button type="button" class="expand-btn" aria-label="Open image" data-expand>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="sub-section" id="ux-solutions">
+          <h3>Solutions</h3>
+
+          <p>To address both the structural and informational gaps I'd diagnosed, I developed two UX frameworks that would work in tandem across the Dr. Squatch digital experience.</p>
+
+          <p><strong>Driftwood</strong> established intentional <span class="hl">entry and exit points</span> throughout the site, ensuring users always had a clear path forward and <span class="hl">eliminating dead ends</span> that were quietly killing discoverability and retention.</p>
+
+          <p><strong>Lighthouse</strong> brought the <span class="hl">right information</span> to the surface at the right moments, strategically placing product <span class="hl">education</span> and trust signals where users were most likely to need them before making a purchase decision.</p>
+
+          <p>Together they gave the experience a connective backbone it previously lacked, designed equally for the user who wants to <span class="hl">feel guided</span>, and the business that needs them to <span class="hl">convert</span>.</p>
+
+          <div class="frameworks">
+            <div class="framework-card lighthouse">
+              <p class="name">Lighthouse</p>
+              <p class="desc">Strategically surface <span class="hl">education</span>, trust signals, and product information at the exact moments users need them, so they feel confident enough to convert.</p>
+              <p class="problem-label">Problem it solves</p>
+              <p class="problem">"The site assumes too much. Users lack the information to make confident purchase decisions."</p>
+            </div>
+
+            <div class="framework-card driftwood">
+              <p class="name">Driftwood</p>
+              <p class="desc">Intentionally design <span class="hl">entry and exit points</span> throughout the experience so users always have a clear path forward, eliminating dead ends and improving discoverability.</p>
+              <p class="problem-label">Problem it solves</p>
+              <p class="problem">"Users wander off the critical path and hit dead ends with no way back into the funnel."</p>
+            </div>
+          </div>
+
+          <div class="ps-frame">
+            <h4 class="ps-title">From Problem to Solution</h4>
+
+            <p class="ps-section-heading">01 — Social Proof</p>
+            <div class="ps-track">
+              <div class="ps-card problem"><span class="ps-chip">Problem</span><div>Users need social proof to build confidence and drive purchase.</div></div>
+              <div class="ps-arrow">→</div>
+              <div class="ps-card-stack">
+                <div class="ps-card goal"><span class="ps-chip">Goal</span><div>Social proof videos</div></div>
+                <div class="ps-card goal"><span class="ps-chip">Goal</span><div>Reviews from real users</div></div>
+              </div>
+              <div class="ps-arrow">→</div>
+              <div class="ps-card-stack">
+                <div class="ps-card solution"><span class="ps-chip">Solution</span><div>Videowise content carousel</div></div>
+                <div class="ps-card solution"><span class="ps-chip">Solution</span><div>Reviews carousel</div></div>
+              </div>
+              <div class="ps-arrow">→</div>
+              <div class="ps-card-stack">
+                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Add below buy box in PDP</div></div>
+              </div>
+            </div>
+
+            <div class="ps-divider"></div>
+
+            <p class="ps-section-heading">02 — Product Education</p>
+            <div class="ps-track">
+              <div class="ps-card problem"><span class="ps-chip">Problem</span><div>Users don't have enough product info to feel confident buying.</div></div>
+              <div class="ps-arrow">→</div>
+              <div class="ps-card goal"><span class="ps-chip">Goal</span><div>Surface ingredients, scent, grit, size, and shipping in one place</div></div>
+              <div class="ps-arrow">→</div>
+              <div class="ps-card solution"><span class="ps-chip">Solution</span><div>Buy Box accordion</div></div>
+              <div class="ps-arrow">→</div>
+              <div class="ps-card-stack">
+                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Soap ingredients</div></div>
+                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Deo ingredients</div></div>
+                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Weight + dimensions</div></div>
+                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>How to use</div></div>
+                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Disclaimer</div></div>
+              </div>
+            </div>
+
+            <div class="ps-divider"></div>
+
+            <p class="ps-section-heading">03 — Bundle Transparency</p>
+            <div class="ps-track">
+              <div class="ps-card problem"><span class="ps-chip">Problem</span><div>Users can't tell exactly what's inside the bundle.</div></div>
+              <div class="ps-arrow">→</div>
+              <div class="ps-card goal"><span class="ps-chip">Goal</span><div>Show every product and scent included, upfront</div></div>
+              <div class="ps-arrow">→</div>
+              <div class="ps-card solution"><span class="ps-chip">Solution</span><div>"What's Included" card grid</div></div>
+              <div class="ps-arrow">→</div>
+              <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Each product and scent shown as its own card</div></div>
+            </div>
+
+            <div class="ps-divider"></div>
+
+            <p class="ps-section-heading">04 — Scent Information</p>
+            <div class="ps-track">
+              <div class="ps-card problem"><span class="ps-chip">Problem</span><div>Users can't tell what each product smells like.</div></div>
+              <div class="ps-arrow">→</div>
+              <div class="ps-card goal"><span class="ps-chip">Goal</span><div>Describe each scent in a place users will look</div></div>
+              <div class="ps-arrow">→</div>
+              <div class="ps-card solution"><span class="ps-chip">Solution</span><div>Scent notes inside Buy Box accordion</div></div>
+              <div class="ps-arrow">→</div>
+              <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Notes shown per scent variant</div></div>
+            </div>
+
+            <div class="ps-divider"></div>
+
+            <p class="ps-section-heading">05 — Company Value Props</p>
+            <div class="ps-track">
+              <div class="ps-card problem"><span class="ps-chip">Problem</span><div>Users don't know what makes Dr. Squatch different.</div></div>
+              <div class="ps-arrow">→</div>
+              <div class="ps-card-stack">
+                <div class="ps-card goal"><span class="ps-chip">Goal</span><div>Communicate "Made For Men"</div></div>
+                <div class="ps-card goal"><span class="ps-chip">Goal</span><div>Communicate "All Natural"</div></div>
+              </div>
+              <div class="ps-arrow">→</div>
+              <div class="ps-card-stack">
+                <div class="ps-card solution"><span class="ps-chip">Solution</span><div>50/50 humor content block</div></div>
+                <div class="ps-card solution"><span class="ps-chip">Solution</span><div>All Natural content carousel</div></div>
+              </div>
+              <div class="ps-arrow">→</div>
+              <div class="ps-card-stack">
+                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Image + text layout</div></div>
+                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>All natural ingredients</div></div>
+                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>No harmful additives</div></div>
+                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Committed to men's health</div></div>
+                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>CTA to "The Squatch Difference"</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="figure">
+            <img src="Assets/Informative Sections.jpg" alt="Informative content sections curated to build user confidence">
+            <button type="button" class="expand-btn" aria-label="Open image" data-expand>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+            </button>
+          </div>
+          <p class="figure-caption">Curating sections to build confidence and inform users.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section" id="growth-design">
+      <header class="section-header">
+        <h2>Growth Design</h2>
+        <ul class="stepper">
+          <li><a href="#growth-experiments" data-sub-id="growth-experiments">Experiments</a></li>
+          <li><a href="#growth-conversions" data-sub-id="growth-conversions">Conversions</a></li>
+          <li><a href="#growth-learnings" data-sub-id="growth-learnings">Learnings</a></li>
+        </ul>
+      </header>
+      <div class="section-body">
+        <div class="sub-section" id="growth-experiments">
+          <h3>Experiments</h3>
+          <p>A/B test framework, hero variant testing, social proof placement, sticky CTA — the experiments that moved the needle and the ones that didn't.</p>
+          <div class="placeholder-block">[ Experiments content placeholder ]</div>
+        </div>
+        <div class="sub-section" id="growth-conversions">
+          <h3>Conversions</h3>
+          <p>Funnel visualizations, before/after conversion rates by surface, and the design changes that drove the lifts.</p>
+          <div class="placeholder-block">[ Conversions content placeholder ]</div>
+        </div>
+        <div class="sub-section" id="growth-learnings">
+          <h3>Learnings</h3>
+          <p>Patterns that generalized across categories vs. patterns that only worked in narrow contexts.</p>
+          <div class="placeholder-block">[ Learnings content placeholder ]</div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section" id="features">
+      <header class="section-header">
+        <h2>Features Designs</h2>
+        <ul class="stepper">
+          <li><a href="#features-bundles" data-sub-id="features-bundles">Bundles</a></li>
+          <li><a href="#features-pdp" data-sub-id="features-pdp">PDP</a></li>
+          <li><a href="#features-cart" data-sub-id="features-cart">Cart</a></li>
+        </ul>
+      </header>
+      <div class="section-body">
+        <div class="sub-section" id="features-bundles">
+          <h3>Bundles</h3>
+          <p>Bundle builder with cross-sell logic, recommended add-ons, and subscription incentives.</p>
+          <div class="placeholder-block">[ Bundles content placeholder ]</div>
+        </div>
+        <div class="sub-section" id="features-pdp">
+          <h3>PDP</h3>
+          <p>Modular product detail page that growth could re-arrange per category and per test.</p>
+          <div class="placeholder-block">[ PDP content placeholder ]</div>
+        </div>
+        <div class="sub-section" id="features-cart">
+          <h3>Cart</h3>
+          <p>Side cart, free-shipping nudge, and post-purchase upsell — designed to feel native to the brand voice.</p>
+          <div class="placeholder-block">[ Cart content placeholder ]</div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section" id="cms">
+      <header class="section-header">
+        <h2>CMS Migration</h2>
+        <ul class="stepper">
+          <li><a href="#cms-audit" data-sub-id="cms-audit">Audit</a></li>
+          <li><a href="#cms-architecture" data-sub-id="cms-architecture">Architecture</a></li>
+          <li><a href="#cms-rollout" data-sub-id="cms-rollout">Rollout</a></li>
+        </ul>
+      </header>
+      <div class="section-body">
+        <div class="sub-section" id="cms-audit">
+          <h3>Audit</h3>
+          <p>Inventory of every legacy template, the variants in the wild, and the marketing surfaces in active use.</p>
+          <div class="placeholder-block">[ Audit content placeholder ]</div>
+        </div>
+        <div class="sub-section" id="cms-architecture">
+          <h3>Architecture</h3>
+          <p>Content model design — sections, blocks, presets — and the editorial workflow that made it usable.</p>
+          <div class="placeholder-block">[ Architecture content placeholder ]</div>
+        </div>
+        <div class="sub-section" id="cms-rollout">
+          <h3>Rollout</h3>
+          <p>Phased migration plan, redirects, and the QA process that kept SEO equity intact.</p>
+          <div class="placeholder-block">[ Rollout content placeholder ]</div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section" id="design-system">
+      <header class="section-header">
+        <h2>Design System</h2>
+        <ul class="stepper">
+          <li><a href="#ds-tokens" data-sub-id="ds-tokens">Tokens</a></li>
+          <li><a href="#ds-components" data-sub-id="ds-components">Components</a></li>
+          <li><a href="#ds-governance" data-sub-id="ds-governance">Governance</a></li>
+        </ul>
+      </header>
+      <div class="section-body">
+        <div class="sub-section" id="ds-tokens">
+          <h3>Tokens</h3>
+          <p>Color, type, spacing, and motion tokens — the primitives that everything else is built from.</p>
+          <div class="placeholder-block">[ Tokens content placeholder ]</div>
+        </div>
+        <div class="sub-section" id="ds-components">
+          <h3>Components</h3>
+          <p>The shared library of buttons, inputs, cards, and marketing modules — documented and version-tracked.</p>
+          <div class="placeholder-block">[ Components content placeholder ]</div>
+        </div>
+        <div class="sub-section" id="ds-governance">
+          <h3>Governance</h3>
+          <p>How additions are proposed, how changes are reviewed, and how we keep design and code in sync.</p>
+          <div class="placeholder-block">[ Governance content placeholder ]</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+
+  <div class="case-page-bottom"></div>
+</main>
+
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button type="button" class="lightbox-close" aria-label="Close" id="lightbox-close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+
+<!-- Contact -->
+<section class="contact-section" id="contact">
+  <div class="contact">
+    <div class="contact-grid">
+      <div class="contact-heading">
+        <h2>Let's Work Together</h2>
+        <p>Good Design Starts with a Good Intention.</p>
+      </div>
+      <form class="contact-form" onsubmit="event.preventDefault();">
+        <div class="field"><input type="text" placeholder="Name" required></div>
+        <div class="field"><input type="email" placeholder="Email" required></div>
+        <div class="field"><textarea placeholder="Message" required></textarea></div>
+        <button type="submit" class="contact-submit">Make Good Work Together!</button>
+        <div class="contact-links">
+          <a href="#">Linkedin</a>
+          <a href="#">neoqtran@gmail.com</a>
+          <a href="#">CV</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+<script>
+  // ============================================
+  // Liquid glass refraction follows mouse
+  // ============================================
+  const nav = document.getElementById('nav');
+  if (nav) {
+    nav.addEventListener('mousemove', (e) => {
+      const rect = nav.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      nav.style.setProperty('--mx', x + '%');
+    });
+  }
+
+  // Toggle scrolled state for nav (full-width when scrolled)
+  function handleNavScroll() {
+    document.body.classList.toggle('scrolled', window.scrollY > 8);
+  }
+  handleNavScroll();
+  window.addEventListener('scroll', handleNavScroll, { passive: true });
+
+  // ============================================
+  // Resize the embedded iframe to fit its content (no fixed height)
+  // ============================================
+  (function () {
+    const frame = document.getElementById('ps-frame');
+    if (!frame) return;
+
+    function fit() {
+      const doc = frame.contentDocument;
+      if (!doc || !doc.body) return;
+      // Reset, then measure the true content height
+      frame.style.height = '0px';
+      const h = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight);
+      frame.style.height = h + 'px';
+    }
+
+    frame.addEventListener('load', () => {
+      fit();
+      // Re-fit when fonts/images settle and on inner reflow
+      const win = frame.contentWindow;
+      try {
+        win.addEventListener('load', fit);
+        if (win.document && win.document.fonts && win.document.fonts.ready) {
+          win.document.fonts.ready.then(fit);
+        }
+        if (win.ResizeObserver) {
+          new win.ResizeObserver(fit).observe(win.document.documentElement);
+        }
+      } catch (e) {}
+    });
+
+    // Outer width changes can reflow inner content
+    window.addEventListener('resize', fit);
+  })();
+
+  // ============================================
+  // Image lightbox: any .figure with [data-expand] opens its <img> full-screen
+  // ============================================
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxClose = document.getElementById('lightbox-close');
+
+  function openLightbox(src, alt) {
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || '';
+    lightbox.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('is-open');
+    lightboxImg.src = '';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.figure [data-expand]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const img = btn.closest('.figure').querySelector('img');
+      if (img) openLightbox(img.src, img.alt);
+    });
+  });
+  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+  if (lightbox) lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+  });
+
+  // ============================================
+  // Per-section stepper: highlight sub-item whose content is in view
+  // ============================================
+  const sections = Array.from(document.querySelectorAll('.section'));
+
+  function getActiveSubInSection(section) {
+    const stickyOffset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--global-nav-h')) + 100;
+    const subs = Array.from(section.querySelectorAll('.sub-section'));
+    if (!subs.length) return null;
+    let active = subs[0];
+    for (const sub of subs) {
+      const rect = sub.getBoundingClientRect();
+      if (rect.top <= stickyOffset) active = sub;
+      else break;
+    }
+    return active;
+  }
+
+  function update() {
+    sections.forEach(section => {
+      const activeSub = getActiveSubInSection(section);
+      const links = section.querySelectorAll('.stepper a');
+      links.forEach(a => {
+        a.classList.toggle('active', activeSub && a.dataset.subId === activeSub.id);
+      });
+    });
+  }
+
+  update();
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+</script>
+
+</body>
+</html>
