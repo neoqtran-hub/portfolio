@@ -336,7 +336,7 @@
     max-width: 100%;
     margin: 28px auto 0;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 16px;
   }
   .image-window {
@@ -345,6 +345,393 @@
     border: 1px solid #ececea;
     background: #fff;
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .image-window .iw-label {
+    padding: 24px 24px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--purple-strong);
+    text-align: center;
+  }
+  .image-window .iw-headline {
+    padding: 0 24px;
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: #1a1a1a;
+    line-height: 1.15;
+    text-align: center;
+    letter-spacing: -0.01em;
+  }
+  .image-window .iw-sub {
+    padding: 8px 24px 24px;
+    font-size: 14px;
+    color: #6b6b66;
+    line-height: 1.5;
+    text-align: center;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  /* Annotated hero — single SVG overlay draws all lines + dots from label edge to image target.
+     Labels are HTML text positioned absolutely on the container. */
+  .annotated-hero {
+    position: relative;
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto 24px;
+    /* 220px gutter | 420px image | 220px gutter */
+    padding: 0 220px;
+  }
+  .annotated-hero .ah-image {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+  }
+  .annotated-hero .ah-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .ah-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .ah-overlay line {
+    stroke: var(--muted);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+  .ah-overlay circle.dot {
+    fill: var(--purple);
+  }
+  .ah-overlay circle.pulse {
+    fill: var(--purple);
+    opacity: 0.35;
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: anno-pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes anno-pulse {
+    0%, 100% { transform: scale(1);   opacity: 0.35; }
+    50%      { transform: scale(2.2); opacity: 0;    }
+  }
+  .ah-text {
+    position: absolute;
+    transform: translateY(-50%);
+    width: 150px;
+    font-size: 12px;
+    line-height: 1.3;
+    color: var(--ink);
+    z-index: 6;
+  }
+  .ah-text.left  { left: 8px;  text-align: right;  padding-right: 14px; }
+  .ah-text.right { right: 8px; text-align: left;   padding-left:  14px; }
+  .ah-text .ah-title {
+    display: block;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .ah-text .ah-sub {
+    display: block;
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* Mobile: stack list under image, hide overlay + labels */
+  .ah-mobile-list { display: none; }
+  @media (max-width: 720px) {
+    .image-window { padding: 16px; }
+    .image-window .iw-label,
+    .image-window .iw-headline,
+    .image-window .iw-sub { padding-left: 0; padding-right: 0; }
+    .annotated-hero {
+      max-width: 420px;
+      margin-left: 0;
+      margin-right: 0;
+      padding: 0;
+    }
+    .ah-overlay line,
+    .ah-text { display: none; }
+    .ah-mobile-list {
+      display: grid;
+      gap: 14px;
+      width: 100%;
+      max-width: 420px;
+      margin: 18px auto 8px;
+      padding: 0;
+    }
+    .ah-mobile-list .ml-item {
+      display: grid;
+      grid-template-columns: 16px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+    .ah-mobile-list .ml-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--purple);
+      margin-top: 5px;
+    }
+    .ah-mobile-list .ml-title {
+      display: block;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .ah-mobile-list .ml-sub {
+      display: block;
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+  }
+  .nco-showcase {
+    max-width: 100%;
+    margin: 32px auto 0;
+    display: grid;
+    gap: 22px;
+  }
+  .nco-panel {
+    border-radius: 18px;
+    border: 1px solid #ececea;
+    background: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+    overflow: hidden;
+  }
+  .nco-before {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+    gap: 32px;
+    align-items: center;
+    padding: 28px;
+    background: #fff;
+  }
+  .nco-before-frame {
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+  }
+  .nco-kicker {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--purple-strong);
+    margin-bottom: 10px;
+  }
+  .nco-copy h4 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(28px, 3.2vw, 46px);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .nco-copy p {
+    max-width: 420px;
+    margin: 0;
+    color: #5e5e5c;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .nco-after {
+    display: grid;
+    grid-template-columns: minmax(0, 1.18fr) minmax(280px, 0.82fr);
+    min-height: 760px;
+    background: #fff;
+  }
+  .nco-stage {
+    min-height: 760px;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .nco-page-frame {
+    width: min(214px, 32%);
+    height: 700px;
+    border-radius: 8px;
+    background: #f9f6ef;
+    overflow: visible;
+    box-shadow: none;
+    position: relative;
+  }
+  .nco-viewport {
+    height: 100%;
+    overflow: visible;
+    position: relative;
+  }
+  .nco-strip {
+    transform: translateY(0);
+    transition: transform 1100ms cubic-bezier(0.17, 0.67, 0.22, 1);
+    will-change: transform;
+    box-shadow: 0 28px 70px rgba(0,0,0,0.12);
+  }
+  .nco-shot {
+    position: relative;
+    transform-origin: center center;
+    background: #f9f6ef;
+    filter: blur(1.4px) saturate(0.86);
+    transition: transform 800ms ease, filter 800ms ease, box-shadow 800ms ease;
+  }
+  .nco-shot img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .nco-shot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 0 solid rgba(154,114,64,0);
+    background: rgba(255,255,255,0.3);
+    box-shadow: inset 0 0 0 0 rgba(154,114,64,0);
+    transition: border-width 600ms ease, box-shadow 600ms ease, background 600ms ease;
+    pointer-events: none;
+  }
+  .nco-shot.is-active {
+    border-radius: 14px;
+    transform: scale(1.22);
+    z-index: 5;
+    filter: saturate(1.04) contrast(1.02);
+    box-shadow: 0 0 56px rgba(217, 112, 43, 0.34), 0 0 120px rgba(217, 112, 43, 0.18);
+    overflow: hidden;
+  }
+  .nco-shot.is-active::after {
+    border-width: 4px;
+    border-radius: inherit;
+    background: rgba(255,255,255,0);
+    box-shadow: inset 0 0 0 999px rgba(255,252,242,0.04);
+  }
+  .nco-shot.is-tight-radius {
+    border-radius: 4px;
+  }
+  .nco-scroll-arrows {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 4;
+  }
+  .nco-arrow {
+    width: 28px;
+    height: 28px;
+    border-radius: 0;
+    background: transparent;
+    border: 0;
+    color: var(--ink);
+    font-size: 26px;
+    line-height: 1;
+    box-shadow: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .nco-arrow:hover {
+    transform: translateY(-2px);
+  }
+  .nco-arrow:disabled {
+    opacity: 0.35;
+    cursor: default;
+    transform: none;
+  }
+  .nco-spotlight {
+    align-self: center;
+    padding: 40px;
+  }
+  .nco-section-number {
+    color: var(--purple-strong);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .nco-spotlight h4,
+  .nco-spotlight p,
+  .nco-section-number {
+    transition: opacity 300ms ease, transform 300ms ease;
+  }
+  .nco-spotlight.is-changing h4,
+  .nco-spotlight.is-changing p,
+  .nco-spotlight.is-changing .nco-section-number {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  .nco-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .nco-control {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 50%;
+    padding: 0;
+    background: var(--ink);
+    color: #fff;
+    font-size: 0;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .nco-control svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    display: block;
+  }
+  .nco-control.secondary {
+    background: #fff;
+    color: var(--ink);
+    border: 1px solid #e2e2df;
+  }
+  .nco-control:hover {
+    transform: translateY(-1px);
+  }
+  .nco-progress {
+    width: min(320px, 100%);
+    height: 3px;
+    margin-top: 22px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.1);
+  }
+  .nco-progress span {
+    display: block;
+    height: 100%;
+    width: 7.7%;
+    border-radius: inherit;
+    background: var(--purple-strong);
+    transition: width 500ms ease;
   }
   .ai-creative-grid {
     max-width: 100%;
@@ -456,6 +843,45 @@
     object-fit: cover;
     display: block;
   }
+  .formula-marquee-window {
+    min-height: 420px;
+    gap: 18px;
+  }
+  .formula-marquee-row:hover {
+    animation-play-state: paused;
+  }
+  .formula-marquee-item {
+    width: 220px;
+    flex: 0 0 auto;
+  }
+  .formula-marquee-item .ai-marquee-card {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .formula-marquee-item:hover .ai-marquee-card {
+    transform: scale(1.06);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  }
+  .formula-caption {
+    padding-top: 10px;
+    text-align: center;
+  }
+  .formula-caption strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .formula-caption span {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 1.35;
+    color: var(--muted);
+  }
   @keyframes aiMarqueeLeft {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
@@ -493,6 +919,7 @@
     letter-spacing: -0.03em;
     line-height: 1;
   }
+  .impact-card .value { color: var(--purple); }
   .impact-card .note {
     font-size: 13px;
     color: #6a6a68;
@@ -572,10 +999,36 @@
   .story-content p:first-child { margin-top: 18px; }
   @media (max-width: 720px) {
     .image-window-grid { grid-template-columns: 1fr; }
-    .ai-creative-grid { grid-template-columns: 1fr; gap: 24px; }
+    .nco-before,
+    .nco-after { grid-template-columns: 1fr; background: #fff; }
+    .nco-stage { min-height: 620px; padding: 22px; }
+    .nco-page-frame { width: min(152px, 43%); height: 560px; }
+    .nco-shot.is-active { transform: scale(1.12); }
+    .nco-scroll-arrows { right: 4px; }
+    .nco-before { padding: 20px; }
+    .nco-spotlight { padding: 26px 22px 30px; }
+    .ai-creative-grid { grid-template-columns: 1fr; gap: 20px; max-width: 100%; }
+    .ai-creative-slot { width: 100%; min-width: 0; max-width: 100%; }
     .ai-creative-slot.wide { grid-column: auto; }
-    .ai-animation-window,
-    .ai-wide-window { min-height: 320px; }
+    .ai-animation-window {
+      aspect-ratio: 1 / 1;
+      min-height: 0;
+      width: 100%;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+    .ai-wide-window {
+      min-height: 280px;
+      padding: 14px 0;
+      gap: 10px;
+      max-width: 100%;
+      overflow: hidden;
+    }
+    .ai-marquee-title { font-size: 20px; padding: 0 16px; }
+    .ai-marquee-card { width: 140px; border-radius: 10px; }
+    .formula-marquee-window { min-height: 340px; }
+    .formula-marquee-item { width: 150px; }
+    .ai-marquee-row { gap: 10px; }
     .impact-grid { grid-template-columns: 1fr 1fr; }
     .impact-row { grid-template-columns: 1fr; }
     .impact-row > div {
@@ -607,6 +1060,7 @@
     --ps-goal-bg: #E2DEFF;    --ps-goal-text: #5B4FCF;
     --ps-solution-bg: #D4F2EC;--ps-solution-text: #1E7A68;
     --ps-detail-bg: #FDEEC8;  --ps-detail-text: #A06A00;
+    text-align: center;
   }
   .ps-frame .ps-title {
     font-family: 'DM Serif Display', Georgia, serif;
@@ -616,22 +1070,267 @@
     color: var(--ink);
     letter-spacing: -0.01em;
     margin-bottom: 28px;
+    text-align: left;
   }
   .ps-frame .ps-section-heading {
     font-family: 'Config', sans-serif;
     font-size: 10px;
-    font-weight: 500;
+    font-weight: 700;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #BBBBBB;
+    color: #6b6b66;
     margin-bottom: 20px;
   }
   .ps-frame .ps-track {
     display: grid;
-    grid-template-columns: 1fr 24px 1fr 24px 1fr 24px 1fr;
+    grid-template-columns: 1fr 24px 1fr 24px 1fr;
     gap: 0;
     align-items: start;
-    margin-bottom: 28px;
+    margin-bottom: 20px;
+  }
+  /* Low-fi wireframe container */
+  .ps-wire {
+    margin-top: 16px;
+    background: #FAFAFA;
+    border: 1px dashed #D0D0D0;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .ps-wire-label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #999;
+    margin: 0 0 14px;
+    font-weight: 600;
+  }
+  .wire-row { display: flex; gap: 12px; align-items: stretch; }
+  .wire-row + .wire-row { margin-top: 12px; }
+  .wire-box {
+    background: #fff;
+    border: 1.5px solid #C8C8C8;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .wire-line {
+    height: 8px;
+    background: #E5E5E5;
+    border-radius: 4px;
+  }
+  .wire-line.short { width: 40%; }
+  .wire-line.medium { width: 65%; }
+  .wire-line.long { width: 90%; }
+  .wire-block {
+    background: #E8E8E8;
+    border-radius: 4px;
+  }
+  /* Carousel wireframe */
+  .wire-carousel {
+    display: flex;
+    gap: 10px;
+    overflow: hidden;
+  }
+  .wire-video-card {
+    flex: 1;
+    aspect-ratio: 9 / 14;
+    background: #DCDCDC;
+    border: 1.5px solid #C8C8C8;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .wire-play {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid #B8B8B8;
+  }
+  .wire-play::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 10px solid #888;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    margin-left: 3px;
+  }
+  .wire-review-card {
+    flex: 1;
+    background: #fff;
+    border: 1.5px solid #C8C8C8;
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 140px;
+  }
+  .wire-stars {
+    display: flex;
+    gap: 3px;
+  }
+  .wire-star {
+    width: 12px;
+    height: 12px;
+    background: #BBB;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  }
+  /* Accordion wireframe */
+  .wire-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: #fff;
+    border: 1.5px solid #C8C8C8;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .wire-accordion-item {
+    padding: 14px 16px;
+    border-bottom: 1px solid #E5E5E5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .wire-accordion-item:last-child { border-bottom: none; }
+  .wire-accordion-item.open {
+    background: #F5F5F5;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .wire-accordion-head {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+  }
+  .wire-chevron {
+    color: #AAA;
+    font-size: 14px;
+  }
+  .wire-accordion-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 4px;
+  }
+  /* Bundle cards */
+  .wire-bundle-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .wire-bundle-card {
+    background: #fff;
+    border: 1.5px solid #C8C8C8;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .wire-bundle-img {
+    aspect-ratio: 1;
+    background: #DCDCDC;
+    border-radius: 6px;
+  }
+  /* Scent product cards */
+  .wire-product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .wire-product-card {
+    background: #fff;
+    border: 1.5px solid #C8C8C8;
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .wire-product-img {
+    aspect-ratio: 1;
+    background: #DCDCDC;
+    border-radius: 6px;
+  }
+  .wire-scent-notes {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    background: #F5F5F5;
+    border-radius: 4px;
+  }
+  .wire-scent-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    color: #999;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+  /* 50/50 layout */
+  .wire-5050 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .wire-half {
+    background: #fff;
+    border: 1.5px solid #C8C8C8;
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+  }
+  .wire-half-img {
+    flex: 1;
+    background: #DCDCDC;
+    min-height: 110px;
+  }
+  .wire-half-content {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .wire-hero {
+    position: relative;
+    background: #DCDCDC;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px;
+    gap: 8px;
+  }
+  .wire-hero-overlay {
+    background: rgba(255,255,255,0.85);
+    padding: 12px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .wire-btn {
+    background: #888;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-size: 11px;
+    width: fit-content;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
   .ps-frame .ps-track:last-of-type { margin-bottom: 0; }
   .ps-frame .ps-arrow {
@@ -655,8 +1354,9 @@
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 4px;
+    text-align: center;
   }
   .ps-frame .ps-chip {
     font-family: 'Config', sans-serif;
@@ -688,6 +1388,9 @@
     }
     .ps-frame .ps-arrow { display: none; }
     .ps-frame .ps-card { font-size: 12px; }
+    .wire-bundle-grid { grid-template-columns: repeat(2, 1fr); }
+    .wire-product-grid { grid-template-columns: 1fr; }
+    .wire-5050 { grid-template-columns: 1fr; }
   }
 
   /* Caption under a figure */
@@ -1039,9 +1742,38 @@
                 <div class="ps-card solution"><span class="ps-chip">Solution</span><div>Videowise content carousel</div></div>
                 <div class="ps-card solution"><span class="ps-chip">Solution</span><div>Reviews carousel</div></div>
               </div>
-              <div class="ps-arrow">→</div>
-              <div class="ps-card-stack">
-                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Add below buy box in PDP</div></div>
+            </div>
+
+            <div class="ps-wire">
+              <p class="ps-wire-label">Wireframe to Social Proof Videos, Real users Reviews</p>
+              <div class="wire-carousel">
+                <div class="wire-video-card"><div class="wire-play"></div></div>
+                <div class="wire-video-card"><div class="wire-play"></div></div>
+                <div class="wire-video-card"><div class="wire-play"></div></div>
+                <div class="wire-video-card"><div class="wire-play"></div></div>
+                <div class="wire-video-card"><div class="wire-play"></div></div>
+              </div>
+              <div class="wire-carousel" style="margin-top: 14px;">
+                <div class="wire-review-card">
+                  <div class="wire-stars"><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span></div>
+                  <div class="wire-line long"></div>
+                  <div class="wire-line long"></div>
+                  <div class="wire-line medium"></div>
+                  <div class="wire-line short"></div>
+                </div>
+                <div class="wire-review-card">
+                  <div class="wire-stars"><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span></div>
+                  <div class="wire-line long"></div>
+                  <div class="wire-line medium"></div>
+                  <div class="wire-line long"></div>
+                  <div class="wire-line short"></div>
+                </div>
+                <div class="wire-review-card">
+                  <div class="wire-stars"><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span></div>
+                  <div class="wire-line long"></div>
+                  <div class="wire-line long"></div>
+                  <div class="wire-line medium"></div>
+                </div>
               </div>
             </div>
 
@@ -1054,13 +1786,38 @@
               <div class="ps-card goal"><span class="ps-chip">Goal</span><div>Surface ingredients, scent, grit, size, and shipping in one place</div></div>
               <div class="ps-arrow">→</div>
               <div class="ps-card solution"><span class="ps-chip">Solution</span><div>Buy Box accordion</div></div>
-              <div class="ps-arrow">→</div>
-              <div class="ps-card-stack">
-                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Soap ingredients</div></div>
-                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Deo ingredients</div></div>
-                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Weight + dimensions</div></div>
-                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>How to use</div></div>
-                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Disclaimer</div></div>
+            </div>
+
+            <div class="ps-wire">
+              <p class="ps-wire-label">Wireframe to Accordion in Buy Box with vital product information</p>
+              <div class="wire-accordion">
+                <div class="wire-accordion-item open">
+                  <div class="wire-accordion-head">
+                    <div class="wire-line medium"></div>
+                    <span class="wire-chevron">▾</span>
+                  </div>
+                  <div class="wire-accordion-body">
+                    <div class="wire-line long"></div>
+                    <div class="wire-line long"></div>
+                    <div class="wire-line medium"></div>
+                  </div>
+                </div>
+                <div class="wire-accordion-item">
+                  <div class="wire-line short"></div>
+                  <span class="wire-chevron">▸</span>
+                </div>
+                <div class="wire-accordion-item">
+                  <div class="wire-line short"></div>
+                  <span class="wire-chevron">▸</span>
+                </div>
+                <div class="wire-accordion-item">
+                  <div class="wire-line short"></div>
+                  <span class="wire-chevron">▸</span>
+                </div>
+                <div class="wire-accordion-item">
+                  <div class="wire-line short"></div>
+                  <span class="wire-chevron">▸</span>
+                </div>
               </div>
             </div>
 
@@ -1073,8 +1830,32 @@
               <div class="ps-card goal"><span class="ps-chip">Goal</span><div>Show every product and scent included, upfront</div></div>
               <div class="ps-arrow">→</div>
               <div class="ps-card solution"><span class="ps-chip">Solution</span><div>"What's Included" card grid</div></div>
-              <div class="ps-arrow">→</div>
-              <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Each product and scent shown as its own card</div></div>
+            </div>
+
+            <div class="ps-wire">
+              <p class="ps-wire-label">What's Included</p>
+              <div class="wire-bundle-grid">
+                <div class="wire-bundle-card">
+                  <div class="wire-bundle-img"></div>
+                  <div class="wire-line long"></div>
+                  <div class="wire-line short"></div>
+                </div>
+                <div class="wire-bundle-card">
+                  <div class="wire-bundle-img"></div>
+                  <div class="wire-line long"></div>
+                  <div class="wire-line short"></div>
+                </div>
+                <div class="wire-bundle-card">
+                  <div class="wire-bundle-img"></div>
+                  <div class="wire-line long"></div>
+                  <div class="wire-line short"></div>
+                </div>
+                <div class="wire-bundle-card">
+                  <div class="wire-bundle-img"></div>
+                  <div class="wire-line long"></div>
+                  <div class="wire-line short"></div>
+                </div>
+              </div>
             </div>
 
             <div class="ps-divider"></div>
@@ -1086,8 +1867,42 @@
               <div class="ps-card goal"><span class="ps-chip">Goal</span><div>Describe each scent in a place users will look</div></div>
               <div class="ps-arrow">→</div>
               <div class="ps-card solution"><span class="ps-chip">Solution</span><div>Scent notes inside Buy Box accordion</div></div>
-              <div class="ps-arrow">→</div>
-              <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Notes shown per scent variant</div></div>
+            </div>
+
+            <div class="ps-wire">
+              <p class="ps-wire-label">Product cards with scent notes</p>
+              <div class="wire-product-grid">
+                <div class="wire-product-card">
+                  <div class="wire-product-img"></div>
+                  <div class="wire-line long"></div>
+                  <div class="wire-line short"></div>
+                  <div class="wire-scent-notes">
+                    <div class="wire-scent-label">Scent Notes</div>
+                    <div class="wire-line long"></div>
+                    <div class="wire-line medium"></div>
+                  </div>
+                </div>
+                <div class="wire-product-card">
+                  <div class="wire-product-img"></div>
+                  <div class="wire-line long"></div>
+                  <div class="wire-line short"></div>
+                  <div class="wire-scent-notes">
+                    <div class="wire-scent-label">Scent Notes</div>
+                    <div class="wire-line long"></div>
+                    <div class="wire-line medium"></div>
+                  </div>
+                </div>
+                <div class="wire-product-card">
+                  <div class="wire-product-img"></div>
+                  <div class="wire-line long"></div>
+                  <div class="wire-line short"></div>
+                  <div class="wire-scent-notes">
+                    <div class="wire-scent-label">Scent Notes</div>
+                    <div class="wire-line long"></div>
+                    <div class="wire-line medium"></div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="ps-divider"></div>
@@ -1103,15 +1918,39 @@
               <div class="ps-arrow">→</div>
               <div class="ps-card-stack">
                 <div class="ps-card solution"><span class="ps-chip">Solution</span><div>50/50 humor content block</div></div>
-                <div class="ps-card solution"><span class="ps-chip">Solution</span><div>All Natural content carousel</div></div>
+                <div class="ps-card solution"><span class="ps-chip">Solution</span><div>Hero "Committed to Men's Health"</div></div>
               </div>
-              <div class="ps-arrow">→</div>
-              <div class="ps-card-stack">
-                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Image + text layout</div></div>
-                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>All natural ingredients</div></div>
-                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>No harmful additives</div></div>
-                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>Committed to men's health</div></div>
-                <div class="ps-card detail"><span class="ps-chip">Detail</span><div>CTA to "The Squatch Difference"</div></div>
+            </div>
+
+            <div class="ps-wire">
+              <p class="ps-wire-label">Humor 50/50 section and hero section to communicate values</p>
+              <div class="wire-5050">
+                <div class="wire-half">
+                  <div class="wire-half-img"></div>
+                  <div class="wire-half-content">
+                    <div class="wire-line short"></div>
+                    <div class="wire-line long"></div>
+                    <div class="wire-line long"></div>
+                    <div class="wire-line medium"></div>
+                  </div>
+                </div>
+                <div class="wire-half">
+                  <div class="wire-half-content">
+                    <div class="wire-line short"></div>
+                    <div class="wire-line long"></div>
+                    <div class="wire-line long"></div>
+                    <div class="wire-line medium"></div>
+                  </div>
+                  <div class="wire-half-img"></div>
+                </div>
+              </div>
+              <div class="wire-hero" style="margin-top: 14px; border: 1.5px solid #C8C8C8; border-radius: 8px;">
+                <div class="wire-hero-overlay">
+                  <div class="wire-line short" style="height: 14px;"></div>
+                  <div class="wire-line long"></div>
+                  <div class="wire-line medium"></div>
+                  <div class="wire-btn">Learn More</div>
+                </div>
               </div>
             </div>
           </div>
@@ -1154,9 +1993,46 @@
             </div>
           </details>
 
-          <div class="image-window-grid" aria-label="NCO landing page system image placeholders">
-            <div class="image-window"></div>
-            <div class="image-window"></div>
+          <div class="nco-showcase" data-nco-showcase aria-label="Old and new NCO landing page showcase">
+            <div class="nco-panel nco-before">
+              <div class="nco-before-frame">
+                <img src="Animation/NCO landing/OLD frame.jpg" alt="Old NCO landing page framed screenshot">
+              </div>
+              <div class="nco-copy">
+                <div class="nco-kicker">Old Experience</div>
+                <h4>Before</h4>
+                <p>The original page set the baseline: functional, but missing the guided proof and persuasion needed for cold traffic.</p>
+              </div>
+            </div>
+
+            <div class="nco-panel nco-after">
+              <div class="nco-stage">
+                <div class="nco-page-frame">
+                  <div class="nco-viewport">
+                    <div class="nco-strip" data-nco-strip></div>
+                  </div>
+                </div>
+                <div class="nco-scroll-arrows" aria-label="Scroll landing page sections">
+                  <button class="nco-arrow" type="button" data-nco-prev aria-label="Previous section">↑</button>
+                  <button class="nco-arrow" type="button" data-nco-next aria-label="Next section">↓</button>
+                </div>
+              </div>
+
+              <div class="nco-copy nco-spotlight" data-nco-copy aria-live="polite">
+                <div class="nco-section-number" data-nco-number>Section 01 / 13</div>
+                <h4 data-nco-title>Hero</h4>
+                <p data-nco-text>Clarifies the offer fast with what is included, savings, and a direct path to buy.</p>
+                <div class="nco-controls" aria-label="NCO animation controls">
+                  <button class="nco-control" type="button" data-nco-play aria-label="Pause animation">
+                    <svg data-nco-play-state-icon viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg>
+                  </button>
+                  <button class="nco-control secondary" type="button" data-nco-replay aria-label="Replay animation">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5a7 7 0 1 1-6.32 4H3l4-4 4 4H8.1A5 5 0 1 0 12 7z"/></svg>
+                  </button>
+                </div>
+                <div class="nco-progress" aria-hidden="true"><span data-nco-progress></span></div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1213,16 +2089,128 @@
           <p>After enough sections tested well with users and pages started performing consistently, the winning pattern became clear: lead with a strong product hero, make the offer easy to understand, explain the product at the right moment, add proof, then make the purchase path feel obvious.</p>
           <p>That learning turned growth design from one-off page creation into a system. Each new landing page could start from what already worked, then adjust the story, education, proof points, and offer structure for the campaign.</p>
 
-          <div class="image-window-grid" aria-label="Tested pattern image placeholders">
-            <div class="image-window"></div>
-            <div class="image-window"></div>
+          <div class="image-window-grid" aria-label="Tested pattern examples">
+            <div class="image-window">
+              <div class="iw-label">Winning Hero Image</div>
+              <div class="iw-headline">Every Element Earns Its Place</div>
+              <div class="iw-sub">Each visual cue is intentional &mdash; working together to communicate value, build trust, and reduce friction at first glance.</div>
+              <div class="annotated-hero">
+                <div class="ah-image">
+                  <img src="Animation/NCO%20landing/Hero%20Images/Winning%20Hero%20Image/Hero.jpg" alt="Dr. Squatch winning hero image annotated with conversion design cues" />
+                </div>
+
+                <svg class="ah-overlay" viewBox="0 0 860 420" preserveAspectRatio="none" aria-hidden="true">
+                  <!-- Lines: from label-edge to dot -->
+                  <line x1="158" y1="76"  x2="296" y2="76"  />
+                  <line x1="158" y1="328" x2="338" y2="328" />
+                  <line x1="573" y1="34"  x2="702" y2="34"  />
+                  <line x1="581" y1="71"  x2="702" y2="71"  />
+                  <line x1="514" y1="168" x2="702" y2="168" />
+                  <!-- Dots: pulse + solid at each target -->
+                  <circle class="pulse" cx="296" cy="76"  r="5" />
+                  <circle class="dot"   cx="296" cy="76"  r="5" />
+                  <circle class="pulse" cx="338" cy="328" r="5" />
+                  <circle class="dot"   cx="338" cy="328" r="5" />
+                  <circle class="pulse" cx="573" cy="34"  r="5" />
+                  <circle class="dot"   cx="573" cy="34"  r="5" />
+                  <circle class="pulse" cx="581" cy="71"  r="5" />
+                  <circle class="dot"   cx="581" cy="71"  r="5" />
+                  <circle class="pulse" cx="514" cy="168" r="5" />
+                  <circle class="dot"   cx="514" cy="168" r="5" />
+                </svg>
+
+                <div class="ah-text left"  style="top:18%;">
+                  <span class="ah-title">Hand</span>
+                  <span class="ah-sub">Human size reference</span>
+                </div>
+                <div class="ah-text left"  style="top:78%;">
+                  <span class="ah-title">Real Reviews</span>
+                  <span class="ah-sub">Social proof &amp; trust</span>
+                </div>
+                <div class="ah-text right" style="top:8%;">
+                  <span class="ah-title">Red Corner</span>
+                  <span class="ah-sub">Free product callout</span>
+                </div>
+                <div class="ah-text right" style="top:17%;">
+                  <span class="ah-title">Bag Icon</span>
+                  <span class="ah-sub">Free product image</span>
+                </div>
+                <div class="ah-text right" style="top:40%;">
+                  <span class="ah-title">Free Gift in Context</span>
+                  <span class="ah-sub">Size vs. other items</span>
+                </div>
+              </div>
+
+              <ul class="ah-mobile-list" aria-label="Hero image annotations">
+                <li class="ml-item"><span class="ml-dot"></span><span><span class="ml-title">Hand</span><span class="ml-sub">Human size reference</span></span></li>
+                <li class="ml-item"><span class="ml-dot"></span><span><span class="ml-title">Red Corner</span><span class="ml-sub">Free product callout</span></span></li>
+                <li class="ml-item"><span class="ml-dot"></span><span><span class="ml-title">Bag Icon</span><span class="ml-sub">Free product image</span></span></li>
+                <li class="ml-item"><span class="ml-dot"></span><span><span class="ml-title">Free Gift in Context</span><span class="ml-sub">Size vs. other items</span></span></li>
+                <li class="ml-item"><span class="ml-dot"></span><span><span class="ml-title">Real Reviews</span><span class="ml-sub">Social proof &amp; trust</span></span></li>
+              </ul>
+            </div>
+            <div class="image-window">
+              <div class="ai-wide-window formula-marquee-window">
+                <h4 class="ai-marquee-title">Winning Carousel Image Formula</h4>
+                <div class="ai-marquee-row formula-marquee-row">
+                  <figure class="formula-marquee-item">
+                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Hero.jpg" alt="Hero carousel image"></div>
+                    <figcaption class="formula-caption"><strong>Hero</strong><span>Lead with product value.</span></figcaption>
+                  </figure>
+                  <figure class="formula-marquee-item">
+                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Reviews.jpg" alt="Reviews carousel image"></div>
+                    <figcaption class="formula-caption"><strong>Reviews</strong><span>Build social proof.</span></figcaption>
+                  </figure>
+                  <figure class="formula-marquee-item">
+                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/What%27s%20Included.jpg" alt="What's included carousel image"></div>
+                    <figcaption class="formula-caption"><strong>What's Included</strong><span>Clarify the offer.</span></figcaption>
+                  </figure>
+                  <figure class="formula-marquee-item">
+                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Free%20Gifts.jpg" alt="Free gifts carousel image"></div>
+                    <figcaption class="formula-caption"><strong>Free Gifts</strong><span>Increase perceived value.</span></figcaption>
+                  </figure>
+                  <figure class="formula-marquee-item">
+                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Benefits.jpg" alt="Benefits carousel image"></div>
+                    <figcaption class="formula-caption"><strong>Benefits</strong><span>Show customer outcomes.</span></figcaption>
+                  </figure>
+                  <figure class="formula-marquee-item">
+                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Product%20Benefits.jpg" alt="Product benefits carousel image"></div>
+                    <figcaption class="formula-caption"><strong>Product Benefits</strong><span>Connect features to value.</span></figcaption>
+                  </figure>
+                  <figure class="formula-marquee-item" aria-hidden="true">
+                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Hero.jpg" alt=""></div>
+                    <figcaption class="formula-caption"><strong>Hero</strong><span>Lead with product value.</span></figcaption>
+                  </figure>
+                  <figure class="formula-marquee-item" aria-hidden="true">
+                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Reviews.jpg" alt=""></div>
+                    <figcaption class="formula-caption"><strong>Reviews</strong><span>Build social proof.</span></figcaption>
+                  </figure>
+                  <figure class="formula-marquee-item" aria-hidden="true">
+                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/What%27s%20Included.jpg" alt=""></div>
+                    <figcaption class="formula-caption"><strong>What's Included</strong><span>Clarify the offer.</span></figcaption>
+                  </figure>
+                  <figure class="formula-marquee-item" aria-hidden="true">
+                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Free%20Gifts.jpg" alt=""></div>
+                    <figcaption class="formula-caption"><strong>Free Gifts</strong><span>Increase perceived value.</span></figcaption>
+                  </figure>
+                  <figure class="formula-marquee-item" aria-hidden="true">
+                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Benefits.jpg" alt=""></div>
+                    <figcaption class="formula-caption"><strong>Benefits</strong><span>Show customer outcomes.</span></figcaption>
+                  </figure>
+                  <figure class="formula-marquee-item" aria-hidden="true">
+                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Product%20Benefits.jpg" alt=""></div>
+                    <figcaption class="formula-caption"><strong>Product Benefits</strong><span>Connect features to value.</span></figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="sub-section" id="growth-impact">
           <h3>Business Impact</h3>
           <p>I designed the landing page system behind Dr. Squatch's current new-customer acquisition engine, supporting nearly <span class="hl">$1M/month in ad spend</span>, <span class="hl">55K+ acquired customers</span>, and <span class="hl">$17M+ in measured spend</span> across 22+ pages.</p>
-          <p>The current top NCO pages are not isolated wins. They are the result of a repeatable system for building acquisition pages that educate, persuade, and convert cold traffic while protecting contribution margin.</p>
+          <p>The current top NCO pages are not isolated wins. They are the result of a repeatable system for building acquisition pages that <span class="hl">educate</span>, <span class="hl">persuade</span>, and <span class="hl">convert</span> cold traffic while protecting contribution margin.</p>
 
           <!-- TODO: Add CTR and scroll-depth proof once data is available. -->
           <div class="impact-grid" aria-label="Growth design business impact metrics">
@@ -1257,28 +2245,28 @@
               <div>CM</div>
             </div>
             <div class="impact-row">
-              <div>SQUATCH-STACK-EXCL-GIFTS</div>
+              <div>NCO page 1</div>
               <div>4,233</div>
               <div>$614K</div>
               <div>32.7%</div>
               <div>65.0%</div>
             </div>
             <div class="impact-row">
-              <div>9-BAR-SOAPS-DOPP2</div>
+              <div>NCO page 2</div>
               <div>6,204</div>
               <div>$1.21M</div>
               <div>28.5%</div>
               <div>64.1%</div>
             </div>
             <div class="impact-row">
-              <div>SIG-SCENT-SET-DOPP2</div>
+              <div>NCO page 3</div>
               <div>4,143</div>
               <div>$677K</div>
               <div>27.3%</div>
               <div>65.7%</div>
             </div>
             <div class="impact-row">
-              <div>LAUNCH-BUN-EXCL-GIFTS</div>
+              <div>NCO page 4</div>
               <div>165</div>
               <div>$24K</div>
               <div>32.1%</div>
@@ -1469,6 +2457,227 @@
 
     // Outer width changes can reflow inner content
     window.addEventListener('resize', fit);
+  })();
+
+  // ============================================
+  // NCO landing page before/after walkthrough
+  // ============================================
+  (function () {
+    const root = document.querySelector('[data-nco-showcase]');
+    if (!root) return;
+
+    const sections = [
+      {
+        title: 'Hero',
+        text: 'Clarifies the offer fast with what is included, savings, and a direct path to buy.',
+        image: 'Animation/NCO landing/NEW/Hero.jpg',
+        align: 'top-clearance'
+      },
+      {
+        title: 'Trust Proof',
+        text: 'Builds immediate confidence with proof points before the shopper has to commit.',
+        image: 'Animation/NCO landing/NEW/Trust Proof.jpg',
+        radius: 'tight'
+      },
+      {
+        title: 'Natural Ingredients',
+        text: 'Reinforces the brand values by making the clean ingredient story easy to understand.',
+        image: 'Animation/NCO landing/NEW/Natural Ingredients.jpg'
+      },
+      {
+        title: 'Reviews Proof',
+        text: 'Uses rating signals to reduce doubt and keep momentum moving toward purchase.',
+        image: 'Animation/NCO landing/NEW/Reviews proof.jpg',
+        radius: 'tight'
+      },
+      {
+        title: 'Actual Users Reviews',
+        text: 'Adds real customer language so the product feels proven by people, not just the brand.',
+        image: 'Animation/NCO landing/NEW/Actual users reviews.jpg'
+      },
+      {
+        title: 'Subscription Benefits',
+        text: 'Makes subscribing feel practical by showing the value, convenience, and savings together.',
+        image: 'Animation/NCO landing/NEW/Subscription Benefits.jpg'
+      },
+      {
+        title: 'Buy Box',
+        text: 'Keeps the decision point clear with pricing, options, and CTA in one focused area.',
+        image: 'Animation/NCO landing/NEW/Buy Box.jpg',
+        align: 'top-clearance'
+      },
+      {
+        title: 'User Reviews Video',
+        text: 'Turns social proof into a more human moment through quick video validation.',
+        image: 'Animation/NCO landing/NEW/User Reviews Video.jpg'
+      },
+      {
+        title: "What's Included",
+        text: 'Spells out the bundle contents so shoppers know exactly what they are getting.',
+        image: "Animation/NCO landing/NEW/What's Included.jpg"
+      },
+      {
+        title: "Company's Commitment",
+        text: 'Connects the offer back to the company values and makes the purchase feel aligned.',
+        image: "Animation/NCO landing/NEW/Company's Commitment.jpg"
+      },
+      {
+        title: 'Social Proof Videos',
+        text: 'Adds more buyer validation and gives the page a stronger community-driven feel.',
+        image: 'Animation/NCO landing/NEW/Social Proof Video.jpg'
+      },
+      {
+        title: 'Product Description',
+        text: 'Explains the product benefits clearly for shoppers who need more detail before buying.',
+        image: 'Animation/NCO landing/NEW/Product description.jpg'
+      },
+      {
+        title: 'Okendo Reviews',
+        text: 'Ends with deep review proof to answer lingering concerns and reinforce trust.',
+        image: 'Animation/NCO landing/NEW/Okendo Reviews.jpg',
+        align: 'top-clearance'
+      }
+    ];
+
+    const strip = root.querySelector('[data-nco-strip]');
+    const viewport = root.querySelector('.nco-viewport');
+    const copy = root.querySelector('[data-nco-copy]');
+    const title = root.querySelector('[data-nco-title]');
+    const text = root.querySelector('[data-nco-text]');
+    const number = root.querySelector('[data-nco-number]');
+    const progress = root.querySelector('[data-nco-progress]');
+    const play = root.querySelector('[data-nco-play]');
+    const playStateIcon = root.querySelector('[data-nco-play-state-icon]');
+    const replay = root.querySelector('[data-nco-replay]');
+    const prev = root.querySelector('[data-nco-prev]');
+    const nextButton = root.querySelector('[data-nco-next]');
+    const intervalMs = 2800;
+    let activeIndex = 0;
+    let isPlaying = true;
+    let timer = null;
+
+    sections.forEach((section, index) => {
+      const shot = document.createElement('div');
+      shot.className = 'nco-shot';
+      shot.dataset.index = index;
+
+      const img = document.createElement('img');
+      img.src = section.image;
+      img.alt = section.title + ' landing page section';
+      shot.appendChild(img);
+      strip.appendChild(shot);
+    });
+
+    const shots = Array.from(strip.querySelectorAll('.nco-shot'));
+    const pad = value => String(value).padStart(2, '0');
+
+    function getOffset(index) {
+      const target = shots[index];
+      if (!target) return 0;
+      if (sections[index].align === 'top-clearance') {
+        const scale = window.matchMedia('(max-width: 720px)').matches ? 1.12 : 1.22;
+        const topInset = viewport.clientHeight * 0.1;
+        return -target.offsetTop + (target.offsetHeight * (scale - 1) / 2) + topInset;
+      }
+      const centerOffset = (viewport.clientHeight - target.clientHeight) / 2;
+      return Math.min(0, -target.offsetTop + centerOffset);
+    }
+
+    function setActive(index) {
+      activeIndex = Math.max(0, Math.min(index, sections.length - 1));
+      shots.forEach((shot, shotIndex) => {
+        shot.classList.toggle('is-active', shotIndex === activeIndex);
+        shot.classList.toggle('is-tight-radius', shotIndex === activeIndex && sections[activeIndex].radius === 'tight');
+      });
+      strip.style.transform = `translateY(${getOffset(activeIndex)}px)`;
+      progress.style.width = `${((activeIndex + 1) / sections.length) * 100}%`;
+      if (prev) prev.disabled = activeIndex === 0;
+      if (nextButton) nextButton.disabled = activeIndex === sections.length - 1;
+
+      copy.classList.add('is-changing');
+      window.setTimeout(() => {
+        const section = sections[activeIndex];
+        number.textContent = `Section ${pad(activeIndex + 1)} / ${sections.length}`;
+        title.textContent = section.title;
+        text.textContent = section.text;
+        copy.classList.remove('is-changing');
+      }, 150);
+    }
+
+    function stop() {
+      window.clearInterval(timer);
+      timer = null;
+    }
+
+    function start() {
+      stop();
+      timer = window.setInterval(() => {
+        if (activeIndex >= sections.length - 1) {
+          isPlaying = false;
+          updatePlayButton();
+          stop();
+          return;
+        }
+        setActive(activeIndex + 1);
+      }, intervalMs);
+    }
+
+    function updatePlayButton() {
+      if (playStateIcon) {
+        playStateIcon.innerHTML = isPlaying
+          ? '<path d="M7 5h3v14H7zM14 5h3v14h-3z"/>'
+          : '<path d="M8 5v14l11-7z"/>';
+      }
+      play.setAttribute('aria-label', isPlaying ? 'Pause animation' : 'Play animation');
+    }
+
+    play.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      updatePlayButton();
+      if (isPlaying) start();
+      else stop();
+    });
+
+    replay.addEventListener('click', () => {
+      setActive(0);
+      isPlaying = true;
+      updatePlayButton();
+      start();
+    });
+
+    function pauseForManualNavigation() {
+      isPlaying = false;
+      updatePlayButton();
+      stop();
+    }
+
+    if (prev) {
+      prev.addEventListener('click', () => {
+        pauseForManualNavigation();
+        setActive(activeIndex - 1);
+      });
+    }
+
+    if (nextButton) {
+      nextButton.addEventListener('click', () => {
+        pauseForManualNavigation();
+        setActive(activeIndex + 1);
+      });
+    }
+
+    window.addEventListener('resize', () => setActive(activeIndex));
+
+    Promise.all(Array.from(strip.querySelectorAll('img')).map(img => {
+      if (img.complete) return Promise.resolve();
+      return new Promise(resolve => {
+        img.addEventListener('load', resolve, { once: true });
+        img.addEventListener('error', resolve, { once: true });
+      });
+    })).then(() => {
+      setActive(0);
+      updatePlayButton();
+      start();
+    });
   })();
 
   // ============================================
