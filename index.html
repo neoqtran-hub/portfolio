@@ -60,9 +60,40 @@
     --muted: #8a8a8a;
     --muted-soft: #b8b8b8;
     --bg: #f4f4f2;
+    --bg-soft: #F9F9F7;
     --card-radius: 28px;
     --pill-radius: 999px;
+    --glass-bg: rgba(255,255,255,0.45);
+    --glass-bg-strong: rgba(255,255,255,0.85);
+    --glass-border: rgba(255,255,255,0.6);
+    --hero-overlay: rgba(244,244,242,0);
   }
+  body.dark {
+    --ink: #f1f1f1;
+    --ink-soft: #d8d8d8;
+    --muted: #9a9a9a;
+    --muted-soft: #5a5a5a;
+    --bg: #0c0c10;
+    --bg-soft: #131319;
+    --glass-bg: rgba(30,30,40,0.45);
+    --glass-bg-strong: rgba(20,20,28,0.85);
+    --glass-border: rgba(255,255,255,0.12);
+    --hero-overlay: rgba(12,12,16,0.55);
+  }
+  body { background: var(--bg); color: var(--ink); transition: background 0.4s ease, color 0.4s ease; }
+  body.dark .hero { background-color: var(--bg); }
+  body.dark .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--hero-overlay);
+    pointer-events: none; z-index: 0;
+  }
+  body.dark .contact-section { background: var(--bg-soft); }
+  body.dark .case-tag,
+  body.dark .case-brand-pill,
+  body.dark .case-cta { background: rgba(30,30,40,0.85); color: var(--ink); }
+  body.dark .brand-logo { filter: grayscale(1) invert(1); opacity: 0.7; }
+  body.dark .brand-logo:hover { filter: grayscale(0.3) invert(1); }
 
   /* ============================================
      LIQUID GLASS NAV
@@ -94,10 +125,10 @@
     justify-content: space-between;
     padding: 14px 40px;
     border-radius: var(--pill-radius);
-    background: rgba(255,255,255,0.45);
+    background: var(--glass-bg);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255,255,255,0.6);
+    border: 1px solid var(--glass-border);
     box-shadow:
       0 1px 0 rgba(255,255,255,0.9) inset,
       0 -1px 0 rgba(255,255,255,0.4) inset,
@@ -112,7 +143,7 @@
   /* Scrolled state: full-width bar, no shadow, no rounded corners */
   body.scrolled .nav {
     border-radius: 0;
-    background: rgba(255,255,255,0.85);
+    background: var(--glass-bg-strong);
     border-color: transparent;
     border-bottom: 1px solid rgba(0,0,0,0.04);
     box-shadow: none;
@@ -801,6 +832,268 @@
   @media (max-width: 560px) {
     .brands-grid { grid-template-columns: repeat(3, 1fr); }
   }
+
+  /* ============================================
+     STICKY LIQUID GLASS BOTTOM WIDGET
+     ============================================ */
+  .theme-dock {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px;
+    border-radius: var(--pill-radius);
+    background: var(--glass-bg);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.6) inset,
+      0 -1px 0 rgba(255,255,255,0.2) inset,
+      0 14px 40px -10px rgba(20,20,40,0.25),
+      0 30px 60px -25px rgba(20,20,40,0.35);
+    overflow: hidden;
+  }
+  .theme-dock::before {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg,
+      rgba(255,255,255,0.55) 0%,
+      rgba(255,255,255,0.05) 40%,
+      transparent 60%,
+      rgba(155,81,224,0.10) 100%);
+    pointer-events: none;
+  }
+  body.dark .theme-dock::before {
+    background: linear-gradient(135deg,
+      rgba(255,255,255,0.18) 0%,
+      transparent 50%,
+      rgba(155,81,224,0.15) 100%);
+  }
+  .theme-btn {
+    position: relative;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink);
+    transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+    z-index: 1;
+  }
+  .theme-btn svg { width: 20px; height: 20px; }
+  .theme-btn:hover { background: rgba(155,81,224,0.12); transform: scale(1.08); }
+  .theme-btn.active {
+    background: rgba(155,81,224,0.22);
+    color: var(--purple-strong);
+    box-shadow: 0 0 0 1px rgba(155,81,224,0.35) inset;
+  }
+  .theme-btn.party:hover {
+    background: linear-gradient(135deg,#ff3df0,#9B51E0,#3df0ff);
+    color: #fff;
+    animation: party-wiggle 0.4s ease-in-out infinite;
+  }
+  @keyframes party-wiggle {
+    0%,100% { transform: scale(1.1) rotate(-6deg); }
+    50% { transform: scale(1.15) rotate(6deg); }
+  }
+
+  /* ============================================
+     PARTY MODE 🎉
+     ============================================ */
+  body.party { overflow: hidden; }
+  body.party::before {
+    content: '';
+    position: fixed; inset: 0;
+    background: #000;
+    z-index: 150;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 2.5s ease;
+  }
+  body.party.lights-out::before { opacity: 0.94; }
+  .party-stage {
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 160;
+    display: none;
+  }
+  body.party .party-stage { display: block; }
+
+  /* Neon beams — anchored at bottom of screen, sweep upward */
+  .neon-beam {
+    position: absolute;
+    bottom: 0; left: 50%;
+    width: 8px;
+    height: 200vmax;
+    transform-origin: 50% 100%;
+    filter: blur(3px);
+    mix-blend-mode: screen;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+    animation: beam-sweep 5s ease-in-out infinite alternate;
+  }
+  body.party.disco-on .neon-beam { opacity: 0.9; }
+  .neon-beam.b1 { background: linear-gradient(0deg, #ff00e0, transparent 70%); animation-duration: 6s; --sweep: 70deg; }
+  .neon-beam.b2 { background: linear-gradient(0deg, #00ffe0, transparent 70%); animation-duration: 7s; --sweep: -60deg; }
+  .neon-beam.b3 { background: linear-gradient(0deg, #ffea00, transparent 70%); animation-duration: 8s; --sweep: 50deg; }
+  .neon-beam.b4 { background: linear-gradient(0deg, #ff3d3d, transparent 70%); animation-duration: 5.5s; --sweep: -45deg; }
+  .neon-beam.b5 { background: linear-gradient(0deg, #3dff6f, transparent 70%); animation-duration: 6.5s; --sweep: 35deg; }
+  .neon-beam.b6 { background: linear-gradient(0deg, #9B51E0, transparent 70%); animation-duration: 7.5s; --sweep: -30deg; }
+  @keyframes beam-sweep {
+    0% { transform: translateX(-50%) rotate(calc(var(--sweep, 45deg) * -1)); }
+    100% { transform: translateX(-50%) rotate(var(--sweep, 45deg)); }
+  }
+
+  /* Disco ball — only when disco phase is on */
+  .disco-ball {
+    position: absolute;
+    top: -200px; left: 50%;
+    width: 140px; height: 140px;
+    transform: translateX(-50%);
+    opacity: 0;
+  }
+  body.party.disco-on .disco-ball {
+    opacity: 1;
+    animation: ball-drop 2s cubic-bezier(0.34,1.56,0.64,1) forwards, ball-swing 4s ease-in-out 2s infinite;
+  }
+  @keyframes ball-drop {
+    0% { top: -200px; }
+    100% { top: 60px; }
+  }
+  @keyframes ball-swing {
+    0%,100% { transform: translateX(-50%) rotate(-8deg); }
+    50% { transform: translateX(-50%) rotate(8deg); }
+  }
+  .disco-ball-string {
+    position: absolute;
+    top: -60px; left: 50%;
+    width: 2px; height: 60px;
+    background: rgba(255,255,255,0.4);
+    transform: translateX(-50%);
+  }
+  .disco-ball-sphere {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 35% 30%, #ffffff 0%, #d8d8d8 20%, #888 50%, #333 100%);
+    box-shadow:
+      0 0 60px rgba(255,255,255,0.6),
+      0 0 120px rgba(155,81,224,0.5),
+      inset -20px -20px 50px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
+    animation: ball-spin 4s linear infinite;
+  }
+  @keyframes ball-spin {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+  }
+  /* Mirror facets */
+  .disco-ball-sphere::before,
+  .disco-ball-sphere::after {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.15) 0 8px, transparent 8px 16px),
+      repeating-linear-gradient(-45deg, rgba(0,0,0,0.2) 0 8px, transparent 8px 16px);
+    border-radius: 50%;
+  }
+  .disco-ball-sphere::after {
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.2) 0 6px, transparent 6px 14px),
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.25) 0 6px, transparent 6px 14px);
+    mix-blend-mode: overlay;
+  }
+  /* Light sparkles from disco ball */
+  .disco-sparkle {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 12px #fff, 0 0 24px currentColor;
+    opacity: 0;
+    display: none;
+  }
+  body.party.disco-on .disco-sparkle {
+    display: block;
+    animation: sparkle 1.5s ease-in-out infinite;
+  }
+  @keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1.4); }
+  }
+
+  /* Element explosion */
+  body.party main, body.party section, body.party .nav-wrap {
+    /* keep visible while individual items fall */
+  }
+  .exploded {
+    animation: explode-fall 3.5s cubic-bezier(0.34, 0.6, 0.4, 1) forwards !important;
+    pointer-events: none !important;
+    will-change: transform;
+  }
+  @keyframes explode-fall {
+    0% {
+      transform: translate(0,0) rotate(0deg) scale(1);
+    }
+    15% {
+      transform:
+        translate(calc(var(--ex, 0px) * 0.4), -120px)
+        rotate(calc(var(--er, 0deg) * 0.25))
+        scale(1.05);
+    }
+    70% {
+      transform:
+        translate(var(--ey, 0px), var(--fall, 70vh))
+        rotate(var(--er, 360deg))
+        scale(0.9);
+    }
+    85% {
+      transform:
+        translate(var(--ey, 0px), calc(var(--fall, 70vh) - 30px))
+        rotate(var(--er, 360deg))
+        scale(0.9);
+    }
+    100% {
+      transform:
+        translate(var(--ey, 0px), var(--fall, 70vh))
+        rotate(var(--er, 360deg))
+        scale(0.9);
+    }
+  }
+
+  /* Strobe flashes — only during disco */
+  .strobe {
+    position: absolute; inset: 0;
+    background: rgba(255,255,255,0);
+    mix-blend-mode: screen;
+    display: none;
+  }
+  body.party.disco-on .strobe {
+    display: block;
+    animation: strobe-flash 0.4s steps(2) infinite;
+  }
+  @keyframes strobe-flash {
+    0%, 49% { background: rgba(255,255,255,0); }
+    50%, 100% { background: rgba(255,255,255,0.12); }
+  }
+
+  /* Confetti */
+  .confetti {
+    position: absolute;
+    top: -20px;
+    width: 10px; height: 14px;
+    opacity: 0.9;
+    animation: confetti-fall linear forwards;
+  }
+  @keyframes confetti-fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0.8; }
+  }
 </style>
 </head>
 <body>
@@ -1083,6 +1376,39 @@
 </section>
 
 
+<!-- ============================================
+     STICKY THEME DOCK (liquid glass)
+     ============================================ -->
+<div class="theme-dock" id="theme-dock" role="toolbar" aria-label="Theme">
+  <button class="theme-btn active" id="btn-light" aria-label="Light mode" title="Light mode">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+  </button>
+  <button class="theme-btn" id="btn-dark" aria-label="Dark mode" title="Dark mode">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+    </svg>
+  </button>
+  <button class="theme-btn party" id="btn-party" aria-label="Party mode" title="Party mode 🎉">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5.8 11.3 2 22l10.7-3.79"/>
+      <path d="M4 3h.01"/>
+      <path d="M22 8h.01"/>
+      <path d="M15 2h.01"/>
+      <path d="M22 20h.01"/>
+      <path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"/>
+      <path d="m22 13-1.99-.13a2.9 2.9 0 0 0-3.21 1.77c-.27.83-1.13 1.34-2.01 1.17l-.39-.08C13.54 15.5 12.75 16 12.6 16.86L12.4 18"/>
+      <path d="m11 2 .33.84a2.9 2.9 0 0 1-.32 3.4c-.6.66-.32 1.74.55 1.99l.34.1"/>
+      <path d="M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z"/>
+    </svg>
+  </button>
+</div>
+
+<!-- Party stage (populated by JS) -->
+<div class="party-stage" id="party-stage" aria-hidden="true"></div>
+
 <script>
   // Liquid glass refraction follows mouse
   const nav = document.getElementById('nav');
@@ -1100,6 +1426,188 @@
   }
   handleNavScroll();
   window.addEventListener('scroll', handleNavScroll, { passive: true });
+
+  // ============================================
+  // THEME DOCK — light / dark / party
+  // ============================================
+  const btnLight = document.getElementById('btn-light');
+  const btnDark = document.getElementById('btn-dark');
+  const btnParty = document.getElementById('btn-party');
+  const partyStage = document.getElementById('party-stage');
+
+  function setActive(btn) {
+    [btnLight, btnDark, btnParty].forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+  }
+
+  function setLight() {
+    stopParty();
+    document.body.classList.remove('dark');
+    setActive(btnLight);
+    try { localStorage.setItem('theme', 'light'); } catch(e) {}
+  }
+  function setDark() {
+    stopParty();
+    document.body.classList.add('dark');
+    setActive(btnDark);
+    try { localStorage.setItem('theme', 'dark'); } catch(e) {}
+  }
+
+  btnLight.addEventListener('click', setLight);
+  btnDark.addEventListener('click', setDark);
+
+  // Init from storage
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') setDark();
+  } catch(e) {}
+
+  // ============================================
+  // 🎉 PARTY MODE — disco ball + neon beams + explode/fall
+  // ============================================
+  let partyOn = false;
+  let confettiTimer = null;
+  let discoTimer = null;
+
+  function explodeElements() {
+    // Pick visible, "real" content nodes to explode. Skip the dock itself & party stage.
+    const selectors = [
+      '.hero h1', '.brands-label',
+      '.brand-logo', '.case', '.case-title-block',
+      '.nav', '.contact-heading', '.contact form',
+      'h2', 'p', 'img'
+    ];
+    const nodes = new Set();
+    selectors.forEach(sel => document.querySelectorAll(sel).forEach(n => nodes.add(n)));
+
+    const vh = window.innerHeight;
+    nodes.forEach(el => {
+      if (el.closest('#theme-dock') || el.closest('#party-stage')) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return;
+
+      // Horizontal drift (clamp so things don't fly off-screen too far)
+      const ex = (Math.random() * 200 - 100).toFixed(0) + 'px';
+      const ey = (Math.random() * 120 - 60).toFixed(0) + 'px';
+      // Rotation
+      const er = (Math.random() * 720 - 360).toFixed(0) + 'deg';
+      // Fall distance so element settles near bottom of viewport
+      const targetBottom = vh - rect.height - 8 - Math.random() * 40;
+      const fall = Math.max(0, targetBottom - rect.top);
+
+      el.style.setProperty('--ex', ex);
+      el.style.setProperty('--ey', ey);
+      el.style.setProperty('--er', er);
+      el.style.setProperty('--fall', fall + 'px');
+      el.style.animationDelay = (Math.random() * 1.2).toFixed(2) + 's';
+      el.classList.add('exploded');
+    });
+  }
+
+  function buildDiscoStage() {
+    partyStage.innerHTML = '';
+
+    // Strobe
+    const strobe = document.createElement('div');
+    strobe.className = 'strobe';
+    partyStage.appendChild(strobe);
+
+    // Disco ball
+    const ball = document.createElement('div');
+    ball.className = 'disco-ball';
+    ball.innerHTML = `
+      <div class="disco-ball-string"></div>
+      <div class="disco-ball-sphere"></div>
+    `;
+    partyStage.appendChild(ball);
+
+    // Neon beams (6)
+    for (let i = 1; i <= 6; i++) {
+      const beam = document.createElement('div');
+      beam.className = 'neon-beam b' + i;
+      beam.style.animationDelay = (-i * 0.7) + 's';
+      partyStage.appendChild(beam);
+    }
+
+    // Sparkles around screen
+    const colors = ['#ff00e0', '#00ffe0', '#ffea00', '#ff3d3d', '#3dff6f', '#9B51E0'];
+    for (let i = 0; i < 40; i++) {
+      const s = document.createElement('div');
+      s.className = 'disco-sparkle';
+      s.style.left = (Math.random() * 100) + '%';
+      s.style.top = (Math.random() * 100) + '%';
+      s.style.color = colors[i % colors.length];
+      s.style.animationDelay = (Math.random() * 1.5).toFixed(2) + 's';
+      s.style.animationDuration = (1 + Math.random() * 1.5).toFixed(2) + 's';
+      partyStage.appendChild(s);
+    }
+  }
+
+  function spawnConfetti() {
+    const colors = ['#ff00e0','#00ffe0','#ffea00','#ff3d3d','#3dff6f','#9B51E0','#ffffff'];
+    for (let i = 0; i < 6; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = (Math.random() * 100) + '%';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.animationDuration = (2 + Math.random() * 2.5).toFixed(2) + 's';
+      c.style.transform = `rotate(${Math.random()*360}deg)`;
+      c.style.borderRadius = Math.random() > 0.5 ? '2px' : '50%';
+      partyStage.appendChild(c);
+      setTimeout(() => c.remove(), 5000);
+    }
+  }
+
+  function startParty() {
+    if (partyOn) return;
+    partyOn = true;
+    setActive(btnParty);
+    document.body.classList.add('party');
+    // Phase 1: everything explodes & falls to the ground. No lights yet.
+    buildDiscoStage();
+    explodeElements();
+
+    // Phase 2: after 20s, lights out + disco ball + neon beams + strobe + confetti
+    discoTimer = setTimeout(() => {
+      if (!partyOn) return;
+      document.body.classList.add('lights-out');
+      // small delay so blackout settles before disco kicks in
+      setTimeout(() => {
+        if (!partyOn) return;
+        document.body.classList.add('disco-on');
+        confettiTimer = setInterval(spawnConfetti, 220);
+      }, 1500);
+    }, 5000);
+  }
+
+  function stopParty() {
+    if (!partyOn) return;
+    partyOn = false;
+    document.body.classList.remove('party', 'lights-out', 'disco-on');
+    partyStage.innerHTML = '';
+    clearInterval(confettiTimer);
+    clearTimeout(discoTimer);
+    // Restore exploded elements
+    document.querySelectorAll('.exploded').forEach(el => {
+      el.classList.remove('exploded');
+      el.style.removeProperty('--ex');
+      el.style.removeProperty('--ey');
+      el.style.removeProperty('--er');
+      el.style.removeProperty('--fall');
+      el.style.animationDelay = '';
+    });
+  }
+
+  btnParty.addEventListener('click', () => {
+    if (partyOn) {
+      stopParty();
+      // restore previous theme as active
+      const isDark = document.body.classList.contains('dark');
+      setActive(isDark ? btnDark : btnLight);
+    } else {
+      startParty();
+    }
+  });
 
   // Cycle hero word: chaos → frictions → constraints
   const cycleWord = document.getElementById('cycle-word');
