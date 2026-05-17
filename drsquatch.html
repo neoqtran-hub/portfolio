@@ -332,6 +332,258 @@
     color: var(--muted-soft);
     font-size: 13px;
   }
+  .image-window-grid {
+    max-width: 100%;
+    margin: 28px auto 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .image-window {
+    min-height: 320px;
+    border-radius: 18px;
+    border: 1px solid #ececea;
+    background: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+  }
+  .ai-creative-grid {
+    max-width: 100%;
+    margin: 28px auto 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 40px;
+  }
+  .ai-creative-slot {
+    position: relative;
+  }
+  .ai-creative-slot::before {
+    content: none;
+  }
+  .ai-creative-slot.wide {
+    grid-column: 1 / -1;
+  }
+  .ai-animation-window {
+    aspect-ratio: 1 / 1;
+    border-radius: 18px;
+    border: 1px solid #ececea;
+    background: #ffc46d;
+    overflow: hidden;
+    position: relative;
+  }
+  .bag-animation-window {
+    background: #fff;
+  }
+  .pumpkin-sequence-frame {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .pumpkin-sequence-frame:not([src]) {
+    visibility: hidden;
+  }
+  .pumpkin-replay {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    z-index: 2;
+    padding: 9px 12px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.78);
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .pumpkin-replay.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .pumpkin-replay:hover {
+    transform: translateY(-1px);
+  }
+  .ai-wide-window {
+    min-height: 520px;
+    border-radius: 18px;
+    border: 1px solid #ececea;
+    background: #fff;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    padding: 20px 0;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+  .ai-marquee-title {
+    padding: 0 28px;
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-style: italic;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    text-align: center;
+  }
+  .ai-marquee-row {
+    display: flex;
+    gap: 16px;
+    width: max-content;
+    animation: aiMarqueeLeft 34s linear infinite;
+  }
+  .ai-marquee-row.reverse {
+    animation-name: aiMarqueeRight;
+    animation-duration: 38s;
+  }
+  .ai-marquee-card {
+    width: 240px;
+    aspect-ratio: 4 / 3;
+    flex: 0 0 auto;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #f4f4f2;
+    border: 1px solid #ececea;
+  }
+  .ai-marquee-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  @keyframes aiMarqueeLeft {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes aiMarqueeRight {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+  .impact-grid {
+    max-width: 100%;
+    margin: 28px auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .impact-card {
+    background: #fff;
+    border: 1px solid #ececea;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+  }
+  .impact-card .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #b0b0ae;
+    margin-bottom: 8px;
+  }
+  .impact-card .value {
+    font-size: clamp(26px, 3vw, 40px);
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .impact-card .note {
+    font-size: 13px;
+    color: #6a6a68;
+    margin-top: 8px;
+    line-height: 1.4;
+  }
+  .impact-table {
+    max-width: 100%;
+    margin: 28px auto 0;
+    background: #fff;
+    border: 1px solid #ececea;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+  }
+  .impact-row {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
+    border-bottom: 1px solid #f4f4f2;
+  }
+  .impact-row:last-child { border-bottom: 0; }
+  .impact-row > div {
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #4a4a4a;
+    border-left: 1px solid #f4f4f2;
+  }
+  .impact-row > div:first-child {
+    border-left: 0;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .impact-row.header > div {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #b0b0ae;
+  }
+  .story-accordion {
+    max-width: 760px;
+    margin: 24px auto 0;
+    border-top: 1px solid #e8e8e6;
+    border-bottom: 1px solid #e8e8e6;
+    background: transparent;
+    overflow: hidden;
+  }
+  .story-accordion summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    color: #9a9a98;
+    font-size: 15px;
+    font-weight: 400;
+  }
+  .story-accordion summary::-webkit-details-marker { display: none; }
+  .story-accordion summary::after {
+    content: '+';
+    color: #b8b8b6;
+    font-size: 22px;
+    line-height: 1;
+  }
+  .story-accordion[open] summary::after { content: '−'; }
+  .story-content {
+    padding: 0 20px 22px;
+    border-top: 1px solid #eeeeec;
+  }
+  .story-content p {
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .story-content p:first-child { margin-top: 18px; }
+  @media (max-width: 720px) {
+    .image-window-grid { grid-template-columns: 1fr; }
+    .ai-creative-grid { grid-template-columns: 1fr; gap: 24px; }
+    .ai-creative-slot.wide { grid-column: auto; }
+    .ai-animation-window,
+    .ai-wide-window { min-height: 320px; }
+    .impact-grid { grid-template-columns: 1fr 1fr; }
+    .impact-row { grid-template-columns: 1fr; }
+    .impact-row > div {
+      border-left: 0;
+      border-top: 1px solid #f4f4f2;
+    }
+    .impact-row > div:first-child { border-top: 0; }
+  }
 
   /* Highlight for emphasized phrases — works anywhere on the page */
   .hl {
@@ -344,7 +596,7 @@
 
   /* Inlined Problem→Solution diagram (namespaced under .ps-frame) */
   .ps-frame {
-    max-width: 988px;
+    max-width: 100%;
     margin: 32px auto 0;
     padding: 24px;
     border-radius: 16px;
@@ -440,7 +692,7 @@
 
   /* Caption under a figure */
   .sub-section .figure-caption {
-    max-width: 988px;
+    max-width: 100%;
     margin: 12px auto 0;
     font-size: 14px;
     color: var(--muted);
@@ -451,7 +703,7 @@
 
   /* Inline figure (e.g. Hotjar screenshot) with expand button */
   .sub-section .figure {
-    max-width: 988px;
+    max-width: 100%;
     margin: 24px auto;
     border-radius: 12px;
     overflow: hidden;
@@ -549,7 +801,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     margin: 32px auto 0;
-    max-width: 988px;
+    max-width: 100%;
   }
   .framework-card {
     background: #fff;
@@ -880,26 +1132,159 @@
       <header class="section-header">
         <h2>Growth Design</h2>
         <ul class="stepper">
-          <li><a href="#growth-experiments" data-sub-id="growth-experiments">Experiments</a></li>
-          <li><a href="#growth-conversions" data-sub-id="growth-conversions">Conversions</a></li>
-          <li><a href="#growth-learnings" data-sub-id="growth-learnings">Learnings</a></li>
+          <li><a href="#growth-system" data-sub-id="growth-system">NCO System</a></li>
+          <li><a href="#growth-ai-images" data-sub-id="growth-ai-images">AI Creative</a></li>
+          <li><a href="#growth-tested-patterns" data-sub-id="growth-tested-patterns">Tested Patterns</a></li>
+          <li><a href="#growth-impact" data-sub-id="growth-impact">Business Impact</a></li>
         </ul>
       </header>
       <div class="section-body">
-        <div class="sub-section" id="growth-experiments">
-          <h3>Experiments</h3>
-          <p>A/B test framework, hero variant testing, social proof placement, sticky CTA — the experiments that moved the needle and the ones that didn't.</p>
-          <div class="placeholder-block">[ Experiments content placeholder ]</div>
+        <div class="sub-section" id="growth-system">
+          <h3>NCO Landing Page System</h3>
+          <p>I inherited NCO landing pages that were built to ship quickly: product image, price, buy button. They worked as destinations, but they did not work hard enough as acquisition experiences.</p>
+          <p>I rebuilt the approach into a repeatable landing page system around <span class="hl">product story</span>, <span class="hl">offer clarity</span>, <span class="hl">education</span>, <span class="hl">social proof</span>, and a low-friction path to purchase. Each page was designed to answer the questions a cold shopper would have before they were ready to buy.</p>
+
+          <details class="story-accordion">
+            <summary>Read the full growth story</summary>
+            <div class="story-content">
+              <p>When I joined Dr. Squatch, the NCO landing page program had a clear business purpose: acquire new customers from paid traffic. But the page experience itself was still thin. Most pages were built around the basics: show the product, show the price, give the user a way to buy. That left a lot of persuasion work unfinished.</p>
+              <p>The opportunity was to treat each page less like a static product destination and more like a structured acquisition experience. A cold shopper needed context before committing: what the offer included, why the product mattered, what made the bundle valuable, how the scents or ingredients worked, and whether other people trusted it. I started designing pages around those moments of uncertainty.</p>
+              <p>That became a repeatable system. Each landing page could flex around a different campaign, but the underlying formula stayed consistent: a strong product story, clear offer framing, useful education, social proof, bundle clarity, and a purchase path that did not make the user work to understand what to do next.</p>
+              <p>The impact scaled with the system. Since joining in early 2024, I have designed and owned 22+ NCO landing pages, including the current top-performing new-customer pages. Those pages have driven $17M+ in measured ad spend, acquired 55K+ new customers, and now support nearly $977K/month in acquisition spend at roughly 64% contribution margin.</p>
+            </div>
+          </details>
+
+          <div class="image-window-grid" aria-label="NCO landing page system image placeholders">
+            <div class="image-window"></div>
+            <div class="image-window"></div>
+          </div>
         </div>
-        <div class="sub-section" id="growth-conversions">
-          <h3>Conversions</h3>
-          <p>Funnel visualizations, before/after conversion rates by surface, and the design changes that drove the lifts.</p>
-          <div class="placeholder-block">[ Conversions content placeholder ]</div>
+
+        <div class="sub-section" id="growth-ai-images">
+          <h3>AI Assisted Creative</h3>
+          <p>I used image models as a creative production tool for landing pages, especially when a campaign needed stronger product-context imagery than the available photography could support.</p>
+          <p>The goal was not to make decorative AI images. It was to move faster from concept to testable creative, explore stronger compositions, and create product visuals that helped users understand the offer faster. Models used included <span class="hl">Google Nano Banana Pro</span> and <span class="hl">Seedream</span>.</p>
+
+          <div class="ai-creative-grid" aria-label="AI assisted creative containers">
+            <div class="ai-creative-slot" data-label="1">
+              <div class="ai-animation-window" data-pumpkin-sequence>
+                <img class="pumpkin-sequence-frame" alt="Pumpkin campaign AI image build sequence">
+                <button type="button" class="pumpkin-replay" data-pumpkin-replay>Replay</button>
+              </div>
+            </div>
+            <div class="ai-creative-slot" data-label="2">
+              <div class="ai-animation-window bag-animation-window" data-bag-sequence>
+                <img class="pumpkin-sequence-frame" alt="Dopp kit AI image build sequence">
+                <button type="button" class="pumpkin-replay" data-bag-replay>Replay</button>
+              </div>
+            </div>
+            <div class="ai-creative-slot wide" data-label="3">
+              <div class="ai-wide-window">
+                <h4 class="ai-marquee-title">AI Generated Assets</h4>
+                <div class="ai-marquee-row">
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/Hero.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/251009-Spray-Glide-Studio-Shots-010 copy.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/Image Guy.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/IG.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/Hero.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/251009-Spray-Glide-Studio-Shots-010 copy.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/Image Guy.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/IG.jpg" alt=""></div>
+                </div>
+                <div class="ai-marquee-row reverse">
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/Deo Transp 1.png" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/Frame 316123847.png" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/6soap2deo Image.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/Soap Hero 1.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/spray.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/Deo Transp 1.png" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/Frame 316123847.png" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/6soap2deo Image.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/Soap Hero 1.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Animation/Marquee/spray.jpg" alt=""></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="sub-section" id="growth-learnings">
-          <h3>Learnings</h3>
-          <p>Patterns that generalized across categories vs. patterns that only worked in narrow contexts.</p>
-          <div class="placeholder-block">[ Learnings content placeholder ]</div>
+
+        <div class="sub-section" id="growth-tested-patterns">
+          <h3>Tested Patterns</h3>
+          <p>After enough sections tested well with users and pages started performing consistently, the winning pattern became clear: lead with a strong product hero, make the offer easy to understand, explain the product at the right moment, add proof, then make the purchase path feel obvious.</p>
+          <p>That learning turned growth design from one-off page creation into a system. Each new landing page could start from what already worked, then adjust the story, education, proof points, and offer structure for the campaign.</p>
+
+          <div class="image-window-grid" aria-label="Tested pattern image placeholders">
+            <div class="image-window"></div>
+            <div class="image-window"></div>
+          </div>
+        </div>
+
+        <div class="sub-section" id="growth-impact">
+          <h3>Business Impact</h3>
+          <p>I designed the landing page system behind Dr. Squatch's current new-customer acquisition engine, supporting nearly <span class="hl">$1M/month in ad spend</span>, <span class="hl">55K+ acquired customers</span>, and <span class="hl">$17M+ in measured spend</span> across 22+ pages.</p>
+          <p>The current top NCO pages are not isolated wins. They are the result of a repeatable system for building acquisition pages that educate, persuade, and convert cold traffic while protecting contribution margin.</p>
+
+          <!-- TODO: Add CTR and scroll-depth proof once data is available. -->
+          <div class="impact-grid" aria-label="Growth design business impact metrics">
+            <div class="impact-card">
+              <div class="label">Pages owned</div>
+              <div class="value">22+</div>
+              <div class="note">NCO landing pages designed and owned since early 2024</div>
+            </div>
+            <div class="impact-card">
+              <div class="label">Measured spend</div>
+              <div class="value">$17M+</div>
+              <div class="note">Lifetime ad spend flowing through pages I designed</div>
+            </div>
+            <div class="impact-card">
+              <div class="label">Customers acquired</div>
+              <div class="value">55K+</div>
+              <div class="note">New customers acquired through my page portfolio</div>
+            </div>
+            <div class="impact-card">
+              <div class="label">Current run-rate</div>
+              <div class="value">$977K</div>
+              <div class="note">Monthly NCO spend through current top pages</div>
+            </div>
+          </div>
+
+          <div class="impact-table" aria-label="Recent NCO landing page performance">
+            <div class="impact-row header">
+              <div>Landing page</div>
+              <div>Customers</div>
+              <div>Ad spend</div>
+              <div>ROI</div>
+              <div>CM</div>
+            </div>
+            <div class="impact-row">
+              <div>SQUATCH-STACK-EXCL-GIFTS</div>
+              <div>4,233</div>
+              <div>$614K</div>
+              <div>32.7%</div>
+              <div>65.0%</div>
+            </div>
+            <div class="impact-row">
+              <div>9-BAR-SOAPS-DOPP2</div>
+              <div>6,204</div>
+              <div>$1.21M</div>
+              <div>28.5%</div>
+              <div>64.1%</div>
+            </div>
+            <div class="impact-row">
+              <div>SIG-SCENT-SET-DOPP2</div>
+              <div>4,143</div>
+              <div>$677K</div>
+              <div>27.3%</div>
+              <div>65.7%</div>
+            </div>
+            <div class="impact-row">
+              <div>LAUNCH-BUN-EXCL-GIFTS</div>
+              <div>165</div>
+              <div>$24K</div>
+              <div>32.1%</div>
+              <div>60.0%</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1085,6 +1470,106 @@
     // Outer width changes can reflow inner content
     window.addEventListener('resize', fit);
   })();
+
+  // ============================================
+  // Pumpkin AI creative frame sequence
+  // ============================================
+  const pumpkinSequenceWrap = document.querySelector('[data-pumpkin-sequence]');
+  const pumpkinSequence = pumpkinSequenceWrap ? pumpkinSequenceWrap.querySelector('.pumpkin-sequence-frame') : null;
+  const pumpkinReplay = pumpkinSequenceWrap ? pumpkinSequenceWrap.querySelector('[data-pumpkin-replay]') : null;
+  if (pumpkinSequence) {
+    const pumpkinFrames = [
+      '',
+      'Animation/Pumpkin/3.jpg',
+      'Animation/Pumpkin/4.jpg',
+      'Animation/Pumpkin/5.jpg',
+      'Animation/Pumpkin/6.jpg',
+      'Animation/Pumpkin/7.jpg',
+      'Animation/Pumpkin/8.jpg',
+      'Animation/Pumpkin/9.jpg',
+      'Animation/Pumpkin/10.jpg',
+      'Animation/Pumpkin/11.jpg',
+      'Animation/Pumpkin/12.jpg',
+      'Animation/Pumpkin/13.jpg',
+      'Animation/Pumpkin/14.jpg',
+      'Animation/Pumpkin/15.jpg',
+      'Animation/Pumpkin/16.jpg',
+      'Animation/Pumpkin/17.jpg',
+      'Animation/Pumpkin/Final Render.jpg'
+    ];
+    pumpkinFrames.filter(Boolean).forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+    let pumpkinTimer = null;
+    function playPumpkinSequence() {
+      if (pumpkinTimer) window.clearInterval(pumpkinTimer);
+      if (pumpkinReplay) pumpkinReplay.classList.remove('is-visible');
+
+      let index = 0;
+      pumpkinSequence.removeAttribute('src');
+
+      pumpkinTimer = window.setInterval(() => {
+        index += 1;
+        pumpkinSequence.src = pumpkinFrames[index];
+
+        if (index === pumpkinFrames.length - 1) {
+          window.clearInterval(pumpkinTimer);
+          pumpkinTimer = null;
+          if (pumpkinReplay) pumpkinReplay.classList.add('is-visible');
+        }
+      }, 260);
+    }
+
+    window.setTimeout(playPumpkinSequence, 900);
+    if (pumpkinReplay) pumpkinReplay.addEventListener('click', playPumpkinSequence);
+  }
+
+  const bagSequenceWrap = document.querySelector('[data-bag-sequence]');
+  const bagSequence = bagSequenceWrap ? bagSequenceWrap.querySelector('.pumpkin-sequence-frame') : null;
+  const bagReplay = bagSequenceWrap ? bagSequenceWrap.querySelector('[data-bag-replay]') : null;
+  if (bagSequence) {
+    const bagFrames = [
+      '',
+      'Animation/Bag/2.jpg',
+      'Animation/Bag/3.jpg',
+      'Animation/Bag/4.jpg',
+      'Animation/Bag/5.jpg',
+      'Animation/Bag/6.jpg',
+      'Animation/Bag/7.jpg',
+      'Animation/Bag/8.jpg',
+      'Animation/Bag/9.jpg',
+      'Animation/Bag/10.jpg',
+      'Animation/Bag/11.jpg',
+      'Animation/Bag/12.jpg'
+    ];
+    bagFrames.filter(Boolean).forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+    let bagTimer = null;
+    function playBagSequence() {
+      if (bagTimer) window.clearInterval(bagTimer);
+      if (bagReplay) bagReplay.classList.remove('is-visible');
+
+      let index = 0;
+      bagSequence.removeAttribute('src');
+
+      bagTimer = window.setInterval(() => {
+        index += 1;
+        bagSequence.src = bagFrames[index];
+
+        if (index === bagFrames.length - 1) {
+          window.clearInterval(bagTimer);
+          bagTimer = null;
+          if (bagReplay) bagReplay.classList.add('is-visible');
+        }
+      }, 260);
+    }
+
+    window.setTimeout(playBagSequence, 1200);
+    if (bagReplay) bagReplay.addEventListener('click', playBagSequence);
+  }
 
   // ============================================
   // Image lightbox: any .figure with [data-expand] opens its <img> full-screen
