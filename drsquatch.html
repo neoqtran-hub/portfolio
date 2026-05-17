@@ -863,6 +863,33 @@
     transform: scale(1.06);
     box-shadow: 0 12px 30px rgba(0,0,0,0.12);
   }
+  .sections-marquee-window {
+    min-height: 560px;
+    margin-top: 32px;
+    gap: 18px;
+  }
+  .sections-marquee-window .ai-marquee-title {
+    color: var(--ink);
+  }
+  .sections-marquee-subtitle {
+    padding: 0 28px;
+    color: #5f5f5b;
+    font-size: 15px;
+    line-height: 1.55;
+    text-align: center;
+    margin-top: -10px;
+  }
+  .sections-marquee-window .ai-marquee-row:nth-of-type(3) {
+    animation-duration: 42s;
+  }
+  .sections-marquee-window .ai-marquee-card {
+    width: 360px;
+    aspect-ratio: 3 / 1;
+    background: #efefed;
+  }
+  .sections-marquee-window .ai-marquee-card img {
+    object-position: top center;
+  }
   .formula-caption {
     padding-top: 10px;
     text-align: center;
@@ -1047,20 +1074,15 @@
     -webkit-box-decoration-break: clone;
   }
 
-  /* Inlined Problem→Solution diagram (namespaced under .ps-frame) */
+  /* Problem to solution matrix */
   .ps-frame {
     max-width: 100%;
     margin: 32px auto 0;
-    padding: 24px;
+    padding: 28px;
     border-radius: 16px;
     border: 1px solid #ececea;
     background: #fff;
     box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-    --ps-problem-bg: #FFE0DB; --ps-problem-text: #D94F3D;
-    --ps-goal-bg: #E2DEFF;    --ps-goal-text: #5B4FCF;
-    --ps-solution-bg: #D4F2EC;--ps-solution-text: #1E7A68;
-    --ps-detail-bg: #FDEEC8;  --ps-detail-text: #A06A00;
-    text-align: center;
   }
   .ps-frame .ps-title {
     font-family: 'DM Serif Display', Georgia, serif;
@@ -1069,328 +1091,282 @@
     font-weight: 400;
     color: var(--ink);
     letter-spacing: -0.01em;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     text-align: left;
   }
-  .ps-frame .ps-section-heading {
-    font-family: 'Config', sans-serif;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #6b6b66;
-    margin-bottom: 20px;
-  }
-  .ps-frame .ps-track {
+  .ps-table {
     display: grid;
-    grid-template-columns: 1fr 24px 1fr 24px 1fr;
-    gap: 0;
-    align-items: start;
-    margin-bottom: 20px;
-  }
-  /* Low-fi wireframe container */
-  .ps-wire {
-    margin-top: 16px;
-    background: #FAFAFA;
-    border: 1px dashed #D0D0D0;
-    border-radius: 12px;
-    padding: 20px;
-  }
-  .ps-wire-label {
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #999;
-    margin: 0 0 14px;
-    font-weight: 600;
-  }
-  .wire-row { display: flex; gap: 12px; align-items: stretch; }
-  .wire-row + .wire-row { margin-top: 12px; }
-  .wire-box {
-    background: #fff;
-    border: 1.5px solid #C8C8C8;
-    border-radius: 8px;
-    position: relative;
-    overflow: hidden;
-  }
-  .wire-line {
-    height: 8px;
-    background: #E5E5E5;
-    border-radius: 4px;
-  }
-  .wire-line.short { width: 40%; }
-  .wire-line.medium { width: 65%; }
-  .wire-line.long { width: 90%; }
-  .wire-block {
-    background: #E8E8E8;
-    border-radius: 4px;
-  }
-  /* Carousel wireframe */
-  .wire-carousel {
-    display: flex;
-    gap: 10px;
-    overflow: hidden;
-  }
-  .wire-video-card {
-    flex: 1;
-    aspect-ratio: 9 / 14;
-    background: #DCDCDC;
-    border: 1.5px solid #C8C8C8;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-  .wire-play {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.85);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1.5px solid #B8B8B8;
-  }
-  .wire-play::after {
-    content: '';
-    width: 0;
-    height: 0;
-    border-left: 10px solid #888;
-    border-top: 7px solid transparent;
-    border-bottom: 7px solid transparent;
-    margin-left: 3px;
-  }
-  .wire-review-card {
-    flex: 1;
-    background: #fff;
-    border: 1.5px solid #C8C8C8;
-    border-radius: 8px;
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    min-height: 140px;
-  }
-  .wire-stars {
-    display: flex;
-    gap: 3px;
-  }
-  .wire-star {
-    width: 12px;
-    height: 12px;
-    background: #BBB;
-    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  }
-  /* Accordion wireframe */
-  .wire-accordion {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    background: #fff;
-    border: 1.5px solid #C8C8C8;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .wire-accordion-item {
-    padding: 14px 16px;
-    border-bottom: 1px solid #E5E5E5;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .wire-accordion-item:last-child { border-bottom: none; }
-  .wire-accordion-item.open {
-    background: #F5F5F5;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-  .wire-accordion-head {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    align-items: center;
-  }
-  .wire-chevron {
-    color: #AAA;
-    font-size: 14px;
-  }
-  .wire-accordion-body {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding-top: 4px;
-  }
-  /* Bundle cards */
-  .wire-bundle-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-  }
-  .wire-bundle-card {
-    background: #fff;
-    border: 1.5px solid #C8C8C8;
-    border-radius: 8px;
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .wire-bundle-img {
-    aspect-ratio: 1;
-    background: #DCDCDC;
-    border-radius: 6px;
-  }
-  /* Scent product cards */
-  .wire-product-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 14px;
   }
-  .wire-product-card {
-    background: #fff;
-    border: 1.5px solid #C8C8C8;
-    border-radius: 8px;
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .wire-product-img {
-    aspect-ratio: 1;
-    background: #DCDCDC;
-    border-radius: 6px;
-  }
-  .wire-scent-notes {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 8px;
-    background: #F5F5F5;
-    border-radius: 4px;
-  }
-  .wire-scent-label {
-    font-size: 9px;
-    text-transform: uppercase;
-    color: #999;
-    letter-spacing: 0.06em;
-    font-weight: 600;
-  }
-  /* 50/50 layout */
-  .wire-5050 {
+  .ps-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(240px, 0.9fr) minmax(360px, 1.35fr);
+    gap: 24px;
+    align-items: stretch;
+    padding: 20px;
+    border: 1px solid #ececea;
+    border-radius: 14px;
+    background: #fbfbf9;
+  }
+  .ps-row:hover {
+    background: #fff;
+    box-shadow: 0 10px 28px rgba(32,28,22,0.07);
+  }
+  .ps-copy {
+    display: flex;
+    flex-direction: column;
     gap: 12px;
   }
-  .wire-half {
-    background: #fff;
-    border: 1.5px solid #C8C8C8;
-    border-radius: 8px;
-    overflow: hidden;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-  }
-  .wire-half-img {
-    flex: 1;
-    background: #DCDCDC;
-    min-height: 110px;
-  }
-  .wire-half-content {
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .wire-hero {
-    position: relative;
-    background: #DCDCDC;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 16px;
-    gap: 8px;
-  }
-  .wire-hero-overlay {
-    background: rgba(255,255,255,0.85);
-    padding: 12px;
-    border-radius: 6px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .wire-btn {
-    background: #888;
-    color: #fff;
-    padding: 8px 14px;
-    border-radius: 4px;
-    font-size: 11px;
-    width: fit-content;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-  .ps-frame .ps-track:last-of-type { margin-bottom: 0; }
-  .ps-frame .ps-arrow {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 22px;
-    color: #CCCCCC;
-    font-size: 16px;
-    user-select: none;
-  }
-  .ps-frame .ps-card-stack { display: flex; flex-direction: column; gap: 8px; }
-  .ps-frame .ps-card {
-    border-radius: 14px;
-    padding: 8px;
-    font-size: 13.5px;
-    line-height: 1.6;
-    border: 1px solid #ececea;
-    background: #F8F8F6;
+  .ps-name {
     color: var(--ink);
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.15;
   }
-  .ps-frame .ps-chip {
-    font-family: 'Config', sans-serif;
+  .ps-cell {
+    color: #4d4b46;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .ps-cell strong {
+    display: block;
+    color: var(--ink);
     font-size: 11px;
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: 0.02em;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    line-height: 1.3;
+    margin-bottom: 2px;
     text-transform: uppercase;
   }
-  .ps-frame .ps-card.problem  .ps-chip { color: var(--ps-problem-text); }
-  .ps-frame .ps-card.goal     .ps-chip { color: var(--ps-goal-text); }
-  .ps-frame .ps-card.solution .ps-chip { color: var(--ps-solution-text); }
-  .ps-frame .ps-card.detail   .ps-chip { color: var(--ps-detail-text); }
-  .ps-frame .ps-divider {
-    height: 1px;
-    background: rgba(44,35,24,0.06);
-    margin: 32px 0 36px;
+  .ps-proof {
+    display: grid;
+    gap: 14px;
+    align-content: start;
   }
-  @media (max-width: 700px) {
-    .ps-frame {
-      padding: 20px;
-    }
-    .ps-frame .ps-track {
+  .ps-mini {
+    min-height: 210px;
+    border: 1px solid #dedbd4;
+    border-radius: 10px;
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .ps-mini.carousel {
+    display: grid;
+    grid-template-rows: 1.35fr 0.65fr;
+    gap: 12px;
+    padding: 14px;
+  }
+  .ps-video-row,
+  .ps-review-row,
+  .ps-card-row,
+  .ps-scent-row {
+    display: flex;
+    gap: 10px;
+  }
+  .ps-video,
+  .ps-review,
+  .ps-included-card,
+  .ps-scent-card {
+    flex: 1;
+    background: #fff;
+    border: 1px solid #dedbd4;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ps-video {
+    background: #dedbd4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ps-play {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    border: 1px solid #c8c1b6;
+    position: relative;
+  }
+  .ps-play::after {
+    content: '';
+    position: absolute;
+    left: 13px;
+    top: 9px;
+    width: 0;
+    height: 0;
+    border-left: 11px solid #7b746b;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+  }
+  .ps-review {
+    padding: 10px;
+  }
+  .ps-stars {
+    color: #77736b;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 9px;
+  }
+  .ps-line {
+    height: 8px;
+    border-radius: 999px;
+    background: #dedbd4;
+    margin-top: 7px;
+  }
+  .ps-line.short { width: 48%; }
+  .ps-line.medium { width: 68%; }
+  .ps-line.long { width: 88%; }
+  .ps-accordion-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 38px;
+    padding: 0 16px;
+    border-bottom: 1px solid #ebe7df;
+  }
+  .ps-mini.accordion .ps-line,
+  .ps-mini.grid .ps-line,
+  .ps-mini.split .ps-line {
+    display: block;
+    background: #dedbd4;
+  }
+  .ps-accordion-item:last-child { border-bottom: 0; }
+  .ps-accordion-item.open {
+    align-items: flex-start;
+    min-height: 74px;
+    padding-top: 14px;
+  }
+  .ps-accordion-copy { flex: 1; }
+  .ps-toggle {
+    color: #77736b;
+    font-size: 20px;
+    line-height: 1;
+    font-weight: 700;
+    margin-top: 1px;
+  }
+  .ps-mini.grid {
+    display: block;
+    padding: 14px;
+  }
+  .ps-mini-title {
+    color: #3f3c37;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .ps-included-card,
+  .ps-scent-card {
+    min-height: 128px;
+    padding: 10px;
+  }
+  .ps-card-image {
+    height: 58px;
+    border-radius: 7px;
+    background: #dedbd4;
+    margin-bottom: 10px;
+  }
+  .ps-mini.scent {
+    display: grid;
+    grid-template-rows: 1fr 0.85fr;
+    gap: 14px;
+    padding: 14px;
+  }
+  .ps-product-card {
+    display: grid;
+    grid-template-columns: 0.75fr 1fr;
+    gap: 14px;
+    padding: 12px;
+    border: 1px solid #dedbd4;
+    border-radius: 9px;
+    background: #fff;
+  }
+  .ps-product-image {
+    min-height: 86px;
+    border-radius: 7px;
+    background: #dedbd4;
+  }
+  .ps-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 12px;
+  }
+  .ps-scent-chip {
+    border-radius: 999px;
+    padding: 5px 8px;
+    background: #efeeeb;
+    color: #5f5a52;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .ps-mini.split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .ps-value-copy {
+    padding: 18px;
+    background: #efeeeb;
+  }
+  .ps-face-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #dedbd4;
+  }
+  .ps-face {
+    width: 92px;
+    height: 92px;
+    border: 4px solid #7b746b;
+    border-radius: 50%;
+    position: relative;
+  }
+  .ps-face::before,
+  .ps-face::after {
+    content: '';
+    position: absolute;
+    top: 28px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #7b746b;
+  }
+  .ps-face::before { left: 24px; }
+  .ps-face::after { right: 24px; }
+  .ps-smile {
+    position: absolute;
+    left: 23px;
+    top: 48px;
+    width: 38px;
+    height: 20px;
+    border-bottom: 4px solid #7b746b;
+    border-radius: 0 0 40px 40px;
+  }
+  .ps-proof-text {
+    color: #5f5f5b;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .ps-proof-text strong {
+    display: block;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+  @media (max-width: 900px) {
+    .ps-row {
       grid-template-columns: 1fr;
-      grid-template-rows: auto;
-      gap: 8px;
-      padding-left: 12px;
-      border-left: 2px solid rgba(44,35,24,0.1);
+      gap: 18px;
     }
-    .ps-frame .ps-arrow { display: none; }
-    .ps-frame .ps-card { font-size: 12px; }
-    .wire-bundle-grid { grid-template-columns: repeat(2, 1fr); }
-    .wire-product-grid { grid-template-columns: 1fr; }
-    .wire-5050 { grid-template-columns: 1fr; }
+    .ps-cell strong::after {
+      content: '';
+    }
+  }
+  @media (max-width: 520px) {
+    .ps-frame { padding: 20px; }
+    .ps-row { padding: 16px; }
+    .ps-mini { min-height: 160px; }
   }
 
   /* Caption under a figure */
@@ -1727,241 +1703,189 @@
           </div>
 
           <div class="ps-frame">
-            <h4 class="ps-title">From Problem to Solution</h4>
+            <h4 class="ps-title">Turning UX Gaps Into Shipped Modules</h4>
 
-            <p class="ps-section-heading">01 — Social Proof</p>
-            <div class="ps-track">
-              <div class="ps-card problem"><span class="ps-chip">Problem</span><div>Users need social proof to build confidence and drive purchase.</div></div>
-              <div class="ps-arrow">→</div>
-              <div class="ps-card-stack">
-                <div class="ps-card goal"><span class="ps-chip">Goal</span><div>Social proof videos</div></div>
-                <div class="ps-card goal"><span class="ps-chip">Goal</span><div>Reviews from real users</div></div>
-              </div>
-              <div class="ps-arrow">→</div>
-              <div class="ps-card-stack">
-                <div class="ps-card solution"><span class="ps-chip">Solution</span><div>Videowise content carousel</div></div>
-                <div class="ps-card solution"><span class="ps-chip">Solution</span><div>Reviews carousel</div></div>
-              </div>
-            </div>
-
-            <div class="ps-wire">
-              <p class="ps-wire-label">Wireframe to Social Proof Videos, Real users Reviews</p>
-              <div class="wire-carousel">
-                <div class="wire-video-card"><div class="wire-play"></div></div>
-                <div class="wire-video-card"><div class="wire-play"></div></div>
-                <div class="wire-video-card"><div class="wire-play"></div></div>
-                <div class="wire-video-card"><div class="wire-play"></div></div>
-                <div class="wire-video-card"><div class="wire-play"></div></div>
-              </div>
-              <div class="wire-carousel" style="margin-top: 14px;">
-                <div class="wire-review-card">
-                  <div class="wire-stars"><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span></div>
-                  <div class="wire-line long"></div>
-                  <div class="wire-line long"></div>
-                  <div class="wire-line medium"></div>
-                  <div class="wire-line short"></div>
+            <div class="ps-table">
+              <div class="ps-row">
+                <div class="ps-copy">
+                  <span class="ps-name">Social Proof</span>
+                  <div class="ps-cell"><strong>Opportunity</strong>Build confidence closer to purchase.</div>
+                  <div class="ps-cell"><strong>User friction</strong>Shoppers needed proof before they felt ready to buy.</div>
+                  <div class="ps-cell"><strong>Design move</strong>Bring real customer content closer to purchase moments.</div>
                 </div>
-                <div class="wire-review-card">
-                  <div class="wire-stars"><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span></div>
-                  <div class="wire-line long"></div>
-                  <div class="wire-line medium"></div>
-                  <div class="wire-line long"></div>
-                  <div class="wire-line short"></div>
-                </div>
-                <div class="wire-review-card">
-                  <div class="wire-stars"><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span><span class="wire-star"></span></div>
-                  <div class="wire-line long"></div>
-                  <div class="wire-line long"></div>
-                  <div class="wire-line medium"></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="ps-divider"></div>
-
-            <p class="ps-section-heading">02 — Product Education</p>
-            <div class="ps-track">
-              <div class="ps-card problem"><span class="ps-chip">Problem</span><div>Users don't have enough product info to feel confident buying.</div></div>
-              <div class="ps-arrow">→</div>
-              <div class="ps-card goal"><span class="ps-chip">Goal</span><div>Surface ingredients, scent, grit, size, and shipping in one place</div></div>
-              <div class="ps-arrow">→</div>
-              <div class="ps-card solution"><span class="ps-chip">Solution</span><div>Buy Box accordion</div></div>
-            </div>
-
-            <div class="ps-wire">
-              <p class="ps-wire-label">Wireframe to Accordion in Buy Box with vital product information</p>
-              <div class="wire-accordion">
-                <div class="wire-accordion-item open">
-                  <div class="wire-accordion-head">
-                    <div class="wire-line medium"></div>
-                    <span class="wire-chevron">▾</span>
+                <div class="ps-proof">
+                  <div class="ps-mini carousel" aria-hidden="true">
+                    <div class="ps-video-row">
+                      <div class="ps-video"><span class="ps-play"></span></div>
+                      <div class="ps-video"><span class="ps-play"></span></div>
+                      <div class="ps-video"><span class="ps-play"></span></div>
+                    </div>
+                    <div class="ps-review-row">
+                      <div class="ps-review">
+                        <div class="ps-stars">★★★★★</div>
+                        <div class="ps-line long"></div>
+                        <div class="ps-line medium"></div>
+                      </div>
+                      <div class="ps-review">
+                        <div class="ps-stars">★★★★★</div>
+                        <div class="ps-line long"></div>
+                        <div class="ps-line short"></div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="wire-accordion-body">
-                    <div class="wire-line long"></div>
-                    <div class="wire-line long"></div>
-                    <div class="wire-line medium"></div>
-                  </div>
-                </div>
-                <div class="wire-accordion-item">
-                  <div class="wire-line short"></div>
-                  <span class="wire-chevron">▸</span>
-                </div>
-                <div class="wire-accordion-item">
-                  <div class="wire-line short"></div>
-                  <span class="wire-chevron">▸</span>
-                </div>
-                <div class="wire-accordion-item">
-                  <div class="wire-line short"></div>
-                  <span class="wire-chevron">▸</span>
-                </div>
-                <div class="wire-accordion-item">
-                  <div class="wire-line short"></div>
-                  <span class="wire-chevron">▸</span>
+                  <div class="ps-proof-text"><strong>UGC + reviews</strong>Videowise carousel and review carousel.</div>
                 </div>
               </div>
-            </div>
 
-            <div class="ps-divider"></div>
-
-            <p class="ps-section-heading">03 — Bundle Transparency</p>
-            <div class="ps-track">
-              <div class="ps-card problem"><span class="ps-chip">Problem</span><div>Users can't tell exactly what's inside the bundle.</div></div>
-              <div class="ps-arrow">→</div>
-              <div class="ps-card goal"><span class="ps-chip">Goal</span><div>Show every product and scent included, upfront</div></div>
-              <div class="ps-arrow">→</div>
-              <div class="ps-card solution"><span class="ps-chip">Solution</span><div>"What's Included" card grid</div></div>
-            </div>
-
-            <div class="ps-wire">
-              <p class="ps-wire-label">What's Included</p>
-              <div class="wire-bundle-grid">
-                <div class="wire-bundle-card">
-                  <div class="wire-bundle-img"></div>
-                  <div class="wire-line long"></div>
-                  <div class="wire-line short"></div>
+              <div class="ps-row">
+                <div class="ps-copy">
+                  <span class="ps-name">Product Education</span>
+                  <div class="ps-cell"><strong>Opportunity</strong>Give shoppers answers without making them hunt.</div>
+                  <div class="ps-cell"><strong>User friction</strong>Key product details were scattered or missing at decision time.</div>
+                  <div class="ps-cell"><strong>Design move</strong>Put ingredients, scent, grit, size, and shipping in the buy area.</div>
                 </div>
-                <div class="wire-bundle-card">
-                  <div class="wire-bundle-img"></div>
-                  <div class="wire-line long"></div>
-                  <div class="wire-line short"></div>
-                </div>
-                <div class="wire-bundle-card">
-                  <div class="wire-bundle-img"></div>
-                  <div class="wire-line long"></div>
-                  <div class="wire-line short"></div>
-                </div>
-                <div class="wire-bundle-card">
-                  <div class="wire-bundle-img"></div>
-                  <div class="wire-line long"></div>
-                  <div class="wire-line short"></div>
+                <div class="ps-proof">
+                  <div class="ps-mini accordion" aria-hidden="true">
+                    <div class="ps-accordion-item open">
+                      <div class="ps-accordion-copy">
+                        <div class="ps-line medium"></div>
+                        <div class="ps-line long"></div>
+                        <div class="ps-line long"></div>
+                      </div>
+                      <span class="ps-toggle">-</span>
+                    </div>
+                    <div class="ps-accordion-item"><div class="ps-line medium"></div><span class="ps-toggle">+</span></div>
+                    <div class="ps-accordion-item"><div class="ps-line short"></div><span class="ps-toggle">+</span></div>
+                    <div class="ps-accordion-item"><div class="ps-line medium"></div><span class="ps-toggle">+</span></div>
+                  </div>
+                  <div class="ps-proof-text"><strong>Buy box accordion</strong>Vital info surfaced without leaving the PDP.</div>
                 </div>
               </div>
-            </div>
 
-            <div class="ps-divider"></div>
-
-            <p class="ps-section-heading">04 — Scent Information</p>
-            <div class="ps-track">
-              <div class="ps-card problem"><span class="ps-chip">Problem</span><div>Users can't tell what each product smells like.</div></div>
-              <div class="ps-arrow">→</div>
-              <div class="ps-card goal"><span class="ps-chip">Goal</span><div>Describe each scent in a place users will look</div></div>
-              <div class="ps-arrow">→</div>
-              <div class="ps-card solution"><span class="ps-chip">Solution</span><div>Scent notes inside Buy Box accordion</div></div>
-            </div>
-
-            <div class="ps-wire">
-              <p class="ps-wire-label">Product cards with scent notes</p>
-              <div class="wire-product-grid">
-                <div class="wire-product-card">
-                  <div class="wire-product-img"></div>
-                  <div class="wire-line long"></div>
-                  <div class="wire-line short"></div>
-                  <div class="wire-scent-notes">
-                    <div class="wire-scent-label">Scent Notes</div>
-                    <div class="wire-line long"></div>
-                    <div class="wire-line medium"></div>
-                  </div>
+              <div class="ps-row">
+                <div class="ps-copy">
+                  <span class="ps-name">Bundle Clarity</span>
+                  <div class="ps-cell"><strong>Opportunity</strong>Make the offer feel obvious at a glance.</div>
+                  <div class="ps-cell"><strong>User friction</strong>Bundles were hard to understand at a glance.</div>
+                  <div class="ps-cell"><strong>Design move</strong>Show every product and scent before the user has to commit.</div>
                 </div>
-                <div class="wire-product-card">
-                  <div class="wire-product-img"></div>
-                  <div class="wire-line long"></div>
-                  <div class="wire-line short"></div>
-                  <div class="wire-scent-notes">
-                    <div class="wire-scent-label">Scent Notes</div>
-                    <div class="wire-line long"></div>
-                    <div class="wire-line medium"></div>
+                <div class="ps-proof">
+                  <div class="ps-mini grid" aria-hidden="true">
+                    <div class="ps-mini-title">What's included</div>
+                    <div class="ps-card-row">
+                      <div class="ps-included-card">
+                        <div class="ps-card-image"></div>
+                        <div class="ps-line long"></div>
+                        <div class="ps-line short"></div>
+                      </div>
+                      <div class="ps-included-card">
+                        <div class="ps-card-image"></div>
+                        <div class="ps-line long"></div>
+                        <div class="ps-line medium"></div>
+                      </div>
+                      <div class="ps-included-card">
+                        <div class="ps-card-image"></div>
+                        <div class="ps-line long"></div>
+                        <div class="ps-line short"></div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="wire-product-card">
-                  <div class="wire-product-img"></div>
-                  <div class="wire-line long"></div>
-                  <div class="wire-line short"></div>
-                  <div class="wire-scent-notes">
-                    <div class="wire-scent-label">Scent Notes</div>
-                    <div class="wire-line long"></div>
-                    <div class="wire-line medium"></div>
-                  </div>
+                  <div class="ps-proof-text"><strong>What's included grid</strong>A clear inventory of the offer.</div>
                 </div>
               </div>
-            </div>
 
-            <div class="ps-divider"></div>
-
-            <p class="ps-section-heading">05 — Company Value Props</p>
-            <div class="ps-track">
-              <div class="ps-card problem"><span class="ps-chip">Problem</span><div>Users don't know what makes Dr. Squatch different.</div></div>
-              <div class="ps-arrow">→</div>
-              <div class="ps-card-stack">
-                <div class="ps-card goal"><span class="ps-chip">Goal</span><div>Communicate "Made For Men"</div></div>
-                <div class="ps-card goal"><span class="ps-chip">Goal</span><div>Communicate "All Natural"</div></div>
-              </div>
-              <div class="ps-arrow">→</div>
-              <div class="ps-card-stack">
-                <div class="ps-card solution"><span class="ps-chip">Solution</span><div>50/50 humor content block</div></div>
-                <div class="ps-card solution"><span class="ps-chip">Solution</span><div>Hero "Committed to Men's Health"</div></div>
-              </div>
-            </div>
-
-            <div class="ps-wire">
-              <p class="ps-wire-label">Humor 50/50 section and hero section to communicate values</p>
-              <div class="wire-5050">
-                <div class="wire-half">
-                  <div class="wire-half-img"></div>
-                  <div class="wire-half-content">
-                    <div class="wire-line short"></div>
-                    <div class="wire-line long"></div>
-                    <div class="wire-line long"></div>
-                    <div class="wire-line medium"></div>
-                  </div>
+              <div class="ps-row">
+                <div class="ps-copy">
+                  <span class="ps-name">Scent Information</span>
+                  <div class="ps-cell"><strong>Opportunity</strong>Help shoppers compare products more confidently.</div>
+                  <div class="ps-cell"><strong>User friction</strong>Users could not tell what each product smelled like.</div>
+                  <div class="ps-cell"><strong>Design move</strong>Place scent notes where shoppers already compare products.</div>
                 </div>
-                <div class="wire-half">
-                  <div class="wire-half-content">
-                    <div class="wire-line short"></div>
-                    <div class="wire-line long"></div>
-                    <div class="wire-line long"></div>
-                    <div class="wire-line medium"></div>
+                <div class="ps-proof">
+                  <div class="ps-mini scent" aria-hidden="true">
+                    <div class="ps-product-card">
+                      <div class="ps-product-image"></div>
+                      <div>
+                        <div class="ps-line long"></div>
+                        <div class="ps-line medium"></div>
+                        <div class="ps-chip-row">
+                          <span class="ps-scent-chip">Woodsy</span>
+                          <span class="ps-scent-chip">Fresh</span>
+                          <span class="ps-scent-chip">Citrus</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="ps-mini-title">Find your scents</div>
+                      <div class="ps-scent-row">
+                        <div class="ps-scent-card"><div class="ps-card-image"></div><div class="ps-line medium"></div></div>
+                        <div class="ps-scent-card"><div class="ps-card-image"></div><div class="ps-line medium"></div></div>
+                        <div class="ps-scent-card"><div class="ps-card-image"></div><div class="ps-line medium"></div></div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="wire-half-img"></div>
+                  <div class="ps-proof-text"><strong>Scent notes</strong>Buy box and product card details.</div>
                 </div>
               </div>
-              <div class="wire-hero" style="margin-top: 14px; border: 1.5px solid #C8C8C8; border-radius: 8px;">
-                <div class="wire-hero-overlay">
-                  <div class="wire-line short" style="height: 14px;"></div>
-                  <div class="wire-line long"></div>
-                  <div class="wire-line medium"></div>
-                  <div class="wire-btn">Learn More</div>
+
+              <div class="ps-row">
+                <div class="ps-copy">
+                  <span class="ps-name">Value Props</span>
+                  <div class="ps-cell"><strong>Opportunity</strong>Make the brand difference easier to understand.</div>
+                  <div class="ps-cell"><strong>User friction</strong>Users did not know why Dr. Squatch was different.</div>
+                  <div class="ps-cell"><strong>Design move</strong>Turn brand values into page sections with clear entry points.</div>
+                </div>
+                <div class="ps-proof">
+                  <div class="ps-mini split" aria-hidden="true">
+                    <div class="ps-value-copy">
+                      <div class="ps-line short"></div>
+                      <div class="ps-line long"></div>
+                      <div class="ps-line long"></div>
+                      <div class="ps-line medium"></div>
+                      <div class="ps-line short"></div>
+                    </div>
+                    <div class="ps-face-panel">
+                      <div class="ps-face"><span class="ps-smile"></span></div>
+                    </div>
+                  </div>
+                  <div class="ps-proof-text"><strong>Value sections</strong>Humor block and men's health hero.</div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="figure">
-            <img src="Assets/Informative Sections.jpg" alt="Informative content sections curated to build user confidence">
-            <button type="button" class="expand-btn" aria-label="Open image" data-expand>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-            </button>
+          <div class="ai-wide-window sections-marquee-window">
+            <h4 class="ai-marquee-title">Sections Curation.</h4>
+            <p class="sections-marquee-subtitle">Intentionally building confidence and inform users</p>
+            <div class="ai-marquee-row">
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/Group 1000004227.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 1.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 2.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 3.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/Group 1000004227.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 1.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 2.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 3.jpg" alt=""></div>
+            </div>
+            <div class="ai-marquee-row reverse">
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 4.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 5.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 6.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 7.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 4.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 5.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 6.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 7.jpg" alt=""></div>
+            </div>
+            <div class="ai-marquee-row">
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 8.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 3.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 6.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 8.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 3.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 6.jpg" alt=""></div>
+            </div>
           </div>
-          <p class="figure-caption">Curating sections to build confidence and inform users.</p>
         </div>
       </div>
     </section>
