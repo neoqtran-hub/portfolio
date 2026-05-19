@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Me — neo by design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  /* ============================================
+     CONFIG FONT
+     ============================================ */
+  @font-face { font-family:'Config'; src:url('fonts/Config-Light.ttf') format('truetype'); font-weight:300; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('fonts/Config-Regular.ttf') format('truetype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('fonts/Config-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('fonts/Config-SemiBold.ttf') format('truetype'); font-weight:600; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('fonts/Config-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
+
+  /* ============================================
+     RESET & BASE — matches index.html
+     ============================================ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Config', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #1a1a1a;
+    background: #f4f4f2;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+  :root {
+    --purple: #daa520;
+    --purple-strong: #daa520;
+    --accent-rgb: 218, 165, 32;
+    --ink: #1a1a1a;
+    --ink-soft: #2a2a2a;
+    --muted: #8a8a8a;
+    --muted-soft: #b8b8b8;
+    --line: #ececec;
+    --bg: #f4f4f2;
+    --bg-soft: #F9F9F7;
+    --card-radius: 28px;
+    --pill-radius: 999px;
+    --glass-bg: rgba(255,255,255,0.45);
+    --glass-bg-strong: rgba(255,255,255,0.85);
+    --glass-border: rgba(255,255,255,0.6);
+  }
+  body.dark {
+    --ink: #f1f1f1;
+    --ink-soft: #d8d8d8;
+    --muted: #9a9a9a;
+    --muted-soft: #5a5a5a;
+    --line: #1f1f25;
+    --bg: #0c0c10;
+    --bg-soft: #131319;
+    --glass-bg: rgba(30,30,40,0.45);
+    --glass-bg-strong: rgba(20,20,28,0.85);
+    --glass-border: rgba(255,255,255,0.12);
+  }
+  body { background: var(--bg); color: var(--ink); transition: background 0.4s ease, color 0.4s ease; }
+  body.dark .brand-logo img { filter: grayscale(1) invert(1); opacity: 0.7; }
+  body.dark .brand-logo:hover img { filter: grayscale(0.3) invert(1); }
+
+  /* ============================================
+     LIQUID GLASS NAV — synced with index.html
+     ============================================ */
+  .nav-wrap {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: calc(100% - 64px);
+    max-width: 1280px;
+    pointer-events: none;
+    transition: top 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+                width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+                max-width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  body.scrolled .nav-wrap { top: 0; width: 100%; max-width: 100%; }
+  .nav {
+    pointer-events: auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 40px;
+    border-radius: var(--pill-radius);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.9) inset,
+      0 -1px 0 rgba(255,255,255,0.4) inset,
+      0 10px 30px -8px rgba(20, 20, 40, 0.12),
+      0 24px 50px -20px rgba(20, 20, 40, 0.18);
+    overflow: hidden;
+    transition: background 0.35s ease,
+                box-shadow 0.35s ease,
+                border-radius 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+                border-color 0.35s ease;
+  }
+  body.scrolled .nav {
+    border-radius: 0;
+    background: var(--glass-bg-strong);
+    border-color: transparent;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    box-shadow: none;
+  }
+  body.scrolled .nav::before { opacity: 0; }
+  body.scrolled .nav::after { display: none; }
+  .nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      rgba(255,255,255,0.55) 0%,
+      rgba(255,255,255,0.05) 40%,
+      rgba(255,255,255,0.0) 60%,
+      rgba(var(--accent-rgb), 0.10) 100%
+    );
+    pointer-events: none;
+  }
+  .nav::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: var(--mx, 50%);
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(255,255,255,0.75) 0%,
+      rgba(var(--accent-rgb), 0.20) 40%,
+      transparent 70%
+    );
+    transform: translateX(-50%);
+    filter: blur(22px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  .nav:hover::after { opacity: 1; }
+  .nav:hover { background: rgba(255,255,255,0.55); }
+
+  .brand {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    position: relative;
+    z-index: 2;
+  }
+  .brand .neo { color: var(--purple-strong); font-weight: 600; }
+  .brand .by { color: var(--ink); font-weight: 400; }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    position: relative;
+    z-index: 2;
+  }
+  .nav-link {
+    position: relative;
+    padding: 8px 18px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--muted);
+    border-radius: var(--pill-radius);
+    transition: color 0.25s ease;
+  }
+  .nav-link:hover { color: var(--purple-strong); }
+  .nav-link.active { color: var(--purple-strong); }
+  .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--purple-strong);
+  }
+  .nav-link.icon {
+    padding: 8px 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+  }
+  .nav-link.icon img {
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+    transition: opacity 0.25s ease;
+  }
+  .nav-link.icon:hover img { opacity: 1; }
+
+  /* ============================================
+     PAGE LAYOUT
+     ============================================ */
+  .me-page { padding: 140px 32px 0; max-width: 1180px; margin: 0 auto; }
+
+  /* INTRO */
+  .intro {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 80px;
+    align-items: center;
+    padding-bottom: 90px;
+    border-bottom: 1px solid var(--line);
+  }
+  .intro-eyebrow {
+    font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 24px;
+  }
+  .intro-title {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 500; letter-spacing: -0.02em; line-height: 1.05;
+    margin-bottom: 28px;
+  }
+  .intro-title em { font-style: normal; color: var(--muted); }
+  .intro-body {
+    font-size: 17px; line-height: 1.7; color: var(--ink-soft);
+    max-width: 540px; margin-bottom: 32px;
+  }
+  .intro-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px; border-radius: var(--pill-radius);
+    font-size: 14px; font-weight: 500;
+    transition: background .2s, color .2s, transform .2s;
+  }
+  .btn-primary { background: var(--ink); color: var(--bg); }
+  .btn-primary:hover { transform: translateY(-1px); }
+  body.dark .btn-primary { background: #fff; color: #0c0c10; }
+  .btn svg { width: 14px; height: 14px; }
+
+  .intro-photo {
+    aspect-ratio: 4/5;
+    max-width: 300px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, #f7f7f7 0%, #eeeeee 100%);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+  body.dark .intro-photo { background: linear-gradient(180deg, #18181f, #0f0f14); }
+  .intro-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .intro-photo .placeholder {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    color: var(--muted); font-size: 12px; letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* SECTION */
+  .section { padding: 90px 0; border-bottom: 1px solid var(--line); }
+  .section:last-of-type { border-bottom: none; }
+  .section-eyebrow {
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 14px;
+  }
+  .section-title {
+    font-size: clamp(28px, 3.5vw, 40px);
+    font-weight: 500; letter-spacing: -0.015em;
+    margin-bottom: 56px;
+  }
+
+  /* RESUME */
+  .resume-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+  .resume-label { display: none; }
+  .resume-items > * + * {
+    margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--line);
+  }
+  .resume-item {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 22px;
+    align-items: start;
+  }
+  .resume-logo {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .resume-logo img { width: 64%; height: 64%; object-fit: contain; }
+  .resume-item-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 24px; margin-bottom: 4px; flex-wrap: wrap;
+  }
+  .resume-role { font-size: 16px; font-weight: 500; color: var(--ink); letter-spacing: -0.01em; }
+  .resume-date { font-size: 13px; color: var(--muted); white-space: nowrap; }
+  .resume-company { font-size: 15px; color: var(--muted); margin-bottom: 12px; }
+  .resume-desc { font-size: 15px; color: var(--ink-soft); line-height: 1.7; max-width: 620px; margin-bottom: 14px; }
+  .resume-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    padding: 5px 11px;
+    border: 1px solid var(--line);
+    border-radius: var(--pill-radius);
+    color: var(--muted);
+    font-size: 12px;
+    background: transparent;
+  }
+  body.dark .chip { color: var(--ink-soft); }
+
+  /* DOWNLOAD CTA (below resume) */
+  .resume-download {
+    margin-top: 40px;
+  }
+  .resume-download a {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--muted);
+    font-size: 14px;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: color .2s, border-color .2s;
+  }
+  .resume-download a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+  .resume-download svg { width: 14px; height: 14px; }
+
+  /* SOFTWARE GRID */
+  .software-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 16px;
+  }
+  .soft-tile {
+    aspect-ratio: 1/1;
+    background: var(--bg-soft);
+    border-radius: 18px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 12px;
+    transition: transform .2s ease, background .2s ease;
+    border: 1px solid var(--line);
+  }
+  .soft-tile:hover { transform: translateY(-2px); background: var(--bg); }
+  .soft-logo {
+    width: 38px; height: 38px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .soft-logo svg { width: 100%; height: 100%; }
+  .soft-name { font-size: 12px; color: var(--muted); }
+
+  /* BRANDS MARQUEE — reuses Honorable Mentions marquee from index */
+  .brands-marquee {
+    padding: 80px 0;
+    overflow: hidden;
+  }
+  .brands-marquee .section-eyebrow,
+  .brands-marquee .section-title {
+    max-width: 1180px;
+    margin-left: auto; margin-right: auto;
+    padding: 0 32px;
+  }
+  .brands-marquee .section-title { margin-bottom: 48px; }
+  .marquee-track-wrap {
+    position: relative; width: 100%; overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  }
+  .marquee-track {
+    display: flex; gap: 80px; align-items: center;
+    padding: 0 40px; width: max-content;
+    will-change: transform;
+    animation: brands-marquee 40s linear infinite;
+  }
+  .marquee-track:hover { animation-play-state: paused; }
+  @keyframes brands-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+  }
+  .brand-logo {
+    flex: 0 0 auto;
+    height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0.65;
+    transition: opacity .25s ease;
+  }
+  .brand-logo:hover { opacity: 1; }
+  .brand-logo img {
+    max-height: 100%;
+    width: auto; height: auto;
+    object-fit: contain;
+    filter: grayscale(1);
+  }
+  .brand-logo.lg { height: 44px; }
+  .brand-logo.sm { height: 28px; }
+  .brand-logo.xs { height: 22px; }
+
+  /* CONTACT */
+  .contact-section { background: var(--bg-soft); padding: 100px 32px; }
+  .contact { max-width: 1180px; margin: 0 auto; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .contact-heading h2 {
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 500; letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .contact-heading p { color: var(--muted); font-size: 17px; }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .field input, .field textarea {
+    width: 100%; padding: 14px 18px;
+    background: var(--bg); border: 1px solid var(--line);
+    border-radius: 14px; font-family: inherit; font-size: 15px;
+    color: var(--ink); transition: border-color .2s;
+  }
+  .field textarea { min-height: 130px; resize: vertical; }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--ink); }
+  .contact-submit {
+    align-self: flex-start; margin-top: 4px;
+    padding: 14px 26px; background: var(--ink); color: var(--bg);
+    border-radius: var(--pill-radius); font-size: 14px; font-weight: 500;
+    transition: transform .2s;
+  }
+  .contact-submit:hover { transform: translateY(-1px); }
+  body.dark .contact-submit { background: #fff; color: #0c0c10; }
+  .contact-links { display: flex; gap: 24px; margin-top: 20px; color: var(--muted); font-size: 14px; }
+  .contact-links a:hover { color: var(--ink); }
+
+  /* THEME DOCK */
+  .theme-dock {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex; gap: 4px;
+    padding: 6px;
+    border-radius: var(--pill-radius);
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  body.dark .theme-dock { background: rgba(20,20,28,0.6); border-color: rgba(255,255,255,0.08); }
+  .theme-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted);
+    transition: background .2s, color .2s;
+  }
+  .theme-btn:hover { background: rgba(0,0,0,0.05); color: var(--ink); }
+  body.dark .theme-btn:hover { background: rgba(255,255,255,0.08); color: var(--ink); }
+  .theme-btn.active { background: var(--ink); color: var(--bg); }
+  body.dark .theme-btn.active { background: #fff; color: #0c0c10; }
+  .theme-btn svg { width: 18px; height: 18px; }
+
+  /* ============================================
+     RESPONSIVE
+     ============================================ */
+  @media (max-width: 920px) {
+    .intro { grid-template-columns: 1fr; gap: 48px; padding-bottom: 72px; }
+    .intro-photo { max-width: 260px; margin: 0; }
+    .resume-grid { gap: 20px; }
+    .software-grid { grid-template-columns: repeat(4, 1fr); }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .me-page { padding: 110px 20px 0; }
+    .section { padding: 72px 0; }
+  }
+  @media (max-width: 560px) {
+    .nav-wrap { width: calc(100% - 24px); top: 16px; }
+    .nav { padding: 12px 24px; }
+    .nav-link { padding: 8px 12px; font-size: 13px; }
+    .software-grid { grid-template-columns: repeat(3, 1fr); }
+    .brand-logo { height: 26px; }
+    .brand-logo.lg { height: 32px; }
+    .marquee-track { gap: 48px; }
+    .resume-item { grid-template-columns: 48px 1fr; gap: 16px; }
+    .resume-logo { width: 48px; height: 48px; border-radius: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     GLOBAL NAV (matches site)
+     ============================================ -->
+<div class="nav-wrap">
+  <nav class="nav" id="nav">
+    <a href="index.html" class="brand"><span class="neo">neo</span> <span class="by">by design</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#work" class="nav-link">Work</a></li>
+      <li><a href="index.html#play" class="nav-link">Play</a></li>
+      <li><a href="me.html" class="nav-link active">Me</a></li>
+      <li>
+        <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener" class="nav-link icon" aria-label="LinkedIn">
+          <img src="Assets/linkedin.png" alt="LinkedIn">
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<main class="me-page">
+
+  <!-- INTRO -->
+  <section class="intro">
+    <div>
+      <h1 class="intro-title">
+        <span style="font-family: 'DM Serif Display', Georgia, serif; color: #B8972A; font-style: italic;">Neo Tran</span>
+      </h1>
+      <p class="intro-body">
+        I'm a Senior Product Designer with 6+ years of experience designing consumer web and
+        mobile products at scale. My work focuses on growth, ecommerce, financial experiences,
+        design systems, and data-informed product decisions. I like turning complex flows into
+        clean, intuitive experiences that feel polished, useful, and easy to trust.
+      </p>
+    </div>
+
+    <div class="intro-photo">
+      <img src="Assets/neo-portrait.jpg" alt="Portrait of Neo Tran" onerror="this.style.display='none'">
+    </div>
+  </section>
+
+
+  <!-- RESUME -->
+  <section class="section" id="resume">
+    <h2 class="section-title">A focused view of my work history.</h2>
+
+    <div class="resume-grid">
+      <div class="resume-label">Experience</div>
+      <div class="resume-items">
+
+        <div class="resume-item">
+          <div class="resume-logo"><img src="Assets/Resume Logo/Squatch.svg" alt="Dr. Squatch"></div>
+          <div>
+            <div class="resume-item-head">
+              <div class="resume-role">Senior Product Designer, Growth, Design System</div>
+              <div class="resume-date">Feb 2024 — Present</div>
+            </div>
+            <div class="resume-company">Dr. Squatch</div>
+            <p class="resume-desc">
+              I lead design for growth-focused experiences across conversion, retention, and
+              customer lifecycle moments. I partner with product, engineering, and data teams to
+              test ideas quickly and improve performance while extending the design system.
+            </p>
+            <div class="resume-chips">
+              <span class="chip">Ecommerce</span>
+              <span class="chip">Growth</span>
+              <span class="chip">CRO</span>
+              <span class="chip">Design System</span>
+              <span class="chip">Experimentation</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="resume-item">
+          <div class="resume-logo"><img src="Assets/Resume Logo/ACI.svg" alt="American Century Investments"></div>
+          <div>
+            <div class="resume-item-head">
+              <div class="resume-role">Senior Product Designer</div>
+              <div class="resume-date">Mar 2022 — Feb 2024</div>
+            </div>
+            <div class="resume-company">American Century Investments</div>
+            <p class="resume-desc">
+              I designed web and mobile experiences for financial products with an emphasis on
+              clarity, trust, and usability. I worked across complex user journeys, helping
+              simplify decision-making through cleaner flows and scalable interaction patterns.
+            </p>
+            <div class="resume-chips">
+              <span class="chip">Finance</span>
+              <span class="chip">Investing</span>
+              <span class="chip">Enterprise</span>
+              <span class="chip">Design System</span>
+              <span class="chip">CMS Migration</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="resume-item">
+          <div class="resume-logo"><img src="Assets/Resume Logo/Beachbody.svg" alt="Beachbody"></div>
+          <div>
+            <div class="resume-item-head">
+              <div class="resume-role">Senior Product Designer</div>
+              <div class="resume-date">Feb 2021 — Feb 2022</div>
+            </div>
+            <div class="resume-company">Beachbody</div>
+            <p class="resume-desc">
+              I designed end-to-end experiences across mobile and web for a large consumer
+              audience. My work used research, analytics, and design system standards to improve
+              engagement and deliver polished product experiences.
+            </p>
+            <div class="resume-chips">
+              <span class="chip">Fitness</span>
+              <span class="chip">Consumer</span>
+              <span class="chip">Mobile</span>
+              <span class="chip">Subscription</span>
+              <span class="chip">Connected TV</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="resume-item">
+          <div class="resume-logo"><img src="Assets/Resume Logo/Ring.svg" alt="Ring"></div>
+          <div>
+            <div class="resume-item-head">
+              <div class="resume-role">Digital Designer</div>
+              <div class="resume-date">Jan 2020 — Jan 2021</div>
+            </div>
+            <div class="resume-company">Ring</div>
+            <p class="resume-desc">
+              I supported Ring's CMS migration by documenting web components, responsive behavior,
+              and developer specs for reusable page patterns.
+            </p>
+            <div class="resume-chips">
+              <span class="chip">Smart Home</span>
+              <span class="chip">IoT</span>
+              <span class="chip">Ecommerce</span>
+              <span class="chip">Migration Support</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="resume-item">
+          <div class="resume-logo"><img src="Assets/Resume Logo/Squatch.svg" alt="Dr. Squatch"></div>
+          <div>
+            <div class="resume-item-head">
+              <div class="resume-role">Digital / Visual Designer</div>
+              <div class="resume-date">Apr 2018 — Nov 2019</div>
+            </div>
+            <div class="resume-company">Dr. Squatch</div>
+            <p class="resume-desc">
+              I designed ecommerce experiences focused on acquisition, conversion, and brand
+              expression. I helped build early design system foundations that supported the
+              company's growth.
+            </p>
+            <div class="resume-chips">
+              <span class="chip">Ecommerce</span>
+              <span class="chip">Brand</span>
+              <span class="chip">Conversion</span>
+              <span class="chip">Visual Design</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DOWNLOAD RESUME — small, low-prominence CTA below resume -->
+    <div class="resume-download">
+      <a href="Assets/Neo-Tran-Resume.pdf" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download resume (PDF)
+      </a>
+    </div>
+  </section>
+
+
+  <!-- SOFTWARE COMPETENCE — moved above brands -->
+  <section class="section" id="software">
+    <h2 class="section-title">Software Competence</h2>
+
+    <div class="software-grid">
+
+      <div class="soft-tile">
+        <div class="soft-logo">
+          <!-- Figma official mark -->
+          <svg viewBox="0 0 38 57" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 28.5a9.5 9.5 0 1 1 9.5 9.5H19V28.5z" fill="#1ABCFE"/>
+            <path d="M9.5 57A9.5 9.5 0 0 1 9.5 38H19v9.5A9.5 9.5 0 0 1 9.5 57z" fill="#0ACF83"/>
+            <path d="M19 0h9.5a9.5 9.5 0 0 1 0 19H19V0z" fill="#FF7262"/>
+            <path d="M0 9.5A9.5 9.5 0 0 1 9.5 0H19v19H9.5A9.5 9.5 0 0 1 0 9.5z" fill="#F24E1E"/>
+            <path d="M0 28.5A9.5 9.5 0 0 1 9.5 19H19v19H9.5A9.5 9.5 0 0 1 0 28.5z" fill="#A259FF"/>
+          </svg>
+        </div>
+        <div class="soft-name">Figma</div>
+      </div>
+
+      <div class="soft-tile">
+        <div class="soft-logo">
+          <!-- Framer official -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 0h16v8h-8L4 0zm0 8h8l8 8H4V8zm0 8h8v8l-8-8z" fill="#0055FF"/>
+          </svg>
+        </div>
+        <div class="soft-name">Framer</div>
+      </div>
+
+      <div class="soft-tile">
+        <div class="soft-logo">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/3840px-Adobe_Photoshop_CC_icon.svg.png" alt="Photoshop" style="width:38px;height:38px;object-fit:contain;">
+        </div>
+        <div class="soft-name">Photoshop</div>
+      </div>
+
+      <div class="soft-tile">
+        <div class="soft-logo">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Adobe_Illustrator_CC_icon.svg/1280px-Adobe_Illustrator_CC_icon.svg.png" alt="Illustrator" style="width:38px;height:38px;object-fit:contain;">
+        </div>
+        <div class="soft-name">Illustrator</div>
+      </div>
+
+      <div class="soft-tile">
+        <div class="soft-logo">
+          <!-- After Effects -->
+          <svg viewBox="0 0 240 234" xmlns="http://www.w3.org/2000/svg">
+            <rect width="240" height="234" rx="42" fill="#00005B"/>
+            <text x="50%" y="62%" font-family="Helvetica, Arial Black, Arial" font-weight="900" font-size="120" fill="#D291FF" text-anchor="middle">Ae</text>
+          </svg>
+        </div>
+        <div class="soft-name">After Effects</div>
+      </div>
+
+      <div class="soft-tile">
+        <div class="soft-logo">
+          <img src="https://dhygzobemt712.cloudfront.net/Mark/Mark_Logo_Blue.svg" alt="Webflow" style="width:38px;height:38px;object-fit:contain;">
+        </div>
+        <div class="soft-name">Webflow</div>
+      </div>
+
+      <div class="soft-tile">
+        <div class="soft-logo">
+          <img src="https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/1/contentful-8lg04b2avylmh700pic73l.png/contentful-m9m0l34hql9xfsr0ejl3gf.png" alt="Contentful" style="width:38px;height:38px;object-fit:contain;">
+        </div>
+        <div class="soft-name">Contentful</div>
+      </div>
+
+      <div class="soft-tile">
+        <div class="soft-logo">
+          <img src="https://cdn.worldvectorlogo.com/logos/jira-3.svg" alt="Jira" style="width:38px;height:38px;object-fit:contain;">
+        </div>
+        <div class="soft-name">Jira</div>
+      </div>
+
+      <div class="soft-tile">
+        <div class="soft-logo">
+          <img src="https://wpforms.com/wp-content/uploads/2024/08/claude-logo.png" alt="Claude" style="width:38px;height:38px;object-fit:contain;">
+        </div>
+        <div class="soft-name">Claude</div>
+      </div>
+
+      <div class="soft-tile">
+        <div class="soft-logo">
+          <img src="https://a.storyblok.com/f/310467/816x816/de8be483d3/codex-app.png" alt="Codex" style="width:38px;height:38px;object-fit:contain;">
+        </div>
+        <div class="soft-name">Codex</div>
+      </div>
+
+      <div class="soft-tile">
+        <div class="soft-logo">
+          <!-- HTML/CSS -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 2l1.7 19L12 23l7.3-2L21 2H3zm14.4 6H7.8l.2 2.5H17l-.6 6.5L12 18.3l-4.4-1.3-.3-3.4h2.2l.1 1.7 2.4.7 2.4-.7.3-3H6.9L6.3 5h11.3l-.2 3z" fill="#E44D26"/>
+          </svg>
+        </div>
+        <div class="soft-name">HTML / CSS</div>
+      </div>
+
+      <div class="soft-tile">
+        <div class="soft-logo">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Sketch_Logo.svg/1280px-Sketch_Logo.svg.png" alt="Sketch" style="width:38px;height:38px;object-fit:contain;">
+        </div>
+        <div class="soft-name">Sketch</div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+
+<!-- ============================================
+     BRANDS MARQUEE
+     ============================================ -->
+<section class="brands-marquee" aria-label="Brands I've worked with">
+  <div style="max-width:1180px;margin:0 auto;padding:0 32px;">
+    <h2 class="section-title">Brands I've Worked With</h2>
+  </div>
+
+  <div class="marquee-track-wrap">
+    <div class="marquee-track">
+      <!-- Set 1 -->
+      <div class="brand-logo lg" title="Dr. Squatch"><img src="Assets/drsquatch-horizontal-logo-reversed 1.png" alt="Dr. Squatch"></div>
+      <div class="brand-logo" title="Ring"><img src="Assets/Ring.png" alt="Ring"></div>
+      <div class="brand-logo" title="BODi by Beachbody"><img src="Assets/bodi-by-bb-logo 1.png" alt="BODi by Beachbody"></div>
+      <div class="brand-logo lg" title="American Century Investments"><img src="Assets/American Century.png" alt="American Century Investments"></div>
+      <div class="brand-logo" title="Simpluris"><img src="Assets/Simpluris.png" alt="Simpluris"></div>
+      <div class="brand-logo sm" title="LAist"><img src="Assets/LAist.png" alt="LAist"></div>
+      <div class="brand-logo" title="Kareo"><img src="Assets/Kareo.png" alt="Kareo"></div>
+      <div class="brand-logo" title="Dexcare"><img src="Assets/Dexcare.png" alt="Dexcare"></div>
+      <div class="brand-logo" title="Spring Theory"><img src="Assets/Springtheory.png" alt="Spring Theory"></div>
+      <div class="brand-logo" title="Evolus"><img src="Assets/logo 1.png" alt="Evolus"></div>
+
+      <!-- Set 2 (duplicate for seamless loop) -->
+      <div class="brand-logo lg" aria-hidden="true"><img src="Assets/drsquatch-horizontal-logo-reversed 1.png" alt=""></div>
+      <div class="brand-logo" aria-hidden="true"><img src="Assets/Ring.png" alt=""></div>
+      <div class="brand-logo" aria-hidden="true"><img src="Assets/bodi-by-bb-logo 1.png" alt=""></div>
+      <div class="brand-logo lg" aria-hidden="true"><img src="Assets/American Century.png" alt=""></div>
+      <div class="brand-logo" aria-hidden="true"><img src="Assets/Simpluris.png" alt=""></div>
+      <div class="brand-logo sm" aria-hidden="true"><img src="Assets/LAist.png" alt=""></div>
+      <div class="brand-logo" aria-hidden="true"><img src="Assets/Kareo.png" alt=""></div>
+      <div class="brand-logo" aria-hidden="true"><img src="Assets/Dexcare.png" alt=""></div>
+      <div class="brand-logo" aria-hidden="true"><img src="Assets/Springtheory.png" alt=""></div>
+      <div class="brand-logo" aria-hidden="true"><img src="Assets/logo 1.png" alt=""></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================
+     CONTACT (footer on every page)
+     ============================================ -->
+<section class="contact-section" id="contact">
+ <div class="contact">
+  <div class="contact-grid">
+    <div class="contact-heading">
+      <h2>Let's Work Together</h2>
+      <p>Good design starts with clear intent.</p>
+    </div>
+    <form class="contact-form" onsubmit="event.preventDefault();">
+      <div class="field"><input type="text" name="name" placeholder="Name" required></div>
+      <div class="field"><input type="email" name="email" placeholder="Email" required></div>
+      <div class="field"><textarea name="message" placeholder="Message" required></textarea></div>
+      <button type="submit" class="contact-submit">Make Good Work Together!</button>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener">Linkedin</a>
+        <a href="mailto:neoqtran@gmail.com">neoqtran@gmail.com</a>
+        <a href="Assets/Neo-Tran-Resume.pdf" download>CV</a>
+      </div>
+    </form>
+  </div>
+ </div>
+</section>
+
+
+<!-- ============================================
+     THEME DOCK
+     ============================================ -->
+<div class="theme-dock" role="toolbar" aria-label="Theme">
+  <button class="theme-btn active" id="btn-light" aria-label="Light mode" title="Light">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+  </button>
+  <button class="theme-btn" id="btn-dark" aria-label="Dark mode" title="Dark">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+  </button>
+</div>
+
+
+<script>
+  // Nav refraction follows mouse
+  const nav = document.getElementById('nav');
+  if (nav) {
+    nav.addEventListener('mousemove', (e) => {
+      const rect = nav.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      nav.style.setProperty('--mx', x + '%');
+    });
+  }
+
+  // Scrolled nav state
+  function handleNavScroll() {
+    if (window.scrollY > 12) document.body.classList.add('scrolled');
+    else document.body.classList.remove('scrolled');
+  }
+  window.addEventListener('scroll', handleNavScroll, { passive: true });
+  handleNavScroll();
+
+  // Theme toggle
+  const btnLight = document.getElementById('btn-light');
+  const btnDark = document.getElementById('btn-dark');
+  function setTheme(mode) {
+    document.body.classList.toggle('dark', mode === 'dark');
+    btnLight.classList.toggle('active', mode === 'light');
+    btnDark.classList.toggle('active', mode === 'dark');
+    try { localStorage.setItem('theme', mode); } catch(e){}
+  }
+  btnLight.addEventListener('click', () => setTheme('light'));
+  btnDark.addEventListener('click', () => setTheme('dark'));
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') setTheme('dark');
+  } catch(e){}
+</script>
+</body>
+</html>

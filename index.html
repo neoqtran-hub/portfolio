@@ -53,8 +53,9 @@
   button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
   :root {
-    --purple: #9B51E0;
-    --purple-strong: #9B51E0;
+    --purple: #daa520;
+    --purple-strong: #daa520;
+    --accent-rgb: 218, 165, 32;
     --ink: #1a1a1a;
     --ink-soft: #2a2a2a;
     --muted: #8a8a8a;
@@ -161,7 +162,7 @@
       rgba(255,255,255,0.55) 0%,
       rgba(255,255,255,0.05) 40%,
       rgba(255,255,255,0.0) 60%,
-      rgba(155, 81, 224, 0.10) 100%
+      rgba(var(--accent-rgb), 0.10) 100%
     );
     pointer-events: none;
   }
@@ -177,7 +178,7 @@
     background: radial-gradient(
       circle,
       rgba(255,255,255,0.75) 0%,
-      rgba(155, 81, 224, 0.20) 40%,
+      rgba(var(--accent-rgb), 0.20) 40%,
       transparent 70%
     );
     transform: translateX(-50%);
@@ -837,6 +838,7 @@
      STICKY LIQUID GLASS BOTTOM WIDGET
      ============================================ */
   .theme-dock {
+    display: none;
     position: fixed;
     bottom: 24px;
     left: 50%;
@@ -866,14 +868,14 @@
       rgba(255,255,255,0.55) 0%,
       rgba(255,255,255,0.05) 40%,
       transparent 60%,
-      rgba(155,81,224,0.10) 100%);
+      rgba(var(--accent-rgb),0.10) 100%);
     pointer-events: none;
   }
   body.dark .theme-dock::before {
     background: linear-gradient(135deg,
       rgba(255,255,255,0.18) 0%,
       transparent 50%,
-      rgba(155,81,224,0.15) 100%);
+      rgba(var(--accent-rgb),0.15) 100%);
   }
   .theme-btn {
     position: relative;
@@ -885,14 +887,14 @@
     z-index: 1;
   }
   .theme-btn svg { width: 20px; height: 20px; }
-  .theme-btn:hover { background: rgba(155,81,224,0.12); transform: scale(1.08); }
+  .theme-btn:hover { background: rgba(var(--accent-rgb),0.12); transform: scale(1.08); }
   .theme-btn.active {
-    background: rgba(155,81,224,0.22);
+    background: rgba(var(--accent-rgb),0.22);
     color: var(--purple-strong);
-    box-shadow: 0 0 0 1px rgba(155,81,224,0.35) inset;
+    box-shadow: 0 0 0 1px rgba(var(--accent-rgb),0.35) inset;
   }
   .theme-btn.party:hover {
-    background: linear-gradient(135deg,#ff3df0,#9B51E0,#3df0ff);
+    background: linear-gradient(135deg,#ff3df0,#daa520,#3df0ff);
     color: #fff;
     animation: party-wiggle 0.4s ease-in-out infinite;
   }
@@ -942,7 +944,7 @@
   .neon-beam.b3 { background: linear-gradient(0deg, #ffea00, transparent 70%); animation-duration: 8s; --sweep: 50deg; }
   .neon-beam.b4 { background: linear-gradient(0deg, #ff3d3d, transparent 70%); animation-duration: 5.5s; --sweep: -45deg; }
   .neon-beam.b5 { background: linear-gradient(0deg, #3dff6f, transparent 70%); animation-duration: 6.5s; --sweep: 35deg; }
-  .neon-beam.b6 { background: linear-gradient(0deg, #9B51E0, transparent 70%); animation-duration: 7.5s; --sweep: -30deg; }
+  .neon-beam.b6 { background: linear-gradient(0deg, #daa520, transparent 70%); animation-duration: 7.5s; --sweep: -30deg; }
   @keyframes beam-sweep {
     0% { transform: translateX(-50%) rotate(calc(var(--sweep, 45deg) * -1)); }
     100% { transform: translateX(-50%) rotate(var(--sweep, 45deg)); }
@@ -982,7 +984,7 @@
       radial-gradient(circle at 35% 30%, #ffffff 0%, #d8d8d8 20%, #888 50%, #333 100%);
     box-shadow:
       0 0 60px rgba(255,255,255,0.6),
-      0 0 120px rgba(155,81,224,0.5),
+      0 0 120px rgba(var(--accent-rgb),0.5),
       inset -20px -20px 50px rgba(0,0,0,0.5);
     position: relative;
     overflow: hidden;
@@ -1107,7 +1109,7 @@
     <ul class="nav-links">
       <li><a href="#work" class="nav-link active">Work</a></li>
       <li><a href="#play" class="nav-link">Play</a></li>
-      <li><a href="#me" class="nav-link">Me</a></li>
+      <li><a href="me.html" class="nav-link">Me</a></li>
       <li>
         <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener" class="nav-link icon" aria-label="LinkedIn">
           <img src="Assets/linkedin.png" alt="LinkedIn">
@@ -1208,7 +1210,7 @@
     <!-- ---- American Century (full-width) ---- -->
     <a href="american-century.html" class="case">
       <div class="case-card">
-        <img class="case-image" src="Assets/cards/american-century.jpg" alt="" onerror="this.style.display='none'">
+        <img class="case-image" src="Assets/cards/American Century Investments.jpg" alt="" onerror="this.style.display='none'">
         <div class="case-card-overlay">
           <div class="case-top">
             <span class="case-tag">Fintech</span>
@@ -1231,7 +1233,7 @@
     <!-- ---- Beachbody (full-width) ---- -->
     <a href="beachbody.html" class="case">
       <div class="case-card">
-        <img class="case-image" src="Assets/cards/beachbody-1.jpg" alt="" onerror="this.style.display='none'">
+        <img class="case-image" src="Assets/cards/BODi.jpg" alt="" onerror="this.style.display='none'">
         <div class="case-card-overlay">
           <div class="case-top">
             <span class="case-tag">Fitness</span>
@@ -1254,7 +1256,7 @@
     <!-- ---- Ring (full-width) ---- -->
     <a href="ring.html" class="case">
       <div class="case-card">
-        <img class="case-image" src="Assets/cards/ring.jpg" alt="" onerror="this.style.display='none'">
+        <img class="case-image" src="Assets/cards/Ring.jpg" alt="" onerror="this.style.display='none'">
         <div class="case-card-overlay">
           <div class="case-top">
             <span class="case-tag">Smart Home</span>
@@ -1270,7 +1272,7 @@
       </div>
       <div class="case-title">
         <span>Ring</span>
-        <span class="case-meta">Headless CMS · Design System · Component Architecture</span>
+        <span class="case-meta">Headless CMS · Migration Support · Developer Specs</span>
       </div>
     </a>
 
@@ -1530,7 +1532,7 @@
     }
 
     // Sparkles around screen
-    const colors = ['#ff00e0', '#00ffe0', '#ffea00', '#ff3d3d', '#3dff6f', '#9B51E0'];
+    const colors = ['#ff00e0', '#00ffe0', '#ffea00', '#ff3d3d', '#3dff6f', '#daa520'];
     for (let i = 0; i < 40; i++) {
       const s = document.createElement('div');
       s.className = 'disco-sparkle';
@@ -1544,7 +1546,7 @@
   }
 
   function spawnConfetti() {
-    const colors = ['#ff00e0','#00ffe0','#ffea00','#ff3d3d','#3dff6f','#9B51E0','#ffffff'];
+    const colors = ['#ff00e0','#00ffe0','#ffea00','#ff3d3d','#3dff6f','#daa520','#ffffff'];
     for (let i = 0; i < 6; i++) {
       const c = document.createElement('div');
       c.className = 'confetti';

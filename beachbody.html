@@ -36,8 +36,9 @@
   button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
   :root {
-    --purple: #9B51E0;
-    --purple-strong: #9B51E0;
+    --purple: #daa520;
+    --purple-strong: #daa520;
+    --accent-rgb: 218, 165, 32;
     --ink: #1a1a1a;
     --ink-soft: #2a2a2a;
     --muted: #8a8a8a;
@@ -108,7 +109,7 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.05) 40%, rgba(255,255,255,0) 60%, rgba(155,81,224,0.10) 100%);
+    background: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.05) 40%, rgba(255,255,255,0) 60%, rgba(var(--accent-rgb),0.10) 100%);
     pointer-events: none;
   }
   .nav::after {
@@ -118,7 +119,7 @@
     left: var(--mx, 50%);
     width: 240px; height: 240px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,255,255,0.75) 0%, rgba(155,81,224,0.20) 40%, transparent 70%);
+    background: radial-gradient(circle, rgba(255,255,255,0.75) 0%, rgba(var(--accent-rgb),0.20) 40%, transparent 70%);
     transform: translateX(-50%);
     filter: blur(22px);
     opacity: 0;
@@ -244,7 +245,7 @@
       rgba(255,255,255,0.55) 0%,
       rgba(255,255,255,0.05) 35%,
       rgba(255,255,255,0) 60%,
-      rgba(155,81,224,0.06) 100%
+      rgba(var(--accent-rgb),0.06) 100%
     );
     pointer-events: none;
   }
@@ -761,6 +762,55 @@
     .contact { padding: 60px 20px 80px; }
     .contact-grid { grid-template-columns: 1fr; gap: 40px; }
   }
+
+  /* ============================================
+     Side Menu — sticky vertical TOC for case pages
+     ============================================ */
+  .side-menu {
+    position: fixed;
+    top: 50%;
+    left: 32px;
+    transform: translateY(-50%);
+    z-index: 40;
+    max-height: calc(100vh - 160px);
+    overflow-y: auto;
+    font-family: 'DM Serif Display', 'DM Serif Text', Georgia, serif;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  body.scrolled .side-menu {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .side-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .side-menu a {
+    display: block;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--muted);
+    transition: color .25s ease, font-size .25s ease;
+    white-space: nowrap;
+    line-height: 1.2;
+  }
+  .side-menu a:hover {
+    color: var(--ink);
+  }
+  .side-menu a.active {
+    color: var(--purple-strong);
+    font-size: 22px;
+  }
+  .side-menu::-webkit-scrollbar { width: 0; }
+  @media (max-width: 1200px) {
+    .side-menu { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -772,7 +822,7 @@
     <ul class="nav-links">
       <li><a href="index.html#work" class="nav-link active">Work</a></li>
       <li><a href="index.html#play" class="nav-link">Play</a></li>
-      <li><a href="index.html#me" class="nav-link">Me</a></li>
+      <li><a href="me.html" class="nav-link">Me</a></li>
       <li>
         <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener" class="nav-link icon" aria-label="LinkedIn">
           <img src="Assets/linkedin.png" alt="LinkedIn">
@@ -782,6 +832,11 @@
   </nav>
 </div>
 
+
+<!-- Side Menu (auto-populated by JS) -->
+<aside class="side-menu" id="side-menu" aria-label="Page sections">
+  <ul></ul>
+</aside>
 
 <!-- Case Page -->
 <main class="case-page">
@@ -1275,6 +1330,54 @@
   }
   handleNavScroll();
   window.addEventListener('scroll', handleNavScroll, { passive: true });
+
+  // ============================================
+  // Side menu: build TOC from sections + highlight active on scroll
+  // ============================================
+  (function () {
+    const sideMenu = document.getElementById('side-menu');
+    if (!sideMenu) return;
+    const ul = sideMenu.querySelector('ul');
+    const sections = Array.from(document.querySelectorAll('main.case-page section.section[id]'));
+    if (!sections.length) return;
+
+    sections.forEach(sec => {
+      const id = sec.id;
+      const h2 = sec.querySelector('.section-header h2');
+      const label = h2 ? h2.textContent.trim() : id;
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = '#' + id;
+      a.textContent = label;
+      a.dataset.target = id;
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
+    const links = Array.from(ul.querySelectorAll('a'));
+    function setActive(id) {
+      links.forEach(l => l.classList.toggle('active', l.dataset.target === id));
+    }
+
+    function onScroll() {
+      const offset = 120;
+      let currentId = sections[0].id;
+      for (const sec of sections) {
+        const rect = sec.getBoundingClientRect();
+        if (rect.top - offset <= 0) currentId = sec.id;
+        else break;
+      }
+      setActive(currentId);
+    }
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    links.forEach(l => l.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.getElementById(l.dataset.target);
+      if (target) window.scrollTo({ top: target.offsetTop - 90, behavior: 'smooth' });
+    }));
+  })();
 
   // ============================================
   // Resize the embedded iframe to fit its content (no fixed height)
