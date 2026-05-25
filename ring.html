@@ -80,20 +80,21 @@
     justify-content: space-between;
     padding: 14px 40px;
     border-radius: var(--pill-radius);
-    background: rgba(255,255,255,0.45);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255,255,255,0.6);
+    background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.12) 100%);
+    backdrop-filter: blur(24px) saturate(190%) brightness(1.04);
+    -webkit-backdrop-filter: blur(24px) saturate(190%) brightness(1.04);
+    border: 1px solid rgba(255,255,255,0.50);
     box-shadow:
-      0 1px 0 rgba(255,255,255,0.9) inset,
-      0 -1px 0 rgba(255,255,255,0.4) inset,
-      0 4px 6px -1px rgba(0,0,0,0.1),
-      0 2px 4px -2px rgba(0,0,0,0.1);
+      0 1px 0 rgba(255,255,255,0.95) inset,
+      0 -1px 0 rgba(255,255,255,0.22) inset,
+      0 0 0 0.5px rgba(0,0,0,0.04),
+      0 12px 32px -10px rgba(20, 20, 40, 0.14),
+      0 28px 60px -24px rgba(20, 20, 40, 0.20);
     overflow: hidden;
-    transition: background 0.35s ease,
-                box-shadow 0.35s ease,
-                border-radius 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-                border-color 0.35s ease;
+    transition: background 0.4s ease,
+                box-shadow 0.4s ease,
+                border-radius 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+                border-color 0.4s ease;
   }
   body.scrolled .nav {
     border-radius: 0;
@@ -109,21 +110,22 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.05) 40%, rgba(255,255,255,0) 60%, rgba(var(--accent-rgb),0.10) 100%);
+    background: linear-gradient(120deg, rgba(255,255,255,0.60) 0%, rgba(255,255,255,0.10) 24%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.10) 76%, rgba(var(--accent-rgb),0.18) 100%);
     pointer-events: none;
   }
   .nav::after {
     content: '';
     position: absolute;
-    top: -50%;
+    top: 50%;
     left: var(--mx, 50%);
-    width: 240px; height: 240px;
+    width: 320px; height: 320px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,255,255,0.75) 0%, rgba(var(--accent-rgb),0.20) 40%, transparent 70%);
-    transform: translateX(-50%);
-    filter: blur(22px);
+    background: radial-gradient(circle, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.30) 22%, rgba(var(--accent-rgb),0.18) 50%, transparent 72%);
+    transform: translate(-50%, -50%);
+    filter: blur(20px);
     opacity: 0;
     pointer-events: none;
+    mix-blend-mode: screen;
     transition: opacity 0.5s ease;
   }
   .nav:hover::after { opacity: 1; }
@@ -224,15 +226,16 @@
     border-radius: 20px;
     overflow: hidden;
     /* glass fill */
-    background: rgba(255,255,255,0.55);
-    backdrop-filter: blur(28px) saturate(180%);
-    -webkit-backdrop-filter: blur(28px) saturate(180%);
-    border: 1px solid rgba(255,255,255,0.7);
+    background: linear-gradient(180deg, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.16) 100%);
+    backdrop-filter: blur(28px) saturate(190%) brightness(1.04);
+    -webkit-backdrop-filter: blur(28px) saturate(190%) brightness(1.04);
+    border: 1px solid rgba(255,255,255,0.55);
     box-shadow:
-      0 1px 0 rgba(255,255,255,0.95) inset,
-      0 -1px 0 rgba(255,255,255,0.5) inset,
+      0 1px 0 rgba(255,255,255,1) inset,
+      0 -1px 0 rgba(255,255,255,0.25) inset,
+      0 0 0 0.5px rgba(0,0,0,0.03),
       0 1px 2px rgba(0,0,0,0.04),
-      0 8px 24px -16px rgba(0,0,0,0.10);
+      0 12px 28px -18px rgba(0,0,0,0.14);
   }
   /* refraction sheen */
   .section-header::before {
@@ -1071,6 +1074,121 @@
       ticking = true;
     }
   });
+</script>
+
+<!-- Edge glow ripple + blur transition -->
+<style>
+  .wormhole-wrap {
+    position: fixed; inset: 0; z-index: 99999;
+    pointer-events: none; display: none; overflow: hidden;
+  }
+  .wormhole-wrap.active { display: block; }
+  .edge-glow {
+    position: absolute; inset: 0; pointer-events: none;
+    opacity: 0; mix-blend-mode: screen;
+    will-change: opacity, box-shadow;
+  }
+  .edge-glow.l1 {
+    box-shadow:
+      inset 0 0 60px 10px rgba(255,255,255,0.95),
+      inset 0 0 140px 30px rgba(218,165,32,0.85);
+  }
+  .edge-glow.l2 {
+    box-shadow:
+      inset 0 0 90px 18px rgba(255,120,200,0.85),
+      inset 0 0 220px 50px rgba(120,90,255,0.55);
+  }
+  .edge-glow.l3 {
+    box-shadow:
+      inset 0 0 110px 24px rgba(60,200,255,0.8),
+      inset 0 0 280px 70px rgba(80,255,180,0.45);
+  }
+  .wormhole-wrap.out .edge-glow.l1 { animation: edge-pulse 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0s forwards; }
+  .wormhole-wrap.out .edge-glow.l2 { animation: edge-pulse 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0.16s forwards; }
+  .wormhole-wrap.out .edge-glow.l3 { animation: edge-pulse 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0.32s forwards; }
+  .wormhole-wrap.in .edge-glow.l3 { animation: edge-pulse-in 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0s forwards; }
+  .wormhole-wrap.in .edge-glow.l2 { animation: edge-pulse-in 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.16s forwards; }
+  .wormhole-wrap.in .edge-glow.l1 { animation: edge-pulse-in 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.32s forwards; }
+  @keyframes edge-pulse {
+    0% { opacity: 0; transform: scale(1); }
+    25% { opacity: 1; }
+    60% { opacity: 0.85; }
+    100% { opacity: 0; transform: scale(1.02); }
+  }
+  @keyframes edge-pulse-in {
+    0% { opacity: 0; transform: scale(1.02); }
+    30% { opacity: 0.9; }
+    100% { opacity: 0; transform: scale(1); }
+  }
+  body.warp-out #page-warp {
+    animation: page-blur-out 1.3s cubic-bezier(0.65, 0, 0.35, 1) both;
+    will-change: filter, opacity;
+  }
+  @keyframes page-blur-out {
+    0% { filter: blur(0) saturate(1); opacity: 1; }
+    50% { filter: blur(10px) saturate(1.18); opacity: 1; }
+    100% { filter: blur(32px) saturate(1.25); opacity: 0; }
+  }
+  body.warp-in #page-warp {
+    animation: page-blur-in 1.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: filter, opacity;
+  }
+  @keyframes page-blur-in {
+    0% { filter: blur(32px) saturate(1.25); opacity: 0; }
+    40% { opacity: 1; }
+    100% { filter: blur(0) saturate(1); opacity: 1; }
+  }
+  body.warp-out, body.warp-in { overflow: hidden !important; }
+</style>
+<div class="wormhole-wrap" id="wormhole" aria-hidden="true">
+  <div class="edge-glow l1"></div>
+  <div class="edge-glow l2"></div>
+  <div class="edge-glow l3"></div>
+</div>
+<script>
+(function(){
+  var body = document.body;
+  var wormholeEl = document.getElementById('wormhole');
+  var wrap = document.getElementById('page-warp');
+  if (!wrap) {
+    wrap = document.createElement('div');
+    wrap.id = 'page-warp';
+    var kids = Array.from(body.childNodes);
+    kids.forEach(function(node){
+      if (node === wormholeEl || node === wrap) return;
+      if (node.nodeType === 1 && (node.tagName === 'SCRIPT' || node.tagName === 'STYLE')) return;
+      wrap.appendChild(node);
+    });
+    body.insertBefore(wrap, body.firstChild);
+  }
+  try {
+    var raw = sessionStorage.getItem('warpFrom');
+    if (raw) {
+      var data = JSON.parse(raw);
+      if (data && (Date.now() - data.t) < 3000) {
+        wormholeEl.classList.add('active', 'in');
+        body.classList.add('warp-in');
+        setTimeout(function(){
+          wormholeEl.classList.remove('active', 'in');
+          body.classList.remove('warp-in');
+        }, 1500);
+      }
+      sessionStorage.removeItem('warpFrom');
+    }
+  } catch(e) {}
+  document.querySelectorAll('a[href$=".html"]').forEach(function(link){
+    link.addEventListener('click', function(e){
+      var href = link.getAttribute('href');
+      if (!href || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      if (href.indexOf('http') === 0 || href.indexOf('//') === 0) return;
+      e.preventDefault();
+      wormholeEl.classList.add('active', 'out');
+      body.classList.add('warp-out');
+      try { sessionStorage.setItem('warpFrom', JSON.stringify({t:Date.now()})); } catch(err) {}
+      setTimeout(function(){ window.location.href = href; }, 1300);
+    });
+  });
+})();
 </script>
 
 </body>

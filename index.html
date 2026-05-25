@@ -126,20 +126,22 @@
     justify-content: space-between;
     padding: 14px 40px;
     border-radius: var(--pill-radius);
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid var(--glass-border);
+    /* iOS 26 clear material — softer fill, heavier saturation */
+    background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.12) 100%);
+    backdrop-filter: blur(24px) saturate(190%) brightness(1.04);
+    -webkit-backdrop-filter: blur(24px) saturate(190%) brightness(1.04);
+    border: 1px solid rgba(255,255,255,0.50);
     box-shadow:
-      0 1px 0 rgba(255,255,255,0.9) inset,
-      0 -1px 0 rgba(255,255,255,0.4) inset,
-      0 10px 30px -8px rgba(20, 20, 40, 0.12),
-      0 24px 50px -20px rgba(20, 20, 40, 0.18);
+      0 1px 0 rgba(255,255,255,0.95) inset,
+      0 -1px 0 rgba(255,255,255,0.22) inset,
+      0 0 0 0.5px rgba(0,0,0,0.04),
+      0 12px 32px -10px rgba(20, 20, 40, 0.14),
+      0 28px 60px -24px rgba(20, 20, 40, 0.20);
     overflow: hidden;
-    transition: background 0.35s ease,
-                box-shadow 0.35s ease,
-                border-radius 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-                border-color 0.35s ease;
+    transition: background 0.4s ease,
+                box-shadow 0.4s ease,
+                border-radius 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+                border-color 0.4s ease;
   }
   /* Scrolled state: full-width bar, no shadow, no rounded corners */
   body.scrolled .nav {
@@ -158,37 +160,42 @@
     inset: 0;
     border-radius: inherit;
     background: linear-gradient(
-      135deg,
-      rgba(255,255,255,0.55) 0%,
-      rgba(255,255,255,0.05) 40%,
-      rgba(255,255,255,0.0) 60%,
-      rgba(var(--accent-rgb), 0.10) 100%
+      120deg,
+      rgba(255,255,255,0.60) 0%,
+      rgba(255,255,255,0.10) 24%,
+      rgba(255,255,255,0) 50%,
+      rgba(255,255,255,0.10) 76%,
+      rgba(var(--accent-rgb), 0.18) 100%
     );
     pointer-events: none;
   }
-  /* refraction smear that follows hover */
+  /* Pointer-tracked lensing — soft and parallax-like */
   .nav::after {
     content: '';
     position: absolute;
-    top: -50%;
+    top: 50%;
     left: var(--mx, 50%);
-    width: 240px;
-    height: 240px;
+    width: 320px;
+    height: 320px;
     border-radius: 50%;
     background: radial-gradient(
       circle,
-      rgba(255,255,255,0.75) 0%,
-      rgba(var(--accent-rgb), 0.20) 40%,
-      transparent 70%
+      rgba(255,255,255,0.85) 0%,
+      rgba(255,255,255,0.30) 22%,
+      rgba(var(--accent-rgb), 0.18) 50%,
+      transparent 72%
     );
-    transform: translateX(-50%);
-    filter: blur(22px);
+    transform: translate(-50%, -50%);
+    filter: blur(20px);
     opacity: 0;
     pointer-events: none;
+    mix-blend-mode: screen;
     transition: opacity 0.5s ease;
   }
   .nav:hover::after { opacity: 1; }
-  .nav:hover { background: rgba(255,255,255,0.55); }
+  .nav:hover {
+    background: linear-gradient(180deg, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0.16) 100%);
+  }
 
   .brand {
     font-size: 18px;
@@ -262,6 +269,76 @@
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
+    perspective: 1400px;
+  }
+  /* Aurora gradient mesh background — slow drifting blobs */
+  .aurora {
+    position: absolute;
+    inset: -10%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(80px) saturate(1.2);
+    opacity: 0.18;
+    mix-blend-mode: multiply;
+  }
+  body.dark .aurora { opacity: 0.18; mix-blend-mode: screen; }
+  .aurora-blob {
+    position: absolute;
+    border-radius: 50%;
+    will-change: transform;
+  }
+  .aurora-blob.b1 {
+    top: -10%; left: -5%;
+    width: 55vw; height: 55vw;
+    background: radial-gradient(circle, rgba(218,165,32,0.95) 0%, rgba(218,165,32,0) 65%);
+    animation: drift-1 5s ease-in-out infinite alternate;
+  }
+  .aurora-blob.b2 {
+    top: 15%; right: -10%;
+    width: 60vw; height: 60vw;
+    background: radial-gradient(circle, rgba(255,90,180,0.9) 0%, rgba(255,90,180,0) 65%);
+    animation: drift-2 6s ease-in-out infinite alternate;
+  }
+  .aurora-blob.b3 {
+    bottom: -20%; left: 10%;
+    width: 65vw; height: 65vw;
+    background: radial-gradient(circle, rgba(110,70,255,0.85) 0%, rgba(110,70,255,0) 65%);
+    animation: drift-3 7s ease-in-out infinite alternate;
+  }
+  .aurora-blob.b4 {
+    top: 35%; left: 25%;
+    width: 50vw; height: 50vw;
+    background: radial-gradient(circle, rgba(40,180,255,0.8) 0%, rgba(40,180,255,0) 65%);
+    animation: drift-4 5.5s ease-in-out infinite alternate;
+  }
+  .aurora-blob.b5 {
+    bottom: 5%; right: 20%;
+    width: 45vw; height: 45vw;
+    background: radial-gradient(circle, rgba(60,220,160,0.75) 0%, rgba(60,220,160,0) 65%);
+    animation: drift-1 6.5s ease-in-out infinite alternate-reverse;
+  }
+  @keyframes drift-1 {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(8vw, 6vh) scale(1.1); }
+    100% { transform: translate(-4vw, 10vh) scale(0.95); }
+  }
+  @keyframes drift-2 {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(-10vw, 8vh) scale(1.15); }
+    100% { transform: translate(-6vw, -4vh) scale(0.9); }
+  }
+  @keyframes drift-3 {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(6vw, -8vh) scale(1.05); }
+    100% { transform: translate(12vw, 4vh) scale(1.2); }
+  }
+  @keyframes drift-4 {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(-8vw, -6vh) scale(0.9); }
+    100% { transform: translate(4vw, 8vh) scale(1.1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .aurora-blob { animation: none; }
   }
   .hero-inner {
     max-width: 1100px;
@@ -269,18 +346,32 @@
     text-align: center;
     position: relative;
     z-index: 1;
+    transform-style: preserve-3d;
   }
+  /* 3D tilt parallax on hero headline */
   .hero h1 {
     font-size: clamp(30px, 4.4vw, 52px);
     font-weight: 500;
     line-height: 1.28;
     letter-spacing: -0.02em;
     color: var(--ink);
-    /* sized to fit the longest cycle word ("constraints") on one line */
     max-width: 1080px;
     margin: 0 auto;
     white-space: nowrap;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform;
   }
+  .hero h1 .layer-bg,
+  .hero h1 .layer-mid,
+  .hero h1 .layer-fg {
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform;
+  }
+  .hero h1 .layer-bg { transform: translateZ(-40px); }
+  .hero h1 .layer-mid { transform: translateZ(20px); }
+  .hero h1 .layer-fg { transform: translateZ(60px); }
   .hero h1 .line3 {
     display: block;
     white-space: nowrap;
@@ -377,6 +468,16 @@
     transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
   }
   .case-card.compact { aspect-ratio: 4/3; }
+  .case-card {
+    --rx: 0deg;
+    --ry: 0deg;
+    --tx: 0px;
+    --ty: 0px;
+    transform-style: preserve-3d;
+    perspective: 1200px;
+    will-change: transform;
+    transform: perspective(1200px) rotateX(var(--rx)) rotateY(var(--ry));
+  }
   .case-card .case-image {
     position: absolute;
     inset: 0;
@@ -384,6 +485,25 @@
     height: 100%;
     object-fit: cover;
     z-index: 0;
+    transform: translate(var(--tx), var(--ty)) scale(1.08);
+    transition: transform 0.2s ease-out;
+    will-change: transform;
+  }
+  .case-card .case-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    max-width: 38%;
+    max-height: 45%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transform: translate(calc(-50% + var(--tx) * -2), calc(-50% + var(--ty) * -2));
+    transition: transform 0.2s ease-out;
+    will-change: transform;
+    pointer-events: none;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.25));
   }
   .case-card-overlay {
     position: absolute;
@@ -396,7 +516,10 @@
   }
   .case:hover .case-card {
     transform: translateY(-4px);
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+    box-shadow:
+      0 0 0 1px rgba(var(--accent-rgb, 218,165,32), 0.20),
+      0 0 24px 4px rgba(var(--accent-rgb, 218,165,32), 0.28),
+      0 0 60px 12px rgba(var(--accent-rgb, 218,165,32), 0.18);
   }
   .case-top {
     display: flex;
@@ -432,10 +555,17 @@
     width: auto;
     object-fit: contain;
   }
+  /* iOS 26-style liquid glass — thin translucent material with
+     adaptive backdrop, edge specular highlights, and lensing on hover.
+     Principles: clear material, specular edge, content remains legible,
+     dynamic lensing follows the pointer. */
   .case-cta {
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    --mx: 50%;
+    --my: 50%;
+    --lens: 0;
+    position: relative;
+    z-index: 2;
+    isolation: isolate;
     padding: 14px 22px;
     border-radius: var(--pill-radius);
     display: flex;
@@ -444,11 +574,76 @@
     font-size: 14px;
     font-weight: 500;
     color: var(--ink);
-    position: relative;
-    z-index: 2;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    overflow: hidden;
+    /* Clear material — light backdrop blur with adaptive saturation */
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 100%);
+    backdrop-filter: blur(18px) saturate(180%) brightness(1.05);
+    -webkit-backdrop-filter: blur(18px) saturate(180%) brightness(1.05);
+    /* Hairline edge + dual-direction specular highlight */
+    border: 1px solid rgba(255,255,255,0.45);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.85) inset,    /* top specular */
+      0 -1px 0 rgba(255,255,255,0.18) inset,   /* bottom rim */
+      0 1px 1px rgba(0,0,0,0.05),
+      0 8px 24px -10px rgba(0,0,0,0.12);
+    transition:
+      background 0.45s ease,
+      border-color 0.45s ease,
+      box-shadow 0.45s ease,
+      backdrop-filter 0.45s ease;
   }
-  .case-cta .arrow { transition: transform 0.3s ease; }
+  /* Edge specular sweep — sits behind text */
+  .case-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      120deg,
+      rgba(255,255,255,0.55) 0%,
+      rgba(255,255,255,0.10) 22%,
+      rgba(255,255,255,0) 50%,
+      rgba(255,255,255,0.10) 78%,
+      rgba(255,255,255,0.45) 100%
+    );
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.8;
+    transition: opacity 0.45s ease;
+  }
+  /* Lensing highlight that tracks the pointer — appears on hover */
+  .case-cta::after {
+    content: '';
+    position: absolute;
+    inset: -30%;
+    border-radius: inherit;
+    background: radial-gradient(
+      circle at var(--mx) var(--my),
+      rgba(255,255,255,0.90) 0%,
+      rgba(255,255,255,0.35) 18%,
+      rgba(255,255,255,0) 42%
+    );
+    pointer-events: none;
+    z-index: -1;
+    opacity: var(--lens);
+    transition: opacity 0.35s ease;
+    mix-blend-mode: screen;
+    filter: blur(2px);
+  }
+  .case:hover .case-cta {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.12) 100%);
+    border-color: rgba(255,255,255,0.75);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,1) inset,
+      0 -1px 0 rgba(255,255,255,0.25) inset,
+      0 2px 6px rgba(0,0,0,0.06),
+      0 14px 36px -14px rgba(0,0,0,0.18);
+    --lens: 1;
+  }
+  .case-cta > span { position: relative; z-index: 1; }
+  .case-cta .arrow { transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
   .case:hover .case-cta .arrow { transform: translateX(6px); }
 
   .case-title {
@@ -834,74 +1029,6 @@
     .brands-grid { grid-template-columns: repeat(3, 1fr); }
   }
 
-  /* ============================================
-     STICKY LIQUID GLASS BOTTOM WIDGET
-     ============================================ */
-  .theme-dock {
-    display: none;
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 200;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px;
-    border-radius: var(--pill-radius);
-    background: var(--glass-bg);
-    backdrop-filter: blur(22px) saturate(180%);
-    -webkit-backdrop-filter: blur(22px) saturate(180%);
-    border: 1px solid var(--glass-border);
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.6) inset,
-      0 -1px 0 rgba(255,255,255,0.2) inset,
-      0 14px 40px -10px rgba(20,20,40,0.25),
-      0 30px 60px -25px rgba(20,20,40,0.35);
-    overflow: hidden;
-  }
-  .theme-dock::before {
-    content: '';
-    position: absolute; inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(135deg,
-      rgba(255,255,255,0.55) 0%,
-      rgba(255,255,255,0.05) 40%,
-      transparent 60%,
-      rgba(var(--accent-rgb),0.10) 100%);
-    pointer-events: none;
-  }
-  body.dark .theme-dock::before {
-    background: linear-gradient(135deg,
-      rgba(255,255,255,0.18) 0%,
-      transparent 50%,
-      rgba(var(--accent-rgb),0.15) 100%);
-  }
-  .theme-btn {
-    position: relative;
-    width: 42px; height: 42px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--ink);
-    transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
-    z-index: 1;
-  }
-  .theme-btn svg { width: 20px; height: 20px; }
-  .theme-btn:hover { background: rgba(var(--accent-rgb),0.12); transform: scale(1.08); }
-  .theme-btn.active {
-    background: rgba(var(--accent-rgb),0.22);
-    color: var(--purple-strong);
-    box-shadow: 0 0 0 1px rgba(var(--accent-rgb),0.35) inset;
-  }
-  .theme-btn.party:hover {
-    background: linear-gradient(135deg,#ff3df0,#daa520,#3df0ff);
-    color: #fff;
-    animation: party-wiggle 0.4s ease-in-out infinite;
-  }
-  @keyframes party-wiggle {
-    0%,100% { transform: scale(1.1) rotate(-6deg); }
-    50% { transform: scale(1.15) rotate(6deg); }
-  }
 
   /* ============================================
      PARTY MODE 🎉
@@ -1084,6 +1211,84 @@
     50%, 100% { background: rgba(255,255,255,0.12); }
   }
 
+  /* ============================================
+     EDGE GLOW RIPPLE + BLUR CROSSFADE TRANSITION
+     ============================================ */
+  .wormhole-wrap {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    pointer-events: none;
+    display: none;
+    overflow: hidden;
+  }
+  .wormhole-wrap.active { display: block; }
+  /* Edge glow layers — sit at the perimeter and pulse inward */
+  .edge-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    mix-blend-mode: screen;
+    will-change: opacity, box-shadow;
+  }
+  /* Each layer uses an enormous inset box-shadow to paint a glow only along the edges */
+  .edge-glow.l1 {
+    box-shadow:
+      inset 0 0 60px 10px rgba(255,255,255,0.95),
+      inset 0 0 140px 30px rgba(218,165,32,0.85);
+  }
+  .edge-glow.l2 {
+    box-shadow:
+      inset 0 0 90px 18px rgba(255,120,200,0.85),
+      inset 0 0 220px 50px rgba(120,90,255,0.55);
+  }
+  .edge-glow.l3 {
+    box-shadow:
+      inset 0 0 110px 24px rgba(60,200,255,0.8),
+      inset 0 0 280px 70px rgba(80,255,180,0.45);
+  }
+  /* Outbound — three pulses sweeping inward from the edge */
+  .wormhole-wrap.out .edge-glow.l1 { animation: edge-pulse 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0s forwards; }
+  .wormhole-wrap.out .edge-glow.l2 { animation: edge-pulse 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0.16s forwards; }
+  .wormhole-wrap.out .edge-glow.l3 { animation: edge-pulse 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0.32s forwards; }
+  /* Inbound — reverse, fading from inside to edges */
+  .wormhole-wrap.in .edge-glow.l3 { animation: edge-pulse-in 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0s forwards; }
+  .wormhole-wrap.in .edge-glow.l2 { animation: edge-pulse-in 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.16s forwards; }
+  .wormhole-wrap.in .edge-glow.l1 { animation: edge-pulse-in 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.32s forwards; }
+  @keyframes edge-pulse {
+    0%   { opacity: 0; transform: scale(1); }
+    25%  { opacity: 1; }
+    60%  { opacity: 0.85; }
+    100% { opacity: 0; transform: scale(1.02); }
+  }
+  @keyframes edge-pulse-in {
+    0%   { opacity: 0; transform: scale(1.02); }
+    30%  { opacity: 0.9; }
+    100% { opacity: 0; transform: scale(1); }
+  }
+  /* Page blur on outbound */
+  body.warp-out #page-warp {
+    animation: page-blur-out 1.3s cubic-bezier(0.65, 0, 0.35, 1) both;
+    will-change: filter, opacity;
+  }
+  @keyframes page-blur-out {
+    0%   { filter: blur(0) saturate(1); opacity: 1; }
+    50%  { filter: blur(10px) saturate(1.18); opacity: 1; }
+    100% { filter: blur(32px) saturate(1.25); opacity: 0; }
+  }
+  /* Page blur on inbound */
+  body.warp-in #page-warp {
+    animation: page-blur-in 1.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: filter, opacity;
+  }
+  @keyframes page-blur-in {
+    0%   { filter: blur(32px) saturate(1.25); opacity: 0; }
+    40%  { opacity: 1; }
+    100% { filter: blur(0) saturate(1); opacity: 1; }
+  }
+  body.warp-out, body.warp-in { overflow: hidden !important; }
+
   /* Confetti */
   .confetti {
     position: absolute;
@@ -1099,6 +1304,16 @@
 </style>
 </head>
 <body>
+
+<!-- Edge glow ripple overlay -->
+<div class="wormhole-wrap" id="wormhole" aria-hidden="true">
+  <div class="edge-glow l1"></div>
+  <div class="edge-glow l2"></div>
+  <div class="edge-glow l3"></div>
+</div>
+
+<!-- Page wrapper (everything inside gets sucked into the wormhole) -->
+<div id="page-warp">
 
 <!-- ============================================
      STICKY LIQUID GLASS NAV
@@ -1124,11 +1339,18 @@
      HERO
      ============================================ -->
 <section class="hero" id="work">
+  <div class="aurora" aria-hidden="true">
+    <div class="aurora-blob b1"></div>
+    <div class="aurora-blob b2"></div>
+    <div class="aurora-blob b3"></div>
+    <div class="aurora-blob b4"></div>
+    <div class="aurora-blob b5"></div>
+  </div>
   <div class="hero-inner">
-    <h1>
-      I'm a Senior Product Designer working<br>
-      alongside designers and builders, turning<br>
-      <span class="line3"><span class="chaos" id="cycle-word">chaos</span> into final product that converts</span>
+    <h1 id="hero-headline">
+      <span class="layer-bg">I'm a Senior Product Designer working</span>
+      <span class="layer-mid">alongside designers and builders, turning</span>
+      <span class="layer-fg line3"><span class="chaos" id="cycle-word">chaos</span> into final product that converts</span>
     </h1>
 
     <div class="brands">
@@ -1186,8 +1408,8 @@
     <!-- ---- Dr. Squatch (full-width) ---- -->
     <a href="drsquatch.html" class="case">
       <div class="case-card">
-        <!-- Replace src with project image when ready -->
-        <img class="case-image" src="Assets/cards/Drsquatch.jpg" alt="" onerror="this.style.display='none'">
+        <img class="case-image" src="Assets/cards/empty/Drsquatch.jpg" alt="" onerror="this.style.display='none'">
+        <img class="case-logo" src="Assets/cards/logos/Squatch.png" alt="Dr. Squatch">
         <div class="case-card-overlay">
           <div class="case-top">
             <span class="case-tag">E-Commerce</span>
@@ -1210,7 +1432,8 @@
     <!-- ---- American Century (full-width) ---- -->
     <a href="american-century.html" class="case">
       <div class="case-card">
-        <img class="case-image" src="Assets/cards/American Century Investments.jpg" alt="" onerror="this.style.display='none'">
+        <img class="case-image" src="Assets/cards/empty/American Century Investments.jpg" alt="" onerror="this.style.display='none'">
+        <img class="case-logo" src="Assets/cards/logos/American Century.png" alt="American Century Investments">
         <div class="case-card-overlay">
           <div class="case-top">
             <span class="case-tag">Fintech</span>
@@ -1233,7 +1456,8 @@
     <!-- ---- Beachbody (full-width) ---- -->
     <a href="beachbody.html" class="case">
       <div class="case-card">
-        <img class="case-image" src="Assets/cards/BODi.jpg" alt="" onerror="this.style.display='none'">
+        <img class="case-image" src="Assets/cards/empty/BODi.jpg" alt="" onerror="this.style.display='none'">
+        <img class="case-logo" src="Assets/cards/logos/Bodcast.png" alt="BODi by Beachbody">
         <div class="case-card-overlay">
           <div class="case-top">
             <span class="case-tag">Fitness</span>
@@ -1256,7 +1480,8 @@
     <!-- ---- Ring (full-width) ---- -->
     <a href="ring.html" class="case">
       <div class="case-card">
-        <img class="case-image" src="Assets/cards/Ring.jpg" alt="" onerror="this.style.display='none'">
+        <img class="case-image" src="Assets/cards/empty/Ring.jpg" alt="" onerror="this.style.display='none'">
+        <img class="case-logo" src="Assets/cards/logos/Ring_logo 1.png" alt="Ring">
         <div class="case-card-overlay">
           <div class="case-top">
             <span class="case-tag">Smart Home</span>
@@ -1378,40 +1603,39 @@
 </section>
 
 
-<!-- ============================================
-     STICKY THEME DOCK (liquid glass)
-     ============================================ -->
-<div class="theme-dock" id="theme-dock" role="toolbar" aria-label="Theme">
-  <button class="theme-btn active" id="btn-light" aria-label="Light mode" title="Light mode">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="4"/>
-      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-    </svg>
-  </button>
-  <button class="theme-btn" id="btn-dark" aria-label="Dark mode" title="Dark mode">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
-    </svg>
-  </button>
-  <button class="theme-btn party" id="btn-party" aria-label="Party mode" title="Party mode 🎉">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M5.8 11.3 2 22l10.7-3.79"/>
-      <path d="M4 3h.01"/>
-      <path d="M22 8h.01"/>
-      <path d="M15 2h.01"/>
-      <path d="M22 20h.01"/>
-      <path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"/>
-      <path d="m22 13-1.99-.13a2.9 2.9 0 0 0-3.21 1.77c-.27.83-1.13 1.34-2.01 1.17l-.39-.08C13.54 15.5 12.75 16 12.6 16.86L12.4 18"/>
-      <path d="m11 2 .33.84a2.9 2.9 0 0 1-.32 3.4c-.6.66-.32 1.74.55 1.99l.34.1"/>
-      <path d="M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z"/>
-    </svg>
-  </button>
-</div>
 
 <!-- Party stage (populated by JS) -->
 <div class="party-stage" id="party-stage" aria-hidden="true"></div>
 
+</div><!-- /#page-warp -->
+
 <script>
+  // 3D parallax tilt on hero headline
+  const hero = document.querySelector('.hero');
+  const headline = document.getElementById('hero-headline');
+  if (hero && headline) {
+    const bg = headline.querySelector('.layer-bg');
+    const mid = headline.querySelector('.layer-mid');
+    const fg = headline.querySelector('.layer-fg');
+    hero.addEventListener('mousemove', (e) => {
+      const r = hero.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;  // -0.5..0.5
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      const tiltY = px * 10;   // deg
+      const tiltX = -py * 8;
+      headline.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+      if (bg)  bg.style.transform  = `translateZ(-40px) translate(${px * -14}px, ${py * -10}px)`;
+      if (mid) mid.style.transform = `translateZ(20px)  translate(${px * 8}px,  ${py * 6}px)`;
+      if (fg)  fg.style.transform  = `translateZ(60px)  translate(${px * 18}px, ${py * 12}px)`;
+    });
+    hero.addEventListener('mouseleave', () => {
+      headline.style.transform = '';
+      if (bg)  bg.style.transform = '';
+      if (mid) mid.style.transform = '';
+      if (fg)  fg.style.transform = '';
+    });
+  }
+
   // Liquid glass refraction follows mouse
   const nav = document.getElementById('nav');
   if (nav) {
@@ -1421,6 +1645,40 @@
       nav.style.setProperty('--mx', x + '%');
     });
   }
+
+  // Liquid-glass refraction on case CTAs + Parallax hover on case cards
+  document.querySelectorAll('.case').forEach(card => {
+    const cta = card.querySelector('.case-cta');
+    const cardEl = card.querySelector('.case-card');
+    card.addEventListener('mousemove', (e) => {
+      if (cta) {
+        const rect = cta.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        cta.style.setProperty('--mx', x + '%');
+        cta.style.setProperty('--my', y + '%');
+      }
+      if (cardEl) {
+        const r = cardEl.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;  // -0.5..0.5
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        const maxTilt = 6;   // deg
+        const maxShift = 14; // px
+        cardEl.style.setProperty('--ry', (px * maxTilt).toFixed(2) + 'deg');
+        cardEl.style.setProperty('--rx', (-py * maxTilt).toFixed(2) + 'deg');
+        cardEl.style.setProperty('--tx', (px * maxShift).toFixed(2) + 'px');
+        cardEl.style.setProperty('--ty', (py * maxShift).toFixed(2) + 'px');
+      }
+    });
+    if (cardEl) {
+      card.addEventListener('mouseleave', () => {
+        cardEl.style.setProperty('--rx', '0deg');
+        cardEl.style.setProperty('--ry', '0deg');
+        cardEl.style.setProperty('--tx', '0px');
+        cardEl.style.setProperty('--ty', '0px');
+      });
+    }
+  });
 
   // Toggle scrolled state for nav (full-width when scrolled)
   function handleNavScroll() {
@@ -1438,7 +1696,7 @@
   const partyStage = document.getElementById('party-stage');
 
   function setActive(btn) {
-    [btnLight, btnDark, btnParty].forEach(b => b.classList.remove('active'));
+    [btnLight, btnDark, btnParty].forEach(b => { if (b) b.classList.remove('active'); });
     if (btn) btn.classList.add('active');
   }
 
@@ -1455,8 +1713,8 @@
     try { localStorage.setItem('theme', 'dark'); } catch(e) {}
   }
 
-  btnLight.addEventListener('click', setLight);
-  btnDark.addEventListener('click', setDark);
+  if (btnLight) btnLight.addEventListener('click', setLight);
+  if (btnDark) btnDark.addEventListener('click', setDark);
 
   // Init from storage
   try {
@@ -1600,7 +1858,7 @@
     });
   }
 
-  btnParty.addEventListener('click', () => {
+  if (btnParty) btnParty.addEventListener('click', () => {
     if (partyOn) {
       stopParty();
       // restore previous theme as active
@@ -1610,6 +1868,45 @@
       startParty();
     }
   });
+
+  // ============================================
+  // 🌀 WORMHOLE PAGE TRANSITION
+  // ============================================
+  const wormhole = document.getElementById('wormhole');
+
+  function triggerWarpOut(href) {
+    wormhole.classList.remove('in');
+    wormhole.classList.add('active', 'out');
+    document.body.classList.add('warp-out');
+    try { sessionStorage.setItem('warpFrom', JSON.stringify({ t: Date.now() })); } catch(e) {}
+    setTimeout(() => { window.location.href = href; }, 1300);
+  }
+
+  document.querySelectorAll('a.case').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault();
+      triggerWarpOut(href);
+    });
+  });
+
+  // Warp-in on page load if flagged
+  try {
+    const raw = sessionStorage.getItem('warpFrom');
+    if (raw) {
+      const data = JSON.parse(raw);
+      if (data && (Date.now() - data.t) < 3000) {
+        wormhole.classList.add('active', 'in');
+        document.body.classList.add('warp-in');
+        setTimeout(() => {
+          wormhole.classList.remove('active', 'in');
+          document.body.classList.remove('warp-in');
+        }, 1500);
+      }
+      sessionStorage.removeItem('warpFrom');
+    }
+  } catch(e) {}
 
   // Cycle hero word: chaos → frictions → constraints
   const cycleWord = document.getElementById('cycle-word');
