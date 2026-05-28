@@ -16,6 +16,8 @@
   @font-face { font-family:'Config'; src:url('fonts/Config-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; font-display:swap; }
   @font-face { font-family:'Config'; src:url('fonts/Config-SemiBold.ttf') format('truetype'); font-weight:600; font-style:normal; font-display:swap; }
   @font-face { font-family:'Config'; src:url('fonts/Config-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Adrianna'; src:url('fonts/ADRIANNA/Adrianna-Regular.woff2') format('woff2'), url('fonts/ADRIANNA/Adrianna-Regular.woff') format('woff'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Adrianna'; src:url('fonts/ADRIANNA/Adrianna-Bold.woff2') format('woff2'), url('fonts/ADRIANNA/Adrianna-Bold.woff') format('woff'); font-weight:700; font-style:normal; font-display:swap; }
 
   /* ============================================
      RESET & BASE
@@ -386,63 +388,449 @@
     font-size: 14px;
     line-height: 1.45;
   }
-  .execution-map {
-    max-width: 100%;
-    margin: 32px auto 40px;
+  .bundle-demo-row {
+    max-width: 920px;
+    margin: 48px auto 0;
     display: grid;
-    gap: 0;
-  }
-  .execution-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
+    grid-template-columns: 40fr 60fr;
+    gap: 48px;
     align-items: center;
-    padding: 28px 0;
-    border-bottom: 1px solid #e1ded7;
   }
-  .execution-row:first-child {
-    padding-top: 0;
-  }
-  .execution-row:last-child {
-    border-bottom: 0;
-    padding-bottom: 0;
-  }
-  .execution-copy .eyebrow,
-  .execution-media .eyebrow {
-    color: var(--purple-strong);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    margin-bottom: 12px;
-    text-transform: uppercase;
-  }
-  .execution-copy h4,
-  .execution-media h4 {
+  .bundle-demo-copy h4 {
     color: var(--ink);
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
     letter-spacing: -0.01em;
     line-height: 1.15;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
-  .execution-copy p {
-    color: #4a4a4a;
+  .bundle-demo-copy p {
+    max-width: none;
+    margin: 0;
+  }
+  .bundle-device {
+    width: 286px;
+    margin: 0 auto;
+    padding: 12px;
+    border-radius: 36px;
+    background: #111;
+    box-shadow: 0 18px 44px rgba(0,0,0,0.18);
+    position: relative;
+  }
+  .bundle-device::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    width: 86px;
+    height: 24px;
+    transform: translateX(-50%);
+    border-radius: 0 0 14px 14px;
+    background: #111;
+    z-index: 2;
+  }
+  .bundle-device video {
+    width: 100%;
+    display: block;
+    border-radius: 26px;
+    background: #000;
+  }
+  .bundle-stars {
+    max-width: 1080px;
+    margin: 64px auto 0;
+  }
+  .bundle-stars h4 {
+    color: var(--ink);
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .bundle-stars-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .bundle-star-card {
+    min-height: 320px;
+    padding: 28px;
+    border-radius: 18px;
+    background: #fff;
+    border: 1px solid rgba(26,26,26,0.08);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 22px;
+    overflow: hidden;
+  }
+  .bundle-star-title {
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-align: center;
+  }
+  .product-tile-stage {
+    min-height: 170px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .bundle-stepper-stage {
+    width: 100%;
+    min-height: 170px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .product-tile {
+    width: 440px;
+    min-height: 88px;
+    padding: 8px 16px 8px 0;
+    position: relative;
+    background: #fff;
+    border-radius: 8px;
+    outline: 1px solid #E5E5E5;
+    outline-offset: -1px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    overflow: hidden;
+    font-family: 'Adrianna', Arial, sans-serif;
+    box-shadow: 0 12px 28px rgba(31,53,33,0.07);
+  }
+  .product-tile-badge {
+    width: 70px;
+    padding: 1px 8px 2px;
+    position: absolute;
+    right: 40.5px;
+    top: 1px;
+    z-index: 2;
+    background: #EFF6E9;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    color: #2C6A4C;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 14px;
+    text-align: center;
+  }
+  .product-tile-main {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .product-art {
+    width: 72px;
+    height: 72px;
+    padding: 4px;
+    flex: 0 0 72px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+  }
+  .product-art-inner {
+    flex: 1 1 0;
+    height: 64px;
+    position: relative;
+  }
+  .product-shadow {
+    width: 12.44px;
+    height: 12.25px;
+    left: 54.15px;
+    top: 47.75px;
+    position: absolute;
+  }
+  .product-bricc {
+    width: 55px;
+    height: 61px;
+    left: 4.08px;
+    top: 1.5px;
+    position: absolute;
+    object-fit: cover;
+    object-position: 50% 53%;
+  }
+  .product-copy {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    color: #1F3521;
+  }
+  .product-copy strong {
     font-size: 14px;
-    line-height: 1.45;
+    font-weight: 700;
+    line-height: 20px;
   }
-  .execution-slot {
-    min-height: 260px;
-    border-radius: 12px;
-    border: 1px dashed #cfcfc8;
-    background: #f2f2f0;
-    color: var(--muted);
+  .product-copy span {
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 14px;
+  }
+  .product-action {
+    width: 119px;
+    height: 44px;
+    flex: 0 0 119px;
+    position: relative;
+    font-family: 'Adrianna', Arial, sans-serif;
+  }
+  .product-add,
+  .product-stepper {
+    position: absolute;
+    inset: 0;
+    width: 119px;
+    height: 44px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .product-add {
+    background: #C1571A;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0.8px;
+    animation: addState 8s linear infinite;
+  }
+  .product-stepper {
+    background: #fff;
+    border: 1px solid #E5E5E5;
+    color: #000;
+    opacity: 0;
+    animation: counterState 8s linear infinite;
+  }
+  .stepper-btn,
+  .stepper-count {
+    width: 33.33%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+  }
+  .stepper-btn {
+    color: #B8551B;
+  }
+  .stepper-btn svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+    stroke: currentColor;
+  }
+  .stepper-count {
+    position: relative;
+    color: #000;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1;
+  }
+  .count-value {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+  }
+  .count-one { animation: countOne 8s steps(1, end) infinite; }
+  .count-two { animation: countTwo 8s steps(1, end) infinite; }
+  .count-three { animation: countThree 8s steps(1, end) infinite; }
+  .count-four { animation: countFour 8s steps(1, end) infinite; }
+  .count-five { animation: countFive 8s steps(1, end) infinite; }
+  .bundle-stepper {
+    width: 100%;
+    max-width: 440px;
+    height: auto;
     padding: 16px;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 16px;
+    font-family: 'Adrianna', Arial, sans-serif;
+  }
+  .bundle-star-card.stepper-card {
+    align-items: center;
+  }
+  .bundle-stepper-title-wrap {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+  }
+  .bundle-stepper-title {
+    align-self: stretch;
     text-align: center;
-    font-size: 13px;
-    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #1F3521;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 24px;
+  }
+  .bundle-stepper-row {
+    align-self: stretch;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .bundle-stepper-track {
+    flex: 1 1 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .bundle-step {
+    width: 48px;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2px;
+    position: relative;
+  }
+  .bundle-step-label {
+    text-align: center;
+    color: #1F3521;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 16px;
+  }
+  .bundle-step-price {
+    text-align: center;
+    color: #747474;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 14px;
+  }
+  .bundle-dot-wrap {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+  }
+  .bundle-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 9999px;
+    background: #618F65;
+  }
+  .bundle-step.step-6 {
+    width: auto;
+  }
+  .bundle-line {
+    flex: 1 1 0;
+    height: 1px;
+    position: relative;
+    border-radius: 8px;
+    background: #618F65;
+  }
+  .step-3 .bundle-step-price { animation: stepPrice3 8s linear infinite; }
+  .step-4 .bundle-dot { animation: stepDotFrom4 8s linear infinite; }
+  .step-4 .bundle-step-price { animation: stepPrice4 8s linear infinite; }
+  .step-5 .bundle-dot { animation: stepDotFrom5 8s linear infinite; }
+  .step-5 .bundle-step-price { animation: stepPrice5 8s linear infinite; }
+  .step-6 .bundle-dot { animation: stepDotFrom6 8s linear infinite; }
+  .step-6 .bundle-step-price { animation: stepPrice6 8s linear infinite; }
+  .line-3-4 { animation: stepLineFrom4 8s linear infinite; }
+  .line-4-5 { animation: stepLineFrom5 8s linear infinite; }
+  .line-5-6 { animation: stepLineFrom6 8s linear infinite; }
+  .best-deal-tag {
+    padding: 1px 4px;
+    position: absolute;
+    left: -9px;
+    top: -17px;
+    background: #921A1D;
+    border-radius: 4px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 14px;
+    white-space: nowrap;
+  }
+  @keyframes stepDotFrom4 {
+    0%, 14%, 91%, 100% { background: transparent; border: 2px solid #BFBFBF; }
+    16%, 89% { background: #618F65; border: 0 solid transparent; }
+  }
+  @keyframes stepDotFrom5 {
+    0%, 29%, 76%, 100% { background: transparent; border: 2px solid #BFBFBF; }
+    31%, 74% { background: #618F65; border: 0 solid transparent; }
+  }
+  @keyframes stepDotFrom6 {
+    0%, 44%, 61%, 100% { background: transparent; border: 2px solid #BFBFBF; }
+    46%, 59% { background: #618F65; border: 0 solid transparent; }
+  }
+  @keyframes stepLineFrom4 {
+    0%, 14%, 91%, 100% { background: #BFBFBF; }
+    16%, 89% { background: #618F65; }
+  }
+  @keyframes stepLineFrom5 {
+    0%, 29%, 76%, 100% { background: #BFBFBF; }
+    31%, 74% { background: #618F65; }
+  }
+  @keyframes stepLineFrom6 {
+    0%, 44%, 61%, 100% { background: #BFBFBF; }
+    46%, 59% { background: #618F65; }
+  }
+  @keyframes stepPrice3 {
+    0%, 14%, 91%, 100% { color: #1F3521; font-weight: 700; }
+    16%, 89% { color: #747474; font-weight: 400; }
+  }
+  @keyframes stepPrice4 {
+    0%, 14%, 31%, 74%, 91%, 100% { color: #747474; font-weight: 400; }
+    16%, 29%, 76%, 89% { color: #1F3521; font-weight: 700; }
+  }
+  @keyframes stepPrice5 {
+    0%, 29%, 46%, 59%, 76%, 100% { color: #747474; font-weight: 400; }
+    31%, 44%, 61%, 74% { color: #1F3521; font-weight: 700; }
+  }
+  @keyframes stepPrice6 {
+    0%, 44%, 61%, 100% { color: #747474; font-weight: 400; }
+    46%, 59% { color: #1F3521; font-weight: 700; }
+  }
+  @keyframes addState {
+    0%, 18.75%, 91.25%, 100% { opacity: 1; }
+    20%, 90% { opacity: 0; }
+  }
+  @keyframes counterState {
+    0%, 18.75%, 91.25%, 100% { opacity: 0; }
+    20%, 90% { opacity: 1; }
+  }
+  @keyframes countOne {
+    0%, 19.99%, 28%, 82%, 90%, 100% { opacity: 0; }
+    20%, 27.99%, 82.01%, 89.99% { opacity: 1; }
+  }
+  @keyframes countTwo {
+    0%, 27.99%, 36%, 74%, 82%, 100% { opacity: 0; }
+    28%, 35.99%, 74.01%, 81.99% { opacity: 1; }
+  }
+  @keyframes countThree {
+    0%, 35.99%, 44%, 66%, 74%, 100% { opacity: 0; }
+    36%, 43.99%, 66.01%, 73.99% { opacity: 1; }
+  }
+  @keyframes countFour {
+    0%, 43.99%, 52%, 58%, 66%, 100% { opacity: 0; }
+    44%, 51.99%, 58.01%, 65.99% { opacity: 1; }
+  }
+  @keyframes countFive {
+    0%, 51.99%, 58%, 100% { opacity: 0; }
+    52%, 57.99% { opacity: 1; }
   }
   @media (max-width: 820px) {
     .opportunity-map {
@@ -451,12 +839,24 @@
     .opportunity-card {
       min-height: 0;
     }
-    .execution-row {
+    .bundle-demo-row {
       grid-template-columns: 1fr;
-      gap: 18px;
+      gap: 28px;
     }
-    .execution-slot {
-      min-height: 220px;
+    .bundle-stars-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 520px) {
+    .bundle-star-card {
+      padding: 18px;
+    }
+    .product-tile-stage {
+      min-height: 112px;
+    }
+    .product-tile {
+      transform: scale(0.64);
+      transform-origin: center;
     }
   }
   .image-window-grid {
@@ -2437,64 +2837,103 @@
             </div>
           </div>
           <p>In planning, we translated the growth goals into product requirements: flexible bundle quantity, tiered pricing milestones, one-time and subscription options, dynamic price updates, and configurable default bundles for paid traffic.</p>
-          <div class="execution-map" aria-label="Requirements to design execution">
-            <div class="execution-row">
-              <div class="execution-copy">
-                <div class="eyebrow">Requirement</div>
-                <h4>3-12 Bar Builder</h4>
-                <p>Customers needed to build a bundle at their preferred quantity, with clear minimum and maximum states.</p>
-              </div>
-              <div class="execution-media">
-                <div class="eyebrow">Finished Design</div>
-                <h4>Quantity Selection</h4>
-                <div class="execution-slot">Upload final design image here</div>
-              </div>
+          <p>We mapped the core paths for building from scratch, landing on a pre-configured pack, switching between Subscribe and One-time, editing quantities, and handling rules like minimum quantity, max quantity, Limited Edition gating, and out-of-stock scents.</p>
+          <div class="placeholder-block">[ Show: PDP to ATC flow diagram plus edge case matrix ]</div>
+          <div class="bundle-demo-row">
+            <div class="bundle-demo-copy">
+              <h4>Production behavior on device</h4>
+              <p>The final build tightened the interaction model into a mobile-first flow: customers could keep building their pack, see pricing respond in real time, and return to checkout without losing context. The prototype defined the system; the shipped experience made the details feel fast, clear, and ready for daily shopping.</p>
             </div>
-
-            <div class="execution-row">
-              <div class="execution-copy">
-                <div class="eyebrow">Requirement</div>
-                <h4>Tiered Pricing</h4>
-                <p>The builder needed to show how adding more bars changes per-unit price, total price, and savings.</p>
-              </div>
-              <div class="execution-media">
-                <div class="eyebrow">Finished Design</div>
-                <h4>Pricing States</h4>
-                <div class="execution-slot">Upload final design image here</div>
-              </div>
+            <div class="bundle-device" aria-label="Dynamic bundle builder mobile demo">
+              <video src="Assets/Demo.mov" autoplay loop muted playsinline></video>
             </div>
-
-            <div class="execution-row">
-              <div class="execution-copy">
-                <div class="eyebrow">Requirement</div>
-                <h4>Purchase Options</h4>
-                <p>Customers needed to switch between One-time and Subscribe & Save without leaving the builder.</p>
+          </div>
+          <div class="bundle-stars" aria-label="Bundle builder component highlights">
+            <h4>Stars of the show</h4>
+            <div class="bundle-stars-grid">
+              <div class="bundle-star-card">
+                <div class="bundle-star-title">Product Tile Selector</div>
+                <div class="product-tile-stage" aria-label="Animated Alpine Sage product tile selector">
+                  <div class="product-tile">
+                    <div class="product-tile-badge">Best Seller</div>
+                    <div class="product-tile-main">
+                      <div class="product-art" aria-hidden="true">
+                        <div class="product-art-inner">
+                          <img class="product-shadow" src="Assets/Demo/assets/Icons/Shadow-1.png" alt="">
+                          <img class="product-bricc" src="Assets/Demo/assets/source/Web-Images-17.png" alt="">
+                        </div>
+                      </div>
+                      <div class="product-copy">
+                        <strong>Alpine Sage</strong>
+                        <span>Aloe, Cypress, Sage</span>
+                        <span>Zero&nbsp;&nbsp;Grit</span>
+                      </div>
+                    </div>
+                    <div class="product-action" aria-hidden="true">
+                      <div class="product-add">ADD</div>
+                      <div class="product-stepper">
+                        <span class="stepper-btn">
+                          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M7 12H17" stroke-width="2" stroke-linecap="round"/>
+                          </svg>
+                        </span>
+                        <span class="stepper-count">
+                          <span class="count-value count-one">1</span>
+                          <span class="count-value count-two">2</span>
+                          <span class="count-value count-three">3</span>
+                          <span class="count-value count-four">4</span>
+                          <span class="count-value count-five">5</span>
+                        </span>
+                        <span class="stepper-btn stepper-plus">
+                          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M12 6.5V17.5M6.5 12H17.5" stroke-width="2" stroke-linecap="round"/>
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="execution-media">
-                <div class="eyebrow">Finished Design</div>
-                <h4>Subscribe & Save</h4>
-                <div class="execution-slot">Upload final design image here</div>
-              </div>
-            </div>
-
-            <div class="execution-row">
-              <div class="execution-copy">
-                <div class="eyebrow">Requirement</div>
-                <h4>Mobile Review</h4>
-                <p>On mobile, customers needed a persistent way to review their pack and add to cart while scrolling.</p>
-              </div>
-              <div class="execution-media">
-                <div class="eyebrow">Finished Design</div>
-                <h4>Sticky CTA + Drawer</h4>
-                <div class="execution-slot">Upload final design image here</div>
+              <div class="bundle-star-card stepper-card">
+                <div class="bundle-star-title">Stepper</div>
+                <div class="bundle-stepper-stage">
+                  <div class="bundle-stepper">
+                    <div class="bundle-stepper-title-wrap">
+                      <div class="bundle-stepper-title">Build your Bar Soap bundle</div>
+                    </div>
+                    <div class="bundle-stepper-row">
+                      <div class="bundle-stepper-track">
+                        <div class="bundle-step step-3">
+                          <div class="bundle-step-label">3 Bars</div>
+                          <div class="bundle-dot-wrap"><div class="bundle-dot"></div></div>
+                          <div class="bundle-step-price">$6.00/ea</div>
+                        </div>
+                        <div class="bundle-line line-3-4"></div>
+                        <div class="bundle-step step-4">
+                          <div class="bundle-step-label">4 Bars</div>
+                          <div class="bundle-dot-wrap"><div class="bundle-dot"></div></div>
+                          <div class="bundle-step-price">$5.74/ea</div>
+                        </div>
+                        <div class="bundle-line line-4-5"></div>
+                        <div class="bundle-step step-5">
+                          <div class="bundle-step-label">5 Bars</div>
+                          <div class="bundle-dot-wrap"><div class="bundle-dot"></div></div>
+                          <div class="bundle-step-price">$5.46/ea</div>
+                        </div>
+                        <div class="bundle-line line-5-6"></div>
+                        <div class="bundle-step step-6">
+                          <div class="bundle-step-label">6+ Bars</div>
+                          <div class="bundle-dot-wrap"><div class="bundle-dot"></div></div>
+                          <div class="bundle-step-price">$5.25/ea</div>
+                          <div class="best-deal-tag">BEST DEAL</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <p>We mapped the core paths for building from scratch, landing on a pre-configured pack, switching between Subscribe and One-time, editing quantities, and handling rules like minimum quantity, max quantity, Limited Edition gating, and out-of-stock scents.</p>
-          <div class="placeholder-block">[ Show: PDP to ATC flow diagram plus edge case matrix ]</div>
-          <p>I then designed the prototype with product cards, inline quantity steppers, a tier progress bar, dynamic price and savings updates, purchase option cards, and a disabled CTA until the customer reached the 3-bar minimum.</p>
-          <div class="placeholder-block">[ Show: main builder UI, pricing milestones, sticky CTA, editable drawer, and final desktop/mobile screens ]</div>
-          <p>The prototype aligned design, engineering, and leadership around a scalable builder model that could start with bar soap and expand into other categories.</p>
         </div>
         <div class="sub-section" id="features-pdp">
           <h3>PDP</h3>
@@ -2612,7 +3051,6 @@
     </div>
   </div>
 </section>
-
 
 <script>
   // ============================================

@@ -72,6 +72,18 @@
     width: 100%;
     max-width: 100%;
   }
+  .nav-wrap {
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+                opacity 0.3s ease,
+                top 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+                width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+                max-width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  body.nav-hidden .nav-wrap {
+    transform: translate(-50%, -140%);
+    opacity: 0;
+    pointer-events: none;
+  }
   .nav {
     pointer-events: auto;
     position: relative;
@@ -217,7 +229,7 @@
     position: sticky;
     top: var(--global-nav-h);
     z-index: 5;
-    height: 80px;
+    height: var(--subnav-h);
     padding: 0 32px;
     display: flex;
     align-items: center;
@@ -236,6 +248,17 @@
       0 0 0 0.5px rgba(0,0,0,0.03),
       0 1px 2px rgba(0,0,0,0.04),
       0 12px 28px -18px rgba(0,0,0,0.14);
+    transition:
+      top 0.25s ease,
+      width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+      margin-left 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+      border-radius 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  body.nav-hidden .section-header {
+    top: 0;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    border-radius: 0;
   }
   /* refraction sheen */
   .section-header::before {
@@ -911,8 +934,16 @@
   }
 
   // Toggle scrolled state for nav (full-width when scrolled)
+  let lastScrollY = window.scrollY;
   function handleNavScroll() {
-    document.body.classList.toggle('scrolled', window.scrollY > 8);
+    const y = window.scrollY;
+    document.body.classList.toggle('scrolled', y > 8);
+    if (y > 80 && y > lastScrollY) {
+      document.body.classList.add('nav-hidden');
+    } else if (y < lastScrollY) {
+      document.body.classList.remove('nav-hidden');
+    }
+    lastScrollY = y;
   }
   handleNavScroll();
   window.addEventListener('scroll', handleNavScroll, { passive: true });
