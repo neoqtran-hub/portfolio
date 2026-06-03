@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Problem to Solution — Dr. Squatch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  /* Config font (loaded from parent /fonts dir) */
+  @font-face { font-family:'Config'; src:url('../fonts/Config-Light.ttf') format('truetype'); font-weight:300; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('../fonts/Config-Regular.ttf') format('truetype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('../fonts/Config-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('../fonts/Config-SemiBold.ttf') format('truetype'); font-weight:600; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('../fonts/Config-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --sand: #ffffff;
+    --bark: #1A1A1A;
+    --drift: #8A8A8A;
+    --tide: #CCCCCC;
+    --ink: #1a1a1a; /* Text Black */
+    --white: #ffffff;
+    /* Problem — warm red */
+    --problem-bg: #FFF0EE;
+    --problem-border: #FFCFC9;
+    --problem-tag-bg: #FFE0DB;
+    --problem-tag-text: #D94F3D;
+    --problem-text: #1A1A1A;
+    /* Goal — soft indigo */
+    --goal-bg: #F2F0FF;
+    --goal-border: #D0CAFF;
+    --goal-tag-bg: #E2DEFF;
+    --goal-tag-text: #5B4FCF;
+    --goal-text: #1A1A1A;
+    /* Solution — teal */
+    --solution-bg: #F0FAF8;
+    --solution-border: #B8E8E0;
+    --solution-tag-bg: #D4F2EC;
+    --solution-tag-text: #1E7A68;
+    --solution-text: #1A1A1A;
+    /* Detail — amber */
+    --detail-bg: #FFFAF0;
+    --detail-border: #F5E0A8;
+    --detail-tag-bg: #FDEEC8;
+    --detail-tag-text: #A06A00;
+    --detail-text: #1A1A1A;
+  }
+  body {
+    background: var(--sand);
+    font-family: 'Config', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--bark);
+    padding: 24px;
+  }
+  /* Last track has no margin-bottom so the body padding is the only bottom space */
+  .track:last-of-type { margin-bottom: 0; }
+  /* Title — matches Lighthouse/Driftwood card name style (DM Serif Display italic, Text Black) */
+  .frame-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-style: italic;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 28px;
+  }
+  .wrapper {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .header { margin-bottom: 56px; }
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #AAAAAA;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 5vw, 44px);
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .subtitle {
+    font-size: 14px;
+    color: #888888;
+    line-height: 1.6;
+    max-width: 520px;
+  }
+  .col-legend {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+  }
+  .col-label {
+    font-family: 'Config', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: 20px;
+    text-align: center;
+  }
+  .col-label.problem { background: var(--problem-tag-bg); color: var(--problem-tag-text); }
+  .col-label.goal    { background: var(--goal-tag-bg);    color: var(--goal-tag-text); }
+  .col-label.solution{ background: var(--solution-tag-bg);color: var(--solution-tag-text); }
+  .col-label.detail  { background: var(--detail-tag-bg);  color: var(--detail-tag-text); }
+  .track {
+    display: grid;
+    grid-template-columns: 1fr 24px 1fr 24px 1fr 24px 1fr;
+    gap: 0;
+    align-items: start;
+    margin-bottom: 28px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .track:nth-child(1) { animation-delay: 0.05s; }
+  .track:nth-child(2) { animation-delay: 0.1s; }
+  .track:nth-child(3) { animation-delay: 0.15s; }
+  .track:nth-child(4) { animation-delay: 0.2s; }
+  .track:nth-child(5) { animation-delay: 0.25s; }
+  .arrow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 22px;
+    color: #CCCCCC;
+    font-size: 16px;
+    user-select: none;
+  }
+  .card {
+    border-radius: 14px;
+    padding: 8px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    font-weight: 400;
+    border: 1px solid #ececea;
+    background: #F8F8F6;
+    color: var(--ink);
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  /* Chip at top, text below — text-only, no pill background */
+  .card .chip {
+    font-family: 'Config', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 0;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .card .body { color: var(--ink); }
+  .card.problem  .chip { color: var(--problem-tag-text); }
+  .card.goal     .chip { color: var(--goal-tag-text); }
+  .card.solution .chip { color: var(--solution-tag-text); }
+  .card.detail   .chip { color: var(--detail-tag-text); }
+  .card-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .empty { visibility: hidden; }
+  .section-divider {
+    height: 1px;
+    background: rgba(44,35,24,0.08);
+    margin: 40px 0 36px;
+    grid-column: 1 / -1;
+  }
+  .section-heading {
+    font-family: 'Config', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #BBBBBB;
+    margin-bottom: 20px;
+  }
+  .sub-detail {
+    margin-left: 16px;
+    border-left: 2px solid var(--detail-border);
+    padding-left: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .sub-detail .card { font-size: 12px; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (max-width: 700px) {
+    .col-legend { grid-template-columns: 1fr 1fr; }
+    .track {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      gap: 8px;
+      padding-left: 12px;
+      border-left: 2px solid rgba(44,35,24,0.1);
+    }
+    .arrow { display: none; }
+    .card { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h2 class="frame-title">From Problem to Solution</h2>
+
+  <!-- TRACK 1: Social Proof -->
+  <p class="section-heading">01 — Social Proof</p>
+  <div class="track">
+    <div class="card problem"><span class="chip">Problem</span><div class="body">Users need social proof to build confidence and drive purchase.</div></div>
+    <div class="arrow">→</div>
+    <div class="card-stack">
+      <div class="card goal"><span class="chip">Goal</span><div class="body">Social proof videos</div></div>
+      <div class="card goal"><span class="chip">Goal</span><div class="body">Reviews from real users</div></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="card-stack">
+      <div class="card solution"><span class="chip">Solution</span><div class="body">Videowise content carousel</div></div>
+      <div class="card solution"><span class="chip">Solution</span><div class="body">Reviews carousel</div></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="card-stack">
+      <div class="card detail"><span class="chip">Detail</span><div class="body">Add below buy box in PDP</div></div>
+    </div>
+  </div>
+
+  <div style="height:1px;background:rgba(44,35,24,0.06);margin:32px 0 36px;"></div>
+
+  <!-- TRACK 2: Product Education -->
+  <p class="section-heading">02 — Product Education</p>
+  <div class="track">
+    <div class="card problem"><span class="chip">Problem</span><div class="body">Users don't have enough product info to feel confident buying.</div></div>
+    <div class="arrow">→</div>
+    <div class="card goal"><span class="chip">Goal</span><div class="body">Surface ingredients, scent, grit, size, and shipping in one place</div></div>
+    <div class="arrow">→</div>
+    <div class="card solution"><span class="chip">Solution</span><div class="body">Buy Box accordion</div></div>
+    <div class="arrow">→</div>
+    <div class="card-stack">
+      <div class="card detail"><span class="chip">Detail</span><div class="body">Soap ingredients</div></div>
+      <div class="card detail"><span class="chip">Detail</span><div class="body">Deo ingredients</div></div>
+      <div class="card detail"><span class="chip">Detail</span><div class="body">Weight + dimensions</div></div>
+      <div class="card detail"><span class="chip">Detail</span><div class="body">How to use</div></div>
+      <div class="card detail"><span class="chip">Detail</span><div class="body">Disclaimer</div></div>
+    </div>
+  </div>
+
+  <div style="height:1px;background:rgba(44,35,24,0.06);margin:32px 0 36px;"></div>
+
+  <!-- TRACK 3: Bundle Transparency -->
+  <p class="section-heading">03 — Bundle Transparency</p>
+  <div class="track">
+    <div class="card problem"><span class="chip">Problem</span><div class="body">Users can't tell exactly what's inside the bundle.</div></div>
+    <div class="arrow">→</div>
+    <div class="card goal"><span class="chip">Goal</span><div class="body">Show every product and scent included, upfront</div></div>
+    <div class="arrow">→</div>
+    <div class="card solution"><span class="chip">Solution</span><div class="body">"What's Included" card grid</div></div>
+    <div class="arrow">→</div>
+    <div class="card detail"><span class="chip">Detail</span><div class="body">Each product and scent shown as its own card</div></div>
+  </div>
+
+  <div style="height:1px;background:rgba(44,35,24,0.06);margin:32px 0 36px;"></div>
+
+  <!-- TRACK 4: Scent Info -->
+  <p class="section-heading">04 — Scent Information</p>
+  <div class="track">
+    <div class="card problem"><span class="chip">Problem</span><div class="body">Users can't tell what each product smells like.</div></div>
+    <div class="arrow">→</div>
+    <div class="card goal"><span class="chip">Goal</span><div class="body">Describe each scent in a place users will look</div></div>
+    <div class="arrow">→</div>
+    <div class="card solution"><span class="chip">Solution</span><div class="body">Scent notes inside Buy Box accordion</div></div>
+    <div class="arrow">→</div>
+    <div class="card detail"><span class="chip">Detail</span><div class="body">Notes shown per scent variant</div></div>
+  </div>
+
+  <div style="height:1px;background:rgba(44,35,24,0.06);margin:32px 0 36px;"></div>
+
+  <!-- TRACK 5: Value Props -->
+  <p class="section-heading">05 — Company Value Props</p>
+  <div class="track">
+    <div class="card problem"><span class="chip">Problem</span><div class="body">Users don't know what makes Dr. Squatch different.</div></div>
+    <div class="arrow">→</div>
+    <div class="card-stack">
+      <div class="card goal"><span class="chip">Goal</span><div class="body">Communicate "Made For Men"</div></div>
+      <div class="card goal"><span class="chip">Goal</span><div class="body">Communicate "All Natural"</div></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="card-stack">
+      <div class="card solution"><span class="chip">Solution</span><div class="body">50/50 humor content block</div></div>
+      <div class="card solution"><span class="chip">Solution</span><div class="body">All Natural content carousel</div></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="card-stack">
+      <div class="card detail"><span class="chip">Detail</span><div class="body">Image + text layout</div></div>
+      <div class="card detail"><span class="chip">Detail</span><div class="body">All natural ingredients</div></div>
+      <div class="card detail"><span class="chip">Detail</span><div class="body">No harmful additives</div></div>
+      <div class="card detail"><span class="chip">Detail</span><div class="body">Committed to men's health</div></div>
+      <div class="card detail"><span class="chip">Detail</span><div class="body">CTA to "The Squatch Difference"</div></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

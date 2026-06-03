@@ -1,0 +1,34 @@
+# ===== macOS junk =====
+.DS_Store
+**/.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# ===== Node / build artifacts (in case tooling is added later) =====
+node_modules/
+dist/
+build/
+.next/
+out/
+.cache/
+.netlify/
+
+# ===== Editor =====
+.vscode/
+.idea/
+*.swp
+
+# ===== Design source / working files (NOT served by the site) =====
+# Figma/Sketch/PSD exports and intermediate render folders live in design tools,
+# not the deployed repo. Keep them locally but out of git.
+**/Start components/
+*.sketch
+*.fig
+*.psd
+*.ai
+
+# ===== Large source masters =====
+# Commit web-optimized versions only. Uncomment if you keep masters in-repo:
+# *.mov
+# *.mp4
