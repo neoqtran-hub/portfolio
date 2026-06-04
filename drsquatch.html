@@ -1,59 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" type="image/png" href="Assets/favicon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dr. Squatch — Case Study | neo by design</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Unbounded:wght@400;500;600;700;800;900&family=Abel&display=swap" rel="stylesheet">
+<script>
+  /* Apply saved theme before paint (default dark) */
+  (function(){ try{ if(localStorage.getItem("theme")==="light") document.documentElement.setAttribute("data-theme","light"); }catch(e){} })();
+</script>
 <style>
   /* ============================================
      CONFIG FONT
      ============================================ */
-  @font-face { font-family:'Config'; src:url('fonts/Config-Light.ttf') format('truetype'); font-weight:300; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Config'; src:url('fonts/Config-Regular.ttf') format('truetype'); font-weight:400; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Config'; src:url('fonts/Config-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Config'; src:url('fonts/Config-SemiBold.ttf') format('truetype'); font-weight:600; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Config'; src:url('fonts/Config-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Adrianna'; src:url('fonts/ADRIANNA/Adrianna-Regular.woff2') format('woff2'), url('fonts/ADRIANNA/Adrianna-Regular.woff') format('woff'); font-weight:400; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Adrianna'; src:url('fonts/ADRIANNA/Adrianna-Bold.woff2') format('woff2'), url('fonts/ADRIANNA/Adrianna-Bold.woff') format('woff'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Light.ttf') format('truetype'); font-weight:300; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Regular.ttf') format('truetype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-SemiBold.ttf') format('truetype'); font-weight:600; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Adrianna'; src:url('Assets/fonts/ADRIANNA/Adrianna-Regular.woff2') format('woff2'), url('Assets/fonts/ADRIANNA/Adrianna-Regular.woff') format('woff'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Adrianna'; src:url('Assets/fonts/ADRIANNA/Adrianna-Bold.woff2') format('woff2'), url('Assets/fonts/ADRIANNA/Adrianna-Bold.woff') format('woff'); font-weight:700; font-style:normal; font-display:swap; }
 
   /* ============================================
      RESET & BASE
      ============================================ */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: clip; transition: background-color 0.4s ease; }
   body {
-    font-family: 'Config', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    color: #1a1a1a;
-    background: #f4f4f2;
+    position: relative;
+    font-family: var(--body);
+    color: var(--ink);
+    background: var(--bg);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    overflow-x: clip;
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
   a { color: inherit; text-decoration: none; }
   img { max-width: 100%; display: block; }
   button { font-family: inherit; cursor: pointer; border: none; background: none; }
-
-  :root {
-    --purple: #daa520;
-    --purple-strong: #daa520;
-    --accent-rgb: 218, 165, 32;
-    --ink: #1a1a1a;
-    --ink-soft: #2a2a2a;
-    --muted: #8a8a8a;
-    --muted-soft: #b8b8b8;
-    --bg: #f4f4f2;
-    --card-radius: 28px;
-    --pill-radius: 999px;
-    /* heights used by the sticky sub-nav math */
-    --global-nav-h: 80px;   /* top offset (nav top 24px + ~56px height) */
-    --subnav-h: 64px;
-  }
-
-  /* ============================================
+/* ============================================
      GLOBAL LIQUID GLASS NAV (same as homepage)
      ============================================ */
   .nav-wrap {
@@ -151,7 +141,7 @@
      CASE PAGE LAYOUT
      ============================================ */
   .case-page {
-    padding: 110px 32px 0;
+    padding: 40px 32px 0;
     max-width: 1280px;
     margin: 0 auto;
   }
@@ -190,7 +180,7 @@
     margin-top: 14px;
   }
   .case-tags .chip {
-    background: #fff;
+    background: var(--surface);
     padding: 8px 16px;
     border-radius: var(--pill-radius);
     font-size: 12px;
@@ -228,10 +218,10 @@
     border-radius: 20px;
     overflow: hidden;
     /* iOS 26 clear glass fill — subtle gradient + brightened backdrop */
-    background: linear-gradient(180deg, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.16) 100%);
+    background: linear-gradient(180deg, var(--glass) 0%, var(--glass) 100%);
     backdrop-filter: blur(28px) saturate(190%) brightness(1.04);
     -webkit-backdrop-filter: blur(28px) saturate(190%) brightness(1.04);
-    border: 1px solid rgba(255,255,255,0.55);
+    border: 1px solid var(--glass-brd);
     box-shadow:
       0 1px 0 rgba(255,255,255,1) inset,
       0 -1px 0 rgba(255,255,255,0.25) inset,
@@ -285,7 +275,7 @@
     display: inline-block;
     width: 4px; height: 4px;
     border-radius: 50%;
-    background: #c8c8c6;
+    background: var(--line);
   }
   .stepper a {
     padding: 4px 6px;
@@ -304,7 +294,7 @@
     padding: 24px 0;
   }
   .sub-section h3 {
-    font-family: 'DM Serif Display', Georgia, serif;
+    font-family: var(--display);
     font-style: italic;
     font-size: 24px;
     font-weight: 300;
@@ -390,12 +380,12 @@
   .goals-map .opportunity-card p {
     margin: 0;
     max-width: none;
-    color: #4a4a4a;
+    color: var(--copy);
     font-size: 14px;
     line-height: 1.45;
   }
   .sub-section p {
-    color: #4a4a4a;
+    color: var(--copy);
     font-size: 16px;
     line-height: 1.5;
   }
@@ -405,7 +395,7 @@
   .placeholder-block {
     margin-top: 24px;
     height: 280px;
-    background: #f2f2f0;
+    background: var(--surface-2);
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -459,7 +449,7 @@
     text-transform: uppercase;
   }
   .opportunity-card dd {
-    color: #4a4a4a;
+    color: var(--copy);
     font-size: 14px;
     line-height: 1.45;
   }
@@ -536,7 +526,7 @@
   }
   .bundle-stars h4 {
     color: var(--ink);
-    font-family: 'DM Serif Display', Georgia, serif;
+    font-family: var(--display);
     font-style: italic;
     font-size: clamp(28px, 4vw, 44px);
     font-weight: 300;
@@ -1236,7 +1226,7 @@
     display: inline-flex;
     align-items: flex-start;
     gap: 8px;
-    background: #fff;
+    background: var(--surface);
     overflow: hidden;
     animation: morphItems 4.4s linear infinite;
   }
@@ -1341,8 +1331,8 @@
     50%, 95.45% { height: 154px; }
   }
   @keyframes morphItems {
-    0%, 45.45%, 100% { padding: 4px 16px; gap: 8px; background: #fff; }
-    50%, 95.45% { padding: 14px 16px 8px; gap: 10px; background: #FAF8F6; }
+    0%, 45.45%, 100% { padding: 4px 16px; gap: 8px; background: var(--surface); }
+    50%, 95.45% { padding: 14px 16px 8px; gap: 10px; background: var(--surface-2); }
   }
   @keyframes morphCard {
     0%, 45.45%, 100% {
@@ -1358,7 +1348,7 @@
       height: 108px;
       flex-basis: 76px;
       padding: 2px 2px 4px;
-      background: #fff;
+      background: var(--surface);
       box-shadow: 0 1px 2px -1px rgba(0,0,0,0.10), 0 1px 3px rgba(0,0,0,0.10);
     }
   }
@@ -1565,7 +1555,7 @@
     min-height: 320px;
     border-radius: 18px;
     border: 1px solid #ececea;
-    background: #fff;
+    background: var(--surface);
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
     overflow: hidden;
     display: flex;
@@ -1582,7 +1572,7 @@
   }
   .image-window .iw-headline {
     padding: 0 24px;
-    font-family: 'DM Serif Display', Georgia, serif;
+    font-family: var(--display);
     font-size: 24px;
     font-weight: 400;
     color: #1a1a1a;
@@ -1736,7 +1726,7 @@
   .nco-panel {
     border-radius: 18px;
     border: 1px solid #ececea;
-    background: #fff;
+    background: var(--surface);
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
     overflow: hidden;
   }
@@ -1746,7 +1736,7 @@
     gap: 32px;
     align-items: center;
     padding: 28px;
-    background: #fff;
+    background: var(--surface);
   }
   .nco-before-frame {
     border-radius: 14px;
@@ -1762,7 +1752,7 @@
     margin-bottom: 10px;
   }
   .nco-copy h4 {
-    font-family: 'DM Serif Display', Georgia, serif;
+    font-family: var(--display);
     font-size: clamp(28px, 3.2vw, 46px);
     font-weight: 400;
     letter-spacing: -0.02em;
@@ -1781,7 +1771,7 @@
     display: grid;
     grid-template-columns: minmax(0, 1.18fr) minmax(280px, 0.82fr);
     min-height: 760px;
-    background: #fff;
+    background: var(--surface);
   }
   .nco-stage {
     min-height: 760px;
@@ -1796,7 +1786,7 @@
     width: min(214px, 32%);
     height: 700px;
     border-radius: 8px;
-    background: #f9f6ef;
+    background: var(--surface-2);
     overflow: visible;
     box-shadow: none;
     position: relative;
@@ -1815,7 +1805,7 @@
   .nco-shot {
     position: relative;
     transform-origin: center center;
-    background: #f9f6ef;
+    background: var(--surface-2);
     filter: blur(1.4px) saturate(0.86);
     transition: transform 800ms ease, filter 800ms ease, box-shadow 800ms ease;
   }
@@ -1917,7 +1907,7 @@
     border-radius: 50%;
     padding: 0;
     background: var(--ink);
-    color: #fff;
+    color: var(--surface);
     font-size: 0;
     font-weight: 600;
     display: inline-flex;
@@ -1932,7 +1922,7 @@
     display: block;
   }
   .nco-control.secondary {
-    background: #fff;
+    background: var(--surface);
     color: var(--ink);
     border: 1px solid #e2e2df;
   }
@@ -1980,7 +1970,7 @@
     position: relative;
   }
   .bag-animation-window {
-    background: #fff;
+    background: var(--surface);
   }
   .pumpkin-sequence-frame {
     width: 100%;
@@ -2019,7 +2009,7 @@
     min-height: 520px;
     border-radius: 18px;
     border: 1px solid #ececea;
-    background: #fff;
+    background: var(--surface);
     overflow: hidden;
     position: relative;
     display: flex;
@@ -2032,7 +2022,7 @@
   }
   .ai-marquee-title {
     padding: 0 28px;
-    font-family: 'DM Serif Display', Georgia, serif;
+    font-family: var(--display);
     font-style: italic;
     font-size: 28px;
     font-weight: 400;
@@ -2056,7 +2046,7 @@
     flex: 0 0 auto;
     border-radius: 14px;
     overflow: hidden;
-    background: #f4f4f2;
+    background: var(--surface-2);
     border: 1px solid #ececea;
   }
   .ai-marquee-card img {
@@ -2107,7 +2097,7 @@
   .sections-marquee-window .ai-marquee-card {
     width: 360px;
     aspect-ratio: 3 / 1;
-    background: #efefed;
+    background: var(--surface-2);
   }
   .sections-marquee-window .ai-marquee-card img {
     object-position: top center;
@@ -2147,7 +2137,7 @@
     gap: 16px;
   }
   .impact-card {
-    background: #fff;
+    background: var(--surface);
     border: 1px solid #ececea;
     border-radius: 16px;
     padding: 20px;
@@ -2185,7 +2175,7 @@
   .impact-table {
     max-width: 100%;
     margin: 28px auto 0;
-    background: #fff;
+    background: var(--surface);
     border: 1px solid #ececea;
     border-radius: 16px;
     overflow: hidden;
@@ -2194,14 +2184,14 @@
   .impact-row {
     display: grid;
     grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
-    border-bottom: 1px solid #f4f4f2;
+    border-bottom: 1px solid var(--surface-2);
   }
   .impact-row:last-child { border-bottom: 0; }
   .impact-row > div {
     padding: 14px 16px;
     font-size: 13px;
-    color: #4a4a4a;
-    border-left: 1px solid #f4f4f2;
+    color: var(--copy);
+    border-left: 1px solid var(--surface-2);
   }
   .impact-row > div:first-child {
     border-left: 0;
@@ -2256,7 +2246,7 @@
   @media (max-width: 720px) {
     .image-window-grid { grid-template-columns: 1fr; }
     .nco-before,
-    .nco-after { grid-template-columns: 1fr; background: #fff; }
+    .nco-after { grid-template-columns: 1fr; background: var(--surface); }
     .nco-stage { min-height: 620px; padding: 22px; }
     .nco-page-frame { width: min(152px, 43%); height: 560px; }
     .nco-shot.is-active { transform: scale(1.12); }
@@ -2289,7 +2279,7 @@
     .impact-row { grid-template-columns: 1fr; }
     .impact-row > div {
       border-left: 0;
-      border-top: 1px solid #f4f4f2;
+      border-top: 1px solid var(--surface-2);
     }
     .impact-row > div:first-child { border-top: 0; }
   }
@@ -2314,7 +2304,7 @@
     box-shadow: none;
   }
   .ps-frame .ps-title {
-    font-family: 'DM Serif Display', Georgia, serif;
+    font-family: var(--display);
     font-style: italic;
     font-size: 28px;
     font-weight: 400;
@@ -2372,7 +2362,7 @@
     min-height: 210px;
     border: 1px solid #dedbd4;
     border-radius: 10px;
-    background: #fff;
+    background: var(--surface);
     position: relative;
     overflow: hidden;
   }
@@ -2394,7 +2384,7 @@
   .ps-included-card,
   .ps-scent-card {
     flex: 1;
-    background: #fff;
+    background: var(--surface);
     border: 1px solid #dedbd4;
     border-radius: 8px;
     position: relative;
@@ -2506,7 +2496,7 @@
     padding: 12px;
     border: 1px solid #dedbd4;
     border-radius: 9px;
-    background: #fff;
+    background: var(--surface);
   }
   .ps-product-image {
     min-height: 86px;
@@ -2522,7 +2512,7 @@
   .ps-scent-chip {
     border-radius: 999px;
     padding: 5px 8px;
-    background: #efeeeb;
+    background: var(--surface-2);
     color: #5f5a52;
     font-size: 10px;
     font-weight: 700;
@@ -2533,7 +2523,7 @@
   }
   .ps-value-copy {
     padding: 18px;
-    background: #efeeeb;
+    background: var(--surface-2);
   }
   .ps-face-panel {
     display: flex;
@@ -2612,7 +2602,7 @@
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid #ececea;
-    background: #fff;
+    background: var(--surface);
     position: relative;
   }
   .sub-section .figure img {
@@ -2688,7 +2678,7 @@
     height: 44px;
     border-radius: 50%;
     background: rgba(255,255,255,0.12);
-    color: #fff;
+    color: var(--surface);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2708,7 +2698,7 @@
     max-width: 100%;
   }
   .framework-card {
-    background: #fff;
+    background: var(--surface);
     border: 1px solid #ececea;
     border-radius: 16px;
     padding: 24px 28px 26px;
@@ -2716,7 +2706,7 @@
     overflow: hidden;
   }
   .framework-card .name {
-    font-family: 'DM Serif Display', Georgia, serif;
+    font-family: var(--display);
     font-style: italic;
     font-size: 28px;
     font-weight: 400;
@@ -2729,7 +2719,7 @@
   .framework-card .desc {
     font-size: 14px;
     line-height: 1.55;
-    color: #4a4a4a;
+    color: var(--copy);
     margin-bottom: 18px;
   }
   .framework-card .problem-label {
@@ -2771,21 +2761,21 @@
   /* ============================================
      CONTACT (reused from homepage)
      ============================================ */
-  .contact-section { background: #F9F9F7; }
+  .contact-section { background: var(--bg-soft); }
   .contact { padding: 80px 32px 100px; max-width: 1280px; margin: 0 auto; }
   .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
   .contact-heading h2 { font-size: clamp(32px, 3.4vw, 42px); font-weight: 700; color: var(--ink); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; }
   .contact-heading p { font-size: 20px; color: var(--muted); }
   .contact-form { display: flex; flex-direction: column; }
-  .contact-form .field { border-bottom: 1px solid #d8d8d6; padding: 14px 4px; }
+  .contact-form .field { border-bottom: 1px solid var(--line); padding: 14px 4px; }
   .contact-form input, .contact-form textarea { width: 100%; border: none; background: transparent; font-family: inherit; font-size: 16px; color: var(--ink); outline: none; resize: none; }
   .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--muted); }
   .contact-form textarea { min-height: 140px; padding-top: 4px; }
-  .contact-submit { margin-top: 28px; background: #1f1f1f; color: #fff; padding: 18px 28px; border-radius: 14px; font-size: 15px; font-weight: 500; width: 100%; transition: background .25s ease, transform .25s ease; }
-  .contact-submit:hover { background: #000; transform: translateY(-1px); }
+  .contact-submit { display:block; text-align:center; margin-top: 28px; background: var(--btn-bg); color: var(--btn-ink); padding: 18px 28px; border-radius: 14px; font-size: 15px; font-weight: 600; font-family: var(--display); width: 100%; transition: filter .25s ease, transform .25s ease; }
+  .contact-submit:hover { filter: brightness(1.12); transform: translateY(-1px); }
   .contact-links { display: flex; justify-content: space-between; margin-top: 24px; padding: 0 8px; }
   .contact-links a { font-size: 14px; color: var(--muted); transition: color .25s ease; }
-  .contact-links a:hover { color: var(--purple-strong); }
+  .contact-links a:hover { color: var(--ink); }
 
   /* ============================================
      RESPONSIVE
@@ -2826,7 +2816,7 @@
     z-index: 40;
     max-height: calc(100vh - 160px);
     overflow-y: auto;
-    font-family: 'DM Serif Display', 'DM Serif Text', Georgia, serif;
+    font-family: var(--display);
     opacity: 0;
     pointer-events: none;
     transition: opacity .3s ease;
@@ -2864,8 +2854,23 @@
     .side-menu { display: none; }
   }
 </style>
+<link rel="stylesheet" href="alt-project-theme.css">
 </head>
 <body>
+
+<!-- Sticky site nav (home-alt style) -->
+<nav class="snav">
+  <a href="index.html" class="snav-brand">NEO BY DESIGN</a>
+  <div class="snav-links">
+    <a href="index.html#work">Work</a>
+    <a href="me.html">About</a>
+    <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener" class="snav-ln" aria-label="LinkedIn"><img src="Assets/linkedin.png" alt="LinkedIn"></a>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false">
+      <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.5" y1="4.5" x2="6.6" y2="6.6"/><line x1="17.4" y1="17.4" x2="19.5" y2="19.5"/><line x1="4.5" y1="19.5" x2="6.6" y2="17.4"/><line x1="17.4" y1="6.6" x2="19.5" y2="4.5"/></svg>
+      <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.3 6.3 0 0 0 10.5 10.5z"/></svg>
+    </button>
+  </div>
+</nav>
 
 <!-- Global Nav -->
 <div class="nav-wrap">
@@ -2873,8 +2878,8 @@
     <a href="index.html" class="brand"><span class="neo">neo</span> <span class="by">by design</span></a>
     <ul class="nav-links">
       <li><a href="index.html#work" class="nav-link active">Work</a></li>
-      <li><a href="index.html#play" class="nav-link">Play</a></li>
-      <li><a href="me.html" class="nav-link">Me</a></li>
+      <li><a href="index.html#work" class="nav-link">Play</a></li>
+      <li><a href="me.html" class="nav-link">About</a></li>
       <li>
         <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener" class="nav-link icon" aria-label="LinkedIn">
           <img src="Assets/linkedin.png" alt="LinkedIn">
@@ -3137,32 +3142,32 @@
             <h4 class="ai-marquee-title">Sections Curation.</h4>
             <p class="sections-marquee-subtitle">Intentionally building confidence and inform users</p>
             <div class="ai-marquee-row">
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/Group 1000004227.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 1.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 2.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 3.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/Group 1000004227.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 1.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 2.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 3.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/Group 1000004227.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 1.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 2.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 3.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/Group 1000004227.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 1.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 2.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 3.jpg" alt=""></div>
             </div>
             <div class="ai-marquee-row reverse">
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 4.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 5.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 6.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 7.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 4.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 5.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 6.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 7.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 4.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 5.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 6.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 7.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 4.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 5.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 6.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 7.jpg" alt=""></div>
             </div>
             <div class="ai-marquee-row">
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 8.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 3.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 6.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 8.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 3.jpg" alt=""></div>
-              <div class="ai-marquee-card"><img src="Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 6.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 8.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 3.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 6.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 8.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 3.jpg" alt=""></div>
+              <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Sections/screencapture-drsquatch-products-bar-soap-2026-05-03-11_43_44 6.jpg" alt=""></div>
             </div>
           </div>
         </div>
@@ -3199,7 +3204,7 @@
           <div class="nco-showcase" data-nco-showcase aria-label="Old and new NCO landing page showcase">
             <div class="nco-panel nco-before">
               <div class="nco-before-frame">
-                <img src="Animation/NCO landing/OLD frame.jpg" alt="Old NCO landing page framed screenshot">
+                <img src="Assets/Animation/NCO landing/OLD frame.jpg" alt="Old NCO landing page framed screenshot">
               </div>
               <div class="nco-copy">
                 <div class="nco-kicker">Old Experience</div>
@@ -3261,26 +3266,26 @@
               <div class="ai-wide-window">
                 <h4 class="ai-marquee-title">AI Generated Assets</h4>
                 <div class="ai-marquee-row">
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/Hero.jpg" alt=""></div>
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/251009-Spray-Glide-Studio-Shots-010 copy.jpg" alt=""></div>
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/Image Guy.jpg" alt=""></div>
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/IG.jpg" alt=""></div>
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/Hero.jpg" alt=""></div>
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/251009-Spray-Glide-Studio-Shots-010 copy.jpg" alt=""></div>
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/Image Guy.jpg" alt=""></div>
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/IG.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Hero.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/251009-Spray-Glide-Studio-Shots-010 copy.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Image Guy.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/IG.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Hero.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/251009-Spray-Glide-Studio-Shots-010 copy.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Image Guy.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/IG.jpg" alt=""></div>
                 </div>
                 <div class="ai-marquee-row reverse">
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/Deo Transp 1.png" alt=""></div>
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/Frame 316123847.png" alt=""></div>
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/6soap2deo Image.jpg" alt=""></div>
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/Soap Hero 1.jpg" alt=""></div>
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/spray.jpg" alt=""></div>
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/Deo Transp 1.png" alt=""></div>
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/Frame 316123847.png" alt=""></div>
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/6soap2deo Image.jpg" alt=""></div>
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/Soap Hero 1.jpg" alt=""></div>
-                  <div class="ai-marquee-card"><img src="Animation/Marquee/spray.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Deo Transp 1.png" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Frame 316123847.png" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/6soap2deo Image.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Soap Hero 1.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/spray.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Deo Transp 1.png" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Frame 316123847.png" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/6soap2deo Image.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/Soap Hero 1.jpg" alt=""></div>
+                  <div class="ai-marquee-card"><img src="Assets/Animation/Marquee/spray.jpg" alt=""></div>
                 </div>
               </div>
             </div>
@@ -3299,7 +3304,7 @@
               <div class="iw-sub">Each visual cue is intentional &mdash; working together to communicate value, build trust, and reduce friction at first glance.</div>
               <div class="annotated-hero">
                 <div class="ah-image">
-                  <img src="Animation/NCO%20landing/Hero%20Images/Winning%20Hero%20Image/Hero.jpg" alt="Dr. Squatch winning hero image annotated with conversion design cues" />
+                  <img src="Assets/Animation/NCO%20landing/Hero%20Images/Winning%20Hero%20Image/Hero.jpg" alt="Dr. Squatch winning hero image annotated with conversion design cues" />
                 </div>
 
                 <svg class="ah-overlay" viewBox="0 0 860 420" preserveAspectRatio="none" aria-hidden="true">
@@ -3357,51 +3362,51 @@
                 <h4 class="ai-marquee-title">Winning Carousel Image Formula</h4>
                 <div class="ai-marquee-row formula-marquee-row">
                   <figure class="formula-marquee-item">
-                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Hero.jpg" alt="Hero carousel image"></div>
+                    <div class="ai-marquee-card"><img src="Assets/Animation/NCO%20landing/Hero%20Images/Hero.jpg" alt="Hero carousel image"></div>
                     <figcaption class="formula-caption"><strong>Hero</strong><span>Lead with product value.</span></figcaption>
                   </figure>
                   <figure class="formula-marquee-item">
-                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Reviews.jpg" alt="Reviews carousel image"></div>
+                    <div class="ai-marquee-card"><img src="Assets/Animation/NCO%20landing/Hero%20Images/Reviews.jpg" alt="Reviews carousel image"></div>
                     <figcaption class="formula-caption"><strong>Reviews</strong><span>Build social proof.</span></figcaption>
                   </figure>
                   <figure class="formula-marquee-item">
-                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/What%27s%20Included.jpg" alt="What's included carousel image"></div>
+                    <div class="ai-marquee-card"><img src="Assets/Animation/NCO%20landing/Hero%20Images/What%27s%20Included.jpg" alt="What's included carousel image"></div>
                     <figcaption class="formula-caption"><strong>What's Included</strong><span>Clarify the offer.</span></figcaption>
                   </figure>
                   <figure class="formula-marquee-item">
-                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Free%20Gifts.jpg" alt="Free gifts carousel image"></div>
+                    <div class="ai-marquee-card"><img src="Assets/Animation/NCO%20landing/Hero%20Images/Free%20Gifts.jpg" alt="Free gifts carousel image"></div>
                     <figcaption class="formula-caption"><strong>Free Gifts</strong><span>Increase perceived value.</span></figcaption>
                   </figure>
                   <figure class="formula-marquee-item">
-                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Benefits.jpg" alt="Benefits carousel image"></div>
+                    <div class="ai-marquee-card"><img src="Assets/Animation/NCO%20landing/Hero%20Images/Benefits.jpg" alt="Benefits carousel image"></div>
                     <figcaption class="formula-caption"><strong>Benefits</strong><span>Show customer outcomes.</span></figcaption>
                   </figure>
                   <figure class="formula-marquee-item">
-                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Product%20Benefits.jpg" alt="Product benefits carousel image"></div>
+                    <div class="ai-marquee-card"><img src="Assets/Animation/NCO%20landing/Hero%20Images/Product%20Benefits.jpg" alt="Product benefits carousel image"></div>
                     <figcaption class="formula-caption"><strong>Product Benefits</strong><span>Connect features to value.</span></figcaption>
                   </figure>
                   <figure class="formula-marquee-item" aria-hidden="true">
-                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Hero.jpg" alt=""></div>
+                    <div class="ai-marquee-card"><img src="Assets/Animation/NCO%20landing/Hero%20Images/Hero.jpg" alt=""></div>
                     <figcaption class="formula-caption"><strong>Hero</strong><span>Lead with product value.</span></figcaption>
                   </figure>
                   <figure class="formula-marquee-item" aria-hidden="true">
-                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Reviews.jpg" alt=""></div>
+                    <div class="ai-marquee-card"><img src="Assets/Animation/NCO%20landing/Hero%20Images/Reviews.jpg" alt=""></div>
                     <figcaption class="formula-caption"><strong>Reviews</strong><span>Build social proof.</span></figcaption>
                   </figure>
                   <figure class="formula-marquee-item" aria-hidden="true">
-                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/What%27s%20Included.jpg" alt=""></div>
+                    <div class="ai-marquee-card"><img src="Assets/Animation/NCO%20landing/Hero%20Images/What%27s%20Included.jpg" alt=""></div>
                     <figcaption class="formula-caption"><strong>What's Included</strong><span>Clarify the offer.</span></figcaption>
                   </figure>
                   <figure class="formula-marquee-item" aria-hidden="true">
-                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Free%20Gifts.jpg" alt=""></div>
+                    <div class="ai-marquee-card"><img src="Assets/Animation/NCO%20landing/Hero%20Images/Free%20Gifts.jpg" alt=""></div>
                     <figcaption class="formula-caption"><strong>Free Gifts</strong><span>Increase perceived value.</span></figcaption>
                   </figure>
                   <figure class="formula-marquee-item" aria-hidden="true">
-                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Benefits.jpg" alt=""></div>
+                    <div class="ai-marquee-card"><img src="Assets/Animation/NCO%20landing/Hero%20Images/Benefits.jpg" alt=""></div>
                     <figcaption class="formula-caption"><strong>Benefits</strong><span>Show customer outcomes.</span></figcaption>
                   </figure>
                   <figure class="formula-marquee-item" aria-hidden="true">
-                    <div class="ai-marquee-card"><img src="Animation/NCO%20landing/Hero%20Images/Product%20Benefits.jpg" alt=""></div>
+                    <div class="ai-marquee-card"><img src="Assets/Animation/NCO%20landing/Hero%20Images/Product%20Benefits.jpg" alt=""></div>
                     <figcaption class="formula-caption"><strong>Product Benefits</strong><span>Connect features to value.</span></figcaption>
                   </figure>
                 </div>
@@ -4002,28 +4007,21 @@
 </div>
 
 
+<!-- Project navigation -->
+<nav class="project-nav" aria-label="Project navigation">
+  <a class="project-nav-link prev" href="ring.html">
+    <span class="pn-eyebrow">&#8592; Previous Project</span>
+    <span class="pn-name">Ring</span>
+  </a>
+  <a class="project-nav-link next" href="american-century.html">
+    <span class="pn-eyebrow">Next Project &#8594;</span>
+    <span class="pn-name">American Century</span>
+  </a>
+</nav>
+
 <!-- Contact -->
-<section class="contact-section" id="contact">
-  <div class="contact">
-    <div class="contact-grid">
-      <div class="contact-heading">
-        <h2>Let's Work Together</h2>
-        <p>Good Design Starts with a Good Intention.</p>
-      </div>
-      <form class="contact-form" onsubmit="event.preventDefault();">
-        <div class="field"><input type="text" placeholder="Name" required></div>
-        <div class="field"><input type="email" placeholder="Email" required></div>
-        <div class="field"><textarea placeholder="Message" required></textarea></div>
-        <button type="submit" class="contact-submit">Make Good Work Together!</button>
-        <div class="contact-links">
-          <a href="#">Linkedin</a>
-          <a href="#">neoqtran@gmail.com</a>
-          <a href="#">CV</a>
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
+<!-- CONTACT (shared component — see site-contact.js) -->
+<div id="site-contact"></div>
 
 <script>
   // ============================================
@@ -4037,13 +4035,6 @@
       nav.style.setProperty('--mx', x + '%');
     });
   }
-
-  // Toggle scrolled state for nav (full-width when scrolled)
-  function handleNavScroll() {
-    document.body.classList.toggle('scrolled', window.scrollY > 8);
-  }
-  handleNavScroll();
-  window.addEventListener('scroll', handleNavScroll, { passive: true });
 
   // ============================================
   // Side menu: build TOC from sections + highlight active on scroll
@@ -4112,7 +4103,7 @@
 
     frame.addEventListener('load', () => {
       fit();
-      // Re-fit when fonts/images settle and on inner reflow
+      // Re-fit when Assets/fonts/images settle and on inner reflow
       const win = frame.contentWindow;
       try {
         win.addEventListener('load', fit);
@@ -4140,71 +4131,71 @@
       {
         title: 'Hero',
         text: 'Clarifies the offer fast with what is included, savings, and a direct path to buy.',
-        image: 'Animation/NCO landing/NEW/Hero.jpg',
+        image: 'Assets/Animation/NCO landing/NEW/Hero.jpg',
         align: 'top-clearance'
       },
       {
         title: 'Trust Proof',
         text: 'Builds immediate confidence with proof points before the shopper has to commit.',
-        image: 'Animation/NCO landing/NEW/Trust Proof.jpg',
+        image: 'Assets/Animation/NCO landing/NEW/Trust Proof.jpg',
         radius: 'tight'
       },
       {
         title: 'Natural Ingredients',
         text: 'Reinforces the brand values by making the clean ingredient story easy to understand.',
-        image: 'Animation/NCO landing/NEW/Natural Ingredients.jpg'
+        image: 'Assets/Animation/NCO landing/NEW/Natural Ingredients.jpg'
       },
       {
         title: 'Reviews Proof',
         text: 'Uses rating signals to reduce doubt and keep momentum moving toward purchase.',
-        image: 'Animation/NCO landing/NEW/Reviews proof.jpg',
+        image: 'Assets/Animation/NCO landing/NEW/Reviews proof.jpg',
         radius: 'tight'
       },
       {
         title: 'Actual Users Reviews',
         text: 'Adds real customer language so the product feels proven by people, not just the brand.',
-        image: 'Animation/NCO landing/NEW/Actual users reviews.jpg'
+        image: 'Assets/Animation/NCO landing/NEW/Actual users reviews.jpg'
       },
       {
         title: 'Subscription Benefits',
         text: 'Makes subscribing feel practical by showing the value, convenience, and savings together.',
-        image: 'Animation/NCO landing/NEW/Subscription Benefits.jpg'
+        image: 'Assets/Animation/NCO landing/NEW/Subscription Benefits.jpg'
       },
       {
         title: 'Buy Box',
         text: 'Keeps the decision point clear with pricing, options, and CTA in one focused area.',
-        image: 'Animation/NCO landing/NEW/Buy Box.jpg',
+        image: 'Assets/Animation/NCO landing/NEW/Buy Box.jpg',
         align: 'top-clearance'
       },
       {
         title: 'User Reviews Video',
         text: 'Turns social proof into a more human moment through quick video validation.',
-        image: 'Animation/NCO landing/NEW/User Reviews Video.jpg'
+        image: 'Assets/Animation/NCO landing/NEW/User Reviews Video.jpg'
       },
       {
         title: "What's Included",
         text: 'Spells out the bundle contents so shoppers know exactly what they are getting.',
-        image: "Animation/NCO landing/NEW/What's Included.jpg"
+        image: "Assets/Animation/NCO landing/NEW/What's Included.jpg"
       },
       {
         title: "Company's Commitment",
         text: 'Connects the offer back to the company values and makes the purchase feel aligned.',
-        image: "Animation/NCO landing/NEW/Company's Commitment.jpg"
+        image: "Assets/Animation/NCO landing/NEW/Company's Commitment.jpg"
       },
       {
         title: 'Social Proof Videos',
         text: 'Adds more buyer validation and gives the page a stronger community-driven feel.',
-        image: 'Animation/NCO landing/NEW/Social Proof Video.jpg'
+        image: 'Assets/Animation/NCO landing/NEW/Social Proof Video.jpg'
       },
       {
         title: 'Product Description',
         text: 'Explains the product benefits clearly for shoppers who need more detail before buying.',
-        image: 'Animation/NCO landing/NEW/Product description.jpg'
+        image: 'Assets/Animation/NCO landing/NEW/Product description.jpg'
       },
       {
         title: 'Okendo Reviews',
         text: 'Ends with deep review proof to answer lingering concerns and reinforce trust.',
-        image: 'Animation/NCO landing/NEW/Okendo Reviews.jpg',
+        image: 'Assets/Animation/NCO landing/NEW/Okendo Reviews.jpg',
         align: 'top-clearance'
       }
     ];
@@ -4359,22 +4350,22 @@
   if (pumpkinSequence) {
     const pumpkinFrames = [
       '',
-      'Animation/Pumpkin/3.jpg',
-      'Animation/Pumpkin/4.jpg',
-      'Animation/Pumpkin/5.jpg',
-      'Animation/Pumpkin/6.jpg',
-      'Animation/Pumpkin/7.jpg',
-      'Animation/Pumpkin/8.jpg',
-      'Animation/Pumpkin/9.jpg',
-      'Animation/Pumpkin/10.jpg',
-      'Animation/Pumpkin/11.jpg',
-      'Animation/Pumpkin/12.jpg',
-      'Animation/Pumpkin/13.jpg',
-      'Animation/Pumpkin/14.jpg',
-      'Animation/Pumpkin/15.jpg',
-      'Animation/Pumpkin/16.jpg',
-      'Animation/Pumpkin/17.jpg',
-      'Animation/Pumpkin/Final Render.jpg'
+      'Assets/Animation/Pumpkin/3.jpg',
+      'Assets/Animation/Pumpkin/4.jpg',
+      'Assets/Animation/Pumpkin/5.jpg',
+      'Assets/Animation/Pumpkin/6.jpg',
+      'Assets/Animation/Pumpkin/7.jpg',
+      'Assets/Animation/Pumpkin/8.jpg',
+      'Assets/Animation/Pumpkin/9.jpg',
+      'Assets/Animation/Pumpkin/10.jpg',
+      'Assets/Animation/Pumpkin/11.jpg',
+      'Assets/Animation/Pumpkin/12.jpg',
+      'Assets/Animation/Pumpkin/13.jpg',
+      'Assets/Animation/Pumpkin/14.jpg',
+      'Assets/Animation/Pumpkin/15.jpg',
+      'Assets/Animation/Pumpkin/16.jpg',
+      'Assets/Animation/Pumpkin/17.jpg',
+      'Assets/Animation/Pumpkin/Final Render.jpg'
     ];
     pumpkinFrames.filter(Boolean).forEach(src => {
       const img = new Image();
@@ -4410,17 +4401,17 @@
   if (bagSequence) {
     const bagFrames = [
       '',
-      'Animation/Bag/2.jpg',
-      'Animation/Bag/3.jpg',
-      'Animation/Bag/4.jpg',
-      'Animation/Bag/5.jpg',
-      'Animation/Bag/6.jpg',
-      'Animation/Bag/7.jpg',
-      'Animation/Bag/8.jpg',
-      'Animation/Bag/9.jpg',
-      'Animation/Bag/10.jpg',
-      'Animation/Bag/11.jpg',
-      'Animation/Bag/12.jpg'
+      'Assets/Animation/Bag/2.jpg',
+      'Assets/Animation/Bag/3.jpg',
+      'Assets/Animation/Bag/4.jpg',
+      'Assets/Animation/Bag/5.jpg',
+      'Assets/Animation/Bag/6.jpg',
+      'Assets/Animation/Bag/7.jpg',
+      'Assets/Animation/Bag/8.jpg',
+      'Assets/Animation/Bag/9.jpg',
+      'Assets/Animation/Bag/10.jpg',
+      'Assets/Animation/Bag/11.jpg',
+      'Assets/Animation/Bag/12.jpg'
     ];
     bagFrames.filter(Boolean).forEach(src => {
       const img = new Image();
@@ -4641,5 +4632,8 @@
 })();
 </script>
 
+<script src="page-transition.js"></script>
+<script src="site-contact.js"></script>
+<script src="alt-project-theme.js"></script>
 </body>
 </html>

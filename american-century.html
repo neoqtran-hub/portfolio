@@ -1,57 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" type="image/png" href="Assets/favicon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>American Century Investments — Case Study | neo by design</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Unbounded:wght@400;500;600;700;800;900&family=Abel&display=swap" rel="stylesheet">
+<script>
+  /* Apply saved theme before paint (default dark) */
+  (function(){ try{ if(localStorage.getItem("theme")==="light") document.documentElement.setAttribute("data-theme","light"); }catch(e){} })();
+</script>
 <style>
   /* ============================================
      CONFIG FONT
      ============================================ */
-  @font-face { font-family:'Config'; src:url('fonts/Config-Light.ttf') format('truetype'); font-weight:300; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Config'; src:url('fonts/Config-Regular.ttf') format('truetype'); font-weight:400; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Config'; src:url('fonts/Config-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Config'; src:url('fonts/Config-SemiBold.ttf') format('truetype'); font-weight:600; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Config'; src:url('fonts/Config-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Light.ttf') format('truetype'); font-weight:300; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Regular.ttf') format('truetype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-SemiBold.ttf') format('truetype'); font-weight:600; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
 
   /* ============================================
      RESET & BASE
      ============================================ */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: clip; transition: background-color 0.4s ease; }
   body {
-    font-family: 'Config', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    color: #1a1a1a;
-    background: #f4f4f2;
+    position: relative;
+    font-family: var(--body);
+    color: var(--ink);
+    background: var(--bg);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    overflow-x: clip;
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
   a { color: inherit; text-decoration: none; }
   img { max-width: 100%; display: block; }
   button { font-family: inherit; cursor: pointer; border: none; background: none; }
-
-  :root {
-    --purple: #daa520;
-    --purple-strong: #daa520;
-    --accent-rgb: 218, 165, 32;
-    --ink: #1a1a1a;
-    --ink-soft: #2a2a2a;
-    --muted: #8a8a8a;
-    --muted-soft: #b8b8b8;
-    --bg: #f4f4f2;
-    --card-radius: 28px;
-    --pill-radius: 999px;
-    /* heights used by the sticky sub-nav math */
-    --global-nav-h: 80px;   /* top offset (nav top 24px + ~56px height) */
-    --subnav-h: 64px;
-  }
-
-  /* ============================================
+/* ============================================
      GLOBAL LIQUID GLASS NAV (same as homepage)
      ============================================ */
   .nav-wrap {
@@ -161,7 +151,7 @@
      CASE PAGE LAYOUT
      ============================================ */
   .case-page {
-    padding: 110px 32px 0;
+    padding: 40px 32px 0;
     max-width: 1280px;
     margin: 0 auto;
   }
@@ -200,7 +190,7 @@
     margin-top: 14px;
   }
   .case-tags .chip {
-    background: #fff;
+    background: var(--surface);
     padding: 8px 16px;
     border-radius: var(--pill-radius);
     font-size: 12px;
@@ -238,10 +228,10 @@
     border-radius: 20px;
     overflow: hidden;
     /* glass fill */
-    background: linear-gradient(180deg, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.16) 100%);
+    background: linear-gradient(180deg, var(--glass) 0%, var(--glass) 100%);
     backdrop-filter: blur(28px) saturate(190%) brightness(1.04);
     -webkit-backdrop-filter: blur(28px) saturate(190%) brightness(1.04);
-    border: 1px solid rgba(255,255,255,0.55);
+    border: 1px solid var(--glass-brd);
     box-shadow:
       0 1px 0 rgba(255,255,255,1) inset,
       0 -1px 0 rgba(255,255,255,0.25) inset,
@@ -253,12 +243,6 @@
       width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
       margin-left 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
       border-radius 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-  body.nav-hidden .section-header {
-    top: 0;
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    border-radius: 0;
   }
   /* refraction sheen */
   .section-header::before {
@@ -306,7 +290,7 @@
     display: inline-block;
     width: 4px; height: 4px;
     border-radius: 50%;
-    background: #c8c8c6;
+    background: var(--line);
   }
   .stepper a {
     padding: 4px 6px;
@@ -325,8 +309,8 @@
     padding: 24px 0;
   }
   .sub-section h3 {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-style: italic;
+    font-family: var(--display);
+    font-style: normal;
     font-size: 24px;
     font-weight: 400;
     color: var(--ink);
@@ -341,7 +325,7 @@
     margin-right: auto;
   }
   .sub-section p {
-    color: #4a4a4a;
+    color: var(--copy);
     font-size: 16px;
     line-height: 1.5;
   }
@@ -351,7 +335,7 @@
   .placeholder-block {
     margin-top: 24px;
     height: 280px;
-    background: #f2f2f0;
+    background: var(--surface-2);
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -375,8 +359,8 @@
     margin: 32px auto 0;
     padding: 24px;
     border-radius: 16px;
-    border: 1px solid #ececea;
-    background: #fff;
+    border: 1px solid var(--line);
+    background: var(--surface);
     box-shadow: 0 1px 2px rgba(0,0,0,0.04);
     --ps-problem-bg: #FFE0DB; --ps-problem-text: #D94F3D;
     --ps-goal-bg: #E2DEFF;    --ps-goal-text: #5B4FCF;
@@ -384,8 +368,8 @@
     --ps-detail-bg: #FDEEC8;  --ps-detail-text: #A06A00;
   }
   .ps-frame .ps-title {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-style: italic;
+    font-family: var(--display);
+    font-style: normal;
     font-size: 28px;
     font-weight: 400;
     color: var(--ink);
@@ -424,7 +408,7 @@
     padding: 8px;
     font-size: 13.5px;
     line-height: 1.6;
-    border: 1px solid #ececea;
+    border: 1px solid var(--line);
     background: #F8F8F6;
     color: var(--ink);
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
@@ -482,8 +466,8 @@
     margin: 24px auto;
     border-radius: 12px;
     overflow: hidden;
-    border: 1px solid #ececea;
-    background: #fff;
+    border: 1px solid var(--line);
+    background: var(--surface);
     position: relative;
   }
   .sub-section .figure img {
@@ -498,7 +482,7 @@
     width: 24px;
     height: 24px;
     background: transparent;
-    color: #3a3a3a;
+    color: var(--copy);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -559,7 +543,7 @@
     height: 44px;
     border-radius: 50%;
     background: rgba(255,255,255,0.12);
-    color: #fff;
+    color: var(--surface);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -579,16 +563,16 @@
     max-width: 100%;
   }
   .framework-card {
-    background: #fff;
-    border: 1px solid #ececea;
+    background: var(--surface);
+    border: 1px solid var(--line);
     border-radius: 16px;
     padding: 24px 28px 26px;
     position: relative;
     overflow: hidden;
   }
   .framework-card .name {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-style: italic;
+    font-family: var(--display);
+    font-style: normal;
     font-size: 28px;
     font-weight: 400;
     color: var(--ink);
@@ -600,7 +584,7 @@
   .framework-card .desc {
     font-size: 14px;
     line-height: 1.55;
-    color: #4a4a4a;
+    color: var(--copy);
     margin-bottom: 18px;
   }
   .framework-card .problem-label {
@@ -642,21 +626,21 @@
   /* ============================================
      CONTACT (reused from homepage)
      ============================================ */
-  .contact-section { background: #F9F9F7; }
+  .contact-section { background: var(--bg-soft); }
   .contact { padding: 80px 32px 100px; max-width: 1280px; margin: 0 auto; }
   .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
   .contact-heading h2 { font-size: clamp(32px, 3.4vw, 42px); font-weight: 700; color: var(--ink); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; }
   .contact-heading p { font-size: 20px; color: var(--muted); }
   .contact-form { display: flex; flex-direction: column; }
-  .contact-form .field { border-bottom: 1px solid #d8d8d6; padding: 14px 4px; }
+  .contact-form .field { border-bottom: 1px solid var(--line); padding: 14px 4px; }
   .contact-form input, .contact-form textarea { width: 100%; border: none; background: transparent; font-family: inherit; font-size: 16px; color: var(--ink); outline: none; resize: none; }
   .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--muted); }
   .contact-form textarea { min-height: 140px; padding-top: 4px; }
-  .contact-submit { margin-top: 28px; background: #1f1f1f; color: #fff; padding: 18px 28px; border-radius: 14px; font-size: 15px; font-weight: 500; width: 100%; transition: background .25s ease, transform .25s ease; }
-  .contact-submit:hover { background: #000; transform: translateY(-1px); }
+  .contact-submit { display:block; text-align:center; margin-top: 28px; background: var(--btn-bg); color: var(--btn-ink); padding: 18px 28px; border-radius: 14px; font-size: 15px; font-weight: 600; font-family: var(--display); width: 100%; transition: filter .25s ease, transform .25s ease; }
+  .contact-submit:hover { filter: brightness(1.12); transform: translateY(-1px); }
   .contact-links { display: flex; justify-content: space-between; margin-top: 24px; padding: 0 8px; }
   .contact-links a { font-size: 14px; color: var(--muted); transition: color .25s ease; }
-  .contact-links a:hover { color: var(--purple-strong); }
+  .contact-links a:hover { color: var(--ink); }
 
   /* ============================================
      RESPONSIVE
@@ -697,7 +681,7 @@
     z-index: 40;
     max-height: calc(100vh - 160px);
     overflow-y: auto;
-    font-family: 'DM Serif Display', 'DM Serif Text', Georgia, serif;
+    font-family: var(--display);
     opacity: 0;
     pointer-events: none;
     transition: opacity .3s ease;
@@ -735,8 +719,23 @@
     .side-menu { display: none; }
   }
 </style>
+<link rel="stylesheet" href="alt-project-theme.css">
 </head>
 <body>
+
+<!-- Sticky site nav (home-alt style) -->
+<nav class="snav">
+  <a href="index.html" class="snav-brand">NEO BY DESIGN</a>
+  <div class="snav-links">
+    <a href="index.html#work">Work</a>
+    <a href="me.html">About</a>
+    <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener" class="snav-ln" aria-label="LinkedIn"><img src="Assets/linkedin.png" alt="LinkedIn"></a>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false">
+      <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.5" y1="4.5" x2="6.6" y2="6.6"/><line x1="17.4" y1="17.4" x2="19.5" y2="19.5"/><line x1="4.5" y1="19.5" x2="6.6" y2="17.4"/><line x1="17.4" y1="6.6" x2="19.5" y2="4.5"/></svg>
+      <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.3 6.3 0 0 0 10.5 10.5z"/></svg>
+    </button>
+  </div>
+</nav>
 
 <!-- Global Nav -->
 <div class="nav-wrap">
@@ -744,8 +743,8 @@
     <a href="index.html" class="brand"><span class="neo">neo</span> <span class="by">by design</span></a>
     <ul class="nav-links">
       <li><a href="index.html#work" class="nav-link active">Work</a></li>
-      <li><a href="index.html#play" class="nav-link">Play</a></li>
-      <li><a href="me.html" class="nav-link">Me</a></li>
+      <li><a href="index.html#work" class="nav-link">Play</a></li>
+      <li><a href="me.html" class="nav-link">About</a></li>
       <li>
         <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener" class="nav-link icon" aria-label="LinkedIn">
           <img src="Assets/linkedin.png" alt="LinkedIn">
@@ -807,7 +806,7 @@
           <p>I worked across five surfaces of American Century Investments\' digital experience: Contentful migration, landing pages, design systems, client portal, and the internal ESG dashboard. Each one had its own constraints, but they all rolled up to the same goal: bring a fragmented set of investor-facing tools onto a shared foundation that the rest of the business could build on.</p>
 
           <div class="figure">
-            <img src="Portfolio_ACI/Frame 8667.jpg" alt="My Role and Experience: five workstreams across Contentful Migration, Landing Pages, Design Systems, Client Portal, and Internal ESG Dashboard">
+            <img src="Assets/Portfolio_ACI/Frame 8667.jpg" alt="My Role and Experience: five workstreams across Contentful Migration, Landing Pages, Design Systems, Client Portal, and Internal ESG Dashboard">
             <button type="button" class="expand-btn" aria-label="Open image" data-expand>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
             </button>
@@ -819,7 +818,7 @@
           <p>Same shape across every workstream: <span class="hl">understand</span> the problem, the user, and the business context, then <span class="hl">identify</span> the highest-leverage opportunities, then <span class="hl">execute</span> with the team that owns the surface.</p>
 
           <div class="figure">
-            <img src="Portfolio_ACI/Frame 8674.jpg" alt="Process: Understand, Identify, Execute">
+            <img src="Assets/Portfolio_ACI/Frame 8674.jpg" alt="Process: Understand, Identify, Execute">
             <button type="button" class="expand-btn" aria-label="Open image" data-expand>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
             </button>
@@ -831,7 +830,7 @@
           <p>Inside each project, the work moved through requirements, research, user flows, wireframes, UI, prototypes, usability testing, deliverable handoff, QA, launch, and measurement. Some steps got compressed under tight timelines, but the structure stayed the same.</p>
 
           <div class="figure">
-            <img src="Portfolio_ACI/Frame 8675.jpg" alt="Typical work flow from Requirements through Launch and Measure">
+            <img src="Assets/Portfolio_ACI/Frame 8675.jpg" alt="Typical work flow from Requirements through Launch and Measure">
             <button type="button" class="expand-btn" aria-label="Open image" data-expand>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
             </button>
@@ -860,14 +859,14 @@
           <p>I leveraged the existing design system style to build and migrate components into Contentful, mapping each marketing surface to a small set of reusable blocks. Editors could re-arrange sections and variants without breaking the brand or the layout.</p>
 
           <div class="figure">
-            <img src="Portfolio_ACI/Frame 8668.jpg" alt="Contentful migration: live page examples">
+            <img src="Assets/Portfolio_ACI/Frame 8668.jpg" alt="Contentful migration: live page examples">
             <button type="button" class="expand-btn" aria-label="Open image" data-expand>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
             </button>
           </div>
 
           <div class="figure">
-            <img src="Portfolio_ACI/Frame 3280.jpg" alt="Documentation: page templates, grid system, and 2/3/4-card component layouts">
+            <img src="Assets/Portfolio_ACI/Frame 3280.jpg" alt="Documentation: page templates, grid system, and 2/3/4-card component layouts">
             <button type="button" class="expand-btn" aria-label="Open image" data-expand>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
             </button>
@@ -892,7 +891,7 @@
           <p>I inherited a maturing design system and elevated it: aligning typographic scale, form components, alerts, color tokens, and buttons across the ecosystem so that every team pulled from the same source of truth.</p>
 
           <div class="figure">
-            <img src="Portfolio_ACI/Frame 8670.jpg" alt="Design system: type scale, components, form fields, alerts, and color tokens">
+            <img src="Assets/Portfolio_ACI/Frame 8670.jpg" alt="Design system: type scale, components, form fields, alerts, and color tokens">
             <button type="button" class="expand-btn" aria-label="Open image" data-expand>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
             </button>
@@ -905,7 +904,7 @@
           <p>The same components powered the marketing site and the client portal. Landing pages were composed from system blocks rather than designed page-by-page, so brand and behavior stayed consistent at scale.</p>
 
           <div class="figure">
-            <img src="Portfolio_ACI/Frame 8669.jpg" alt="Landing pages built from system components">
+            <img src="Assets/Portfolio_ACI/Frame 8669.jpg" alt="Landing pages built from system components">
             <button type="button" class="expand-btn" aria-label="Open image" data-expand>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
             </button>
@@ -930,7 +929,7 @@
           <p>Building new features into an already mature dashboard: Move Money, Assets Allocations, Balance History Charts, Required Minimum Distribution (RMD), ESG Dashboards, Documents Management, and more.</p>
 
           <div class="figure">
-            <img src="Portfolio_ACI/Frame 8671.jpg" alt="Client Portal feature inventory and dashboard mocks">
+            <img src="Assets/Portfolio_ACI/Frame 8671.jpg" alt="Client Portal feature inventory and dashboard mocks">
             <button type="button" class="expand-btn" aria-label="Open image" data-expand>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
             </button>
@@ -942,7 +941,7 @@
           <p>The legacy Buy Request flow buried critical inputs and gave users no sense of where they were in the process. The update reframes the same task around a clear single-page form, plain-language fields, and a confirmation pattern that doubles as a record.</p>
 
           <div class="figure">
-            <img src="Portfolio_ACI/Frame 8673.jpg" alt="Move Money: legacy three-step modal vs. updated single-page Buy Request">
+            <img src="Assets/Portfolio_ACI/Frame 8673.jpg" alt="Move Money: legacy three-step modal vs. updated single-page Buy Request">
             <button type="button" class="expand-btn" aria-label="Open image" data-expand>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
             </button>
@@ -954,7 +953,7 @@
           <p>The same flows had to feel native on phone. Bottom sheets for account selection, single-action transaction tiles, and a persistent tab bar that kept Total Assets, Transact, Feedback, and Contact one tap away.</p>
 
           <div class="figure">
-            <img src="Portfolio_ACI/Frame 8672.jpg" alt="Mobile transaction flow: Buy, Sell, Exchange, Auto Invest tiles plus account and fund selection sheets">
+            <img src="Assets/Portfolio_ACI/Frame 8672.jpg" alt="Mobile transaction flow: Buy, Sell, Exchange, Auto Invest tiles plus account and fund selection sheets">
             <button type="button" class="expand-btn" aria-label="Open image" data-expand>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
             </button>
@@ -980,28 +979,21 @@
 </div>
 
 
+<!-- Project navigation -->
+<nav class="project-nav" aria-label="Project navigation">
+  <a class="project-nav-link prev" href="drsquatch.html">
+    <span class="pn-eyebrow">&#8592; Previous Project</span>
+    <span class="pn-name">Dr. Squatch</span>
+  </a>
+  <a class="project-nav-link next" href="beachbody.html">
+    <span class="pn-eyebrow">Next Project &#8594;</span>
+    <span class="pn-name">Beachbody</span>
+  </a>
+</nav>
+
 <!-- Contact -->
-<section class="contact-section" id="contact">
-  <div class="contact">
-    <div class="contact-grid">
-      <div class="contact-heading">
-        <h2>Let's Work Together</h2>
-        <p>Good Design Starts with a Good Intention.</p>
-      </div>
-      <form class="contact-form" onsubmit="event.preventDefault();">
-        <div class="field"><input type="text" placeholder="Name" required></div>
-        <div class="field"><input type="email" placeholder="Email" required></div>
-        <div class="field"><textarea placeholder="Message" required></textarea></div>
-        <button type="submit" class="contact-submit">Make Good Work Together!</button>
-        <div class="contact-links">
-          <a href="#">Linkedin</a>
-          <a href="#">neoqtran@gmail.com</a>
-          <a href="#">CV</a>
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
+<!-- CONTACT (shared component — see site-contact.js) -->
+<div id="site-contact"></div>
 
 
 <script>
@@ -1016,21 +1008,6 @@
       nav.style.setProperty('--mx', x + '%');
     });
   }
-
-  // Toggle scrolled state for nav (full-width when scrolled)
-  let lastScrollY = window.scrollY;
-  function handleNavScroll() {
-    const y = window.scrollY;
-    document.body.classList.toggle('scrolled', y > 8);
-    if (y > 80 && y > lastScrollY) {
-      document.body.classList.add('nav-hidden');
-    } else if (y < lastScrollY) {
-      document.body.classList.remove('nav-hidden');
-    }
-    lastScrollY = y;
-  }
-  handleNavScroll();
-  window.addEventListener('scroll', handleNavScroll, { passive: true });
 
   // ============================================
   // Side menu: build TOC from sections + highlight active on scroll
@@ -1098,7 +1075,7 @@
 
     frame.addEventListener('load', () => {
       fit();
-      // Re-fit when fonts/images settle and on inner reflow
+      // Re-fit when Assets/fonts/images settle and on inner reflow
       const win = frame.contentWindow;
       try {
         win.addEventListener('load', fit);
@@ -1191,120 +1168,9 @@
   });
 </script>
 
-<!-- Edge glow ripple + blur transition -->
-<style>
-  .wormhole-wrap {
-    position: fixed; inset: 0; z-index: 99999;
-    pointer-events: none; display: none; overflow: hidden;
-  }
-  .wormhole-wrap.active { display: block; }
-  .edge-glow {
-    position: absolute; inset: 0; pointer-events: none;
-    opacity: 0; mix-blend-mode: screen;
-    will-change: opacity, box-shadow;
-  }
-  .edge-glow.l1 {
-    box-shadow:
-      inset 0 0 60px 10px rgba(255,255,255,0.95),
-      inset 0 0 140px 30px rgba(218,165,32,0.85);
-  }
-  .edge-glow.l2 {
-    box-shadow:
-      inset 0 0 90px 18px rgba(255,120,200,0.85),
-      inset 0 0 220px 50px rgba(120,90,255,0.55);
-  }
-  .edge-glow.l3 {
-    box-shadow:
-      inset 0 0 110px 24px rgba(60,200,255,0.8),
-      inset 0 0 280px 70px rgba(80,255,180,0.45);
-  }
-  .wormhole-wrap.out .edge-glow.l1 { animation: edge-pulse 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0s forwards; }
-  .wormhole-wrap.out .edge-glow.l2 { animation: edge-pulse 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0.16s forwards; }
-  .wormhole-wrap.out .edge-glow.l3 { animation: edge-pulse 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0.32s forwards; }
-  .wormhole-wrap.in .edge-glow.l3 { animation: edge-pulse-in 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0s forwards; }
-  .wormhole-wrap.in .edge-glow.l2 { animation: edge-pulse-in 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.16s forwards; }
-  .wormhole-wrap.in .edge-glow.l1 { animation: edge-pulse-in 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.32s forwards; }
-  @keyframes edge-pulse {
-    0% { opacity: 0; transform: scale(1); }
-    25% { opacity: 1; }
-    60% { opacity: 0.85; }
-    100% { opacity: 0; transform: scale(1.02); }
-  }
-  @keyframes edge-pulse-in {
-    0% { opacity: 0; transform: scale(1.02); }
-    30% { opacity: 0.9; }
-    100% { opacity: 0; transform: scale(1); }
-  }
-  body.warp-out #page-warp {
-    animation: page-blur-out 1.3s cubic-bezier(0.65, 0, 0.35, 1) both;
-    will-change: filter, opacity;
-  }
-  @keyframes page-blur-out {
-    0% { filter: blur(0) saturate(1); opacity: 1; }
-    50% { filter: blur(10px) saturate(1.18); opacity: 1; }
-    100% { filter: blur(32px) saturate(1.25); opacity: 0; }
-  }
-  body.warp-in #page-warp {
-    animation: page-blur-in 1.3s cubic-bezier(0.16, 1, 0.3, 1) both;
-    will-change: filter, opacity;
-  }
-  @keyframes page-blur-in {
-    0% { filter: blur(32px) saturate(1.25); opacity: 0; }
-    40% { opacity: 1; }
-    100% { filter: blur(0) saturate(1); opacity: 1; }
-  }
-  body.warp-out, body.warp-in { overflow: hidden !important; }
-</style>
-<div class="wormhole-wrap" id="wormhole" aria-hidden="true">
-  <div class="edge-glow l1"></div>
-  <div class="edge-glow l2"></div>
-  <div class="edge-glow l3"></div>
-</div>
-<script>
-(function(){
-  var body = document.body;
-  var wormholeEl = document.getElementById('wormhole');
-  var wrap = document.getElementById('page-warp');
-  if (!wrap) {
-    wrap = document.createElement('div');
-    wrap.id = 'page-warp';
-    var kids = Array.from(body.childNodes);
-    kids.forEach(function(node){
-      if (node === wormholeEl || node === wrap) return;
-      if (node.nodeType === 1 && (node.tagName === 'SCRIPT' || node.tagName === 'STYLE')) return;
-      wrap.appendChild(node);
-    });
-    body.insertBefore(wrap, body.firstChild);
-  }
-  try {
-    var raw = sessionStorage.getItem('warpFrom');
-    if (raw) {
-      var data = JSON.parse(raw);
-      if (data && (Date.now() - data.t) < 3000) {
-        wormholeEl.classList.add('active', 'in');
-        body.classList.add('warp-in');
-        setTimeout(function(){
-          wormholeEl.classList.remove('active', 'in');
-          body.classList.remove('warp-in');
-        }, 1500);
-      }
-      sessionStorage.removeItem('warpFrom');
-    }
-  } catch(e) {}
-  document.querySelectorAll('a[href$=".html"]').forEach(function(link){
-    link.addEventListener('click', function(e){
-      var href = link.getAttribute('href');
-      if (!href || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-      if (href.indexOf('http') === 0 || href.indexOf('//') === 0) return;
-      e.preventDefault();
-      wormholeEl.classList.add('active', 'out');
-      body.classList.add('warp-out');
-      try { sessionStorage.setItem('warpFrom', JSON.stringify({t:Date.now()})); } catch(err) {}
-      setTimeout(function(){ window.location.href = href; }, 1300);
-    });
-  });
-})();
-</script>
 
+<script src="page-transition.js"></script>
+<script src="site-contact.js"></script>
+<script src="alt-project-theme.js"></script>
 </body>
 </html>

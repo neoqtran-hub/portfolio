@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  /* Apply saved theme before paint so there's no flash (default = dark) */
+  (function () {
+    try { if (localStorage.getItem('theme') === 'light') document.documentElement.setAttribute('data-theme', 'light'); } catch (e) {}
+  })();
+</script>
+<link rel="icon" type="image/png" href="Assets/favicon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Me — neo by design</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Unbounded:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="alt-project-theme.css">
 <style>
   /* ============================================
      CONFIG FONT
      ============================================ */
-  @font-face { font-family:'Config'; src:url('fonts/Config-Light.ttf') format('truetype'); font-weight:300; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Config'; src:url('fonts/Config-Regular.ttf') format('truetype'); font-weight:400; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Config'; src:url('fonts/Config-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Config'; src:url('fonts/Config-SemiBold.ttf') format('truetype'); font-weight:600; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Config'; src:url('fonts/Config-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Light.ttf') format('truetype'); font-weight:300; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Regular.ttf') format('truetype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-SemiBold.ttf') format('truetype'); font-weight:600; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
 
   /* ============================================
      RESET & BASE — matches index.html
@@ -34,38 +42,14 @@
   img { max-width: 100%; display: block; }
   button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
-  :root {
-    --purple: #daa520;
-    --purple-strong: #daa520;
-    --accent-rgb: 218, 165, 32;
-    --ink: #1a1a1a;
-    --ink-soft: #2a2a2a;
-    --muted: #8a8a8a;
-    --muted-soft: #b8b8b8;
-    --line: #ececec;
-    --bg: #f4f4f2;
-    --bg-soft: #F9F9F7;
-    --card-radius: 28px;
-    --pill-radius: 999px;
-    --glass-bg: rgba(255,255,255,0.45);
-    --glass-bg-strong: rgba(255,255,255,0.85);
-    --glass-border: rgba(255,255,255,0.6);
-  }
-  body.dark {
-    --ink: #f1f1f1;
-    --ink-soft: #d8d8d8;
-    --muted: #9a9a9a;
-    --muted-soft: #5a5a5a;
-    --line: #1f1f25;
-    --bg: #0c0c10;
-    --bg-soft: #131319;
-    --glass-bg: rgba(30,30,40,0.45);
-    --glass-bg-strong: rgba(20,20,28,0.85);
-    --glass-border: rgba(255,255,255,0.12);
-  }
+  /* Color tokens come from the shared canon theme (alt-project-theme.css).
+     Local :root / body.dark token blocks were removed so the canon theme wins. */
   body { background: var(--bg); color: var(--ink); transition: background 0.4s ease, color 0.4s ease; }
-  body.dark .brand-logo img { filter: grayscale(1) invert(1); opacity: 0.7; }
-  body.dark .brand-logo:hover img { filter: grayscale(0.3) invert(1); }
+  /* Disable the shared nav's hide-on-scroll (disappear) behavior on this page */
+  body.nav-hidden .snav { transform: none !important; }
+  /* Per-theme logo filters for the ported marquee (not part of the canon palette) */
+  :root { --logo-filter: grayscale(1) brightness(0) invert(0.78); --logo-dr-filter: grayscale(1); }
+  :root[data-theme="light"] { --logo-filter: grayscale(1) brightness(0) invert(0.18); }
 
   /* ============================================
      LIQUID GLASS NAV — synced with index.html
@@ -210,7 +194,7 @@
   /* ============================================
      PAGE LAYOUT
      ============================================ */
-  .me-page { padding: 140px 32px 0; max-width: 1180px; margin: 0 auto; }
+  .me-page { padding: 56px 32px 0; max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
 
   /* INTRO */
   .intro {
@@ -298,12 +282,13 @@
   .resume-logo {
     width: 56px; height: 56px;
     border-radius: 14px;
-    background: var(--bg-soft);
+    background: #fff;
     border: 1px solid var(--line);
     display: flex; align-items: center; justify-content: center;
     overflow: hidden;
     flex-shrink: 0;
   }
+  :root[data-theme="light"] .resume-logo { background: var(--bg-soft); }
   .resume-logo img { width: 64%; height: 64%; object-fit: contain; }
   .resume-item-head {
     display: flex; justify-content: space-between; align-items: baseline;
@@ -347,14 +332,18 @@
   }
   .soft-tile {
     aspect-ratio: 1/1;
-    background: var(--bg-soft);
+    background: #fff;
     border-radius: 18px;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     gap: 12px;
     transition: transform .2s ease, background .2s ease;
     border: 1px solid var(--line);
   }
-  .soft-tile:hover { transform: translateY(-2px); background: var(--bg); }
+  .soft-tile:hover { transform: translateY(-2px); background: #f2f0ec; }
+  .soft-tile .soft-name { color: #6f6f6a; }
+  :root[data-theme="light"] .soft-tile { background: var(--bg-soft); }
+  :root[data-theme="light"] .soft-tile:hover { background: var(--bg); }
+  :root[data-theme="light"] .soft-tile .soft-name { color: var(--muted); }
   .soft-logo {
     width: 38px; height: 38px;
     display: flex; align-items: center; justify-content: center;
@@ -362,54 +351,52 @@
   .soft-logo svg { width: 100%; height: 100%; }
   .soft-name { font-size: 12px; color: var(--muted); }
 
-  /* BRANDS MARQUEE — reuses Honorable Mentions marquee from index */
-  .brands-marquee {
-    padding: 80px 0;
+  /* LOGO MARQUEE — ported from index.html */
+  .marquee {
+    position: relative;
+    z-index: 1;
     overflow: hidden;
-  }
-  .brands-marquee .section-eyebrow,
-  .brands-marquee .section-title {
-    max-width: 1180px;
-    margin-left: auto; margin-right: auto;
-    padding: 0 32px;
-  }
-  .brands-marquee .section-title { margin-bottom: 48px; }
-  .marquee-track-wrap {
-    position: relative; width: 100%; overflow: hidden;
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
-    mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 30px 0;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   }
   .marquee-track {
-    display: flex; gap: 80px; align-items: center;
-    padding: 0 40px; width: max-content;
-    will-change: transform;
-    animation: brands-marquee 40s linear infinite;
+    display: flex;
+    align-items: center;
+    gap: 72px;
+    width: max-content;
+    animation: scroll-x 38s linear infinite;
   }
-  .marquee-track:hover { animation-play-state: paused; }
-  @keyframes brands-marquee {
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  .marquee-label {
+    font-size: 17px;
+    color: var(--muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .marquee img {
+    height: 26px;
+    width: auto;
+    object-fit: contain;
+    filter: var(--logo-filter);
+    opacity: 0.78;
+    flex-shrink: 0;
+  }
+  /* Dr. Squatch: it's already a light/reversed logo, so it gets its own filter per theme */
+  .marquee img.ms-dr {
+    height: 34px;
+    filter: var(--logo-dr-filter);
+    opacity: 0.72;
+  }
+  @keyframes scroll-x {
     from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
+    to { transform: translateX(-50%); }
   }
   @media (prefers-reduced-motion: reduce) {
     .marquee-track { animation: none; }
   }
-  .brand-logo {
-    flex: 0 0 auto;
-    height: 36px;
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0.65;
-    transition: opacity .25s ease;
-  }
-  .brand-logo:hover { opacity: 1; }
-  .brand-logo img {
-    max-height: 100%;
-    width: auto; height: auto;
-    object-fit: contain;
-    filter: grayscale(1);
-  }
-  .brand-logo.lg { height: 44px; }
-  .brand-logo.sm { height: 28px; }
-  .brand-logo.xs { height: 22px; }
 
   /* CONTACT */
   .contact-section { background: var(--bg-soft); padding: 100px 32px; }
@@ -450,17 +437,15 @@
     .resume-grid { gap: 20px; }
     .software-grid { grid-template-columns: repeat(4, 1fr); }
     .contact-grid { grid-template-columns: 1fr; gap: 40px; }
-    .me-page { padding: 110px 20px 0; }
+    .me-page { padding: 40px 20px 0; }
     .section { padding: 72px 0; }
   }
   @media (max-width: 560px) {
-    .nav-wrap { width: calc(100% - 24px); top: 16px; }
-    .nav { padding: 12px 24px; }
-    .nav-link { padding: 8px 12px; font-size: 13px; }
+    .snav { padding: 0 22px; }
+    .snav-links { gap: 22px; }
     .software-grid { grid-template-columns: repeat(3, 1fr); }
-    .brand-logo { height: 26px; }
-    .brand-logo.lg { height: 32px; }
     .marquee-track { gap: 48px; }
+    .marquee-label { font-size: 15px; }
     .resume-item { grid-template-columns: 48px 1fr; gap: 16px; }
     .resume-logo { width: 48px; height: 48px; border-radius: 12px; }
   }
@@ -469,23 +454,20 @@
 <body>
 
 <!-- ============================================
-     GLOBAL NAV (matches site)
+     SHARED TOP NAV (canon theme — .snav)
      ============================================ -->
-<div class="nav-wrap">
-  <nav class="nav" id="nav">
-    <a href="index.html" class="brand"><span class="neo">neo</span> <span class="by">by design</span></a>
-    <ul class="nav-links">
-      <li><a href="index.html#work" class="nav-link">Work</a></li>
-      <li><a href="index.html#play" class="nav-link">Play</a></li>
-      <li><a href="me.html" class="nav-link active">Me</a></li>
-      <li>
-        <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener" class="nav-link icon" aria-label="LinkedIn">
-          <img src="Assets/linkedin.png" alt="LinkedIn">
-        </a>
-      </li>
-    </ul>
-  </nav>
-</div>
+<nav class="snav">
+  <a href="index.html" class="snav-brand">NEO BY DESIGN</a>
+  <div class="snav-links">
+    <a href="index.html#work">Work</a>
+    <a href="me.html">About</a>
+    <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener" class="snav-ln" aria-label="LinkedIn"><img src="Assets/linkedin.png" alt="LinkedIn"></a>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false">
+      <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.5" y1="4.5" x2="6.6" y2="6.6"/><line x1="17.4" y1="17.4" x2="19.5" y2="19.5"/><line x1="4.5" y1="19.5" x2="6.6" y2="17.4"/><line x1="17.4" y1="6.6" x2="19.5" y2="4.5"/></svg>
+      <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.3 6.3 0 0 0 10.5 10.5z"/></svg>
+    </button>
+  </div>
+</nav>
 
 <main class="me-page">
 
@@ -493,7 +475,7 @@
   <section class="intro">
     <div>
       <h1 class="intro-title">
-        <span style="font-family: 'DM Serif Display', Georgia, serif; color: #B8972A; font-style: italic;">Neo Tran</span>
+        <span style="font-family: var(--display); font-weight: 700; color: var(--ink);">Neo Tran</span>
       </h1>
       <p class="intro-body">
         I'm a Senior Product Designer with 6+ years of experience designing consumer web and
@@ -511,7 +493,7 @@
 
   <!-- RESUME -->
   <section class="section" id="resume">
-    <h2 class="section-title">A focused view of my work history.</h2>
+    <h2 class="section-title">My Work History.</h2>
 
     <div class="resume-grid">
       <div class="resume-label">Experience</div>
@@ -756,39 +738,32 @@
 
 
 <!-- ============================================
-     BRANDS MARQUEE
+     LOGO MARQUEE (ported from index.html)
      ============================================ -->
-<section class="brands-marquee" aria-label="Brands I've worked with">
-  <div style="max-width:1180px;margin:0 auto;padding:0 32px;">
-    <h2 class="section-title">Brands I've Worked With</h2>
-  </div>
+<section class="marquee" aria-label="Brands I have worked with">
+  <div class="marquee-track">
+    <!-- set repeated twice for seamless loop -->
+    <span class="marquee-label">Brands I have worked with</span>
+    <img class="ms-dr" src="Assets/drsquatch-horizontal-logo-reversed 1.png" alt="Dr. Squatch">
+    <img src="Assets/Springtheory.png" alt="Spring Theory">
+    <img src="Assets/Ring.png" alt="Ring">
+    <img src="Assets/Simpluris.png" alt="Simpluris">
+    <img src="Assets/LAist.png" alt="LAist">
+    <img src="Assets/Kareo.png" alt="Kareo">
+    <img src="Assets/American Century.png" alt="American Century">
+    <img src="Assets/logo 1.png" alt="Evolus">
+    <img src="Assets/Dexcare.png" alt="Dexcare">
 
-  <div class="marquee-track-wrap">
-    <div class="marquee-track">
-      <!-- Set 1 -->
-      <div class="brand-logo lg" title="Dr. Squatch"><img src="Assets/drsquatch-horizontal-logo-reversed 1.png" alt="Dr. Squatch"></div>
-      <div class="brand-logo" title="Ring"><img src="Assets/Ring.png" alt="Ring"></div>
-      <div class="brand-logo" title="BODi by Beachbody"><img src="Assets/bodi-by-bb-logo 1.png" alt="BODi by Beachbody"></div>
-      <div class="brand-logo lg" title="American Century Investments"><img src="Assets/American Century.png" alt="American Century Investments"></div>
-      <div class="brand-logo" title="Simpluris"><img src="Assets/Simpluris.png" alt="Simpluris"></div>
-      <div class="brand-logo sm" title="LAist"><img src="Assets/LAist.png" alt="LAist"></div>
-      <div class="brand-logo" title="Kareo"><img src="Assets/Kareo.png" alt="Kareo"></div>
-      <div class="brand-logo" title="Dexcare"><img src="Assets/Dexcare.png" alt="Dexcare"></div>
-      <div class="brand-logo" title="Spring Theory"><img src="Assets/Springtheory.png" alt="Spring Theory"></div>
-      <div class="brand-logo" title="Evolus"><img src="Assets/logo 1.png" alt="Evolus"></div>
-
-      <!-- Set 2 (duplicate for seamless loop) -->
-      <div class="brand-logo lg" aria-hidden="true"><img src="Assets/drsquatch-horizontal-logo-reversed 1.png" alt=""></div>
-      <div class="brand-logo" aria-hidden="true"><img src="Assets/Ring.png" alt=""></div>
-      <div class="brand-logo" aria-hidden="true"><img src="Assets/bodi-by-bb-logo 1.png" alt=""></div>
-      <div class="brand-logo lg" aria-hidden="true"><img src="Assets/American Century.png" alt=""></div>
-      <div class="brand-logo" aria-hidden="true"><img src="Assets/Simpluris.png" alt=""></div>
-      <div class="brand-logo sm" aria-hidden="true"><img src="Assets/LAist.png" alt=""></div>
-      <div class="brand-logo" aria-hidden="true"><img src="Assets/Kareo.png" alt=""></div>
-      <div class="brand-logo" aria-hidden="true"><img src="Assets/Dexcare.png" alt=""></div>
-      <div class="brand-logo" aria-hidden="true"><img src="Assets/Springtheory.png" alt=""></div>
-      <div class="brand-logo" aria-hidden="true"><img src="Assets/logo 1.png" alt=""></div>
-    </div>
+    <span class="marquee-label">Brands I have worked with</span>
+    <img class="ms-dr" src="Assets/drsquatch-horizontal-logo-reversed 1.png" alt="Dr. Squatch">
+    <img src="Assets/Springtheory.png" alt="Spring Theory">
+    <img src="Assets/Ring.png" alt="Ring">
+    <img src="Assets/Simpluris.png" alt="Simpluris">
+    <img src="Assets/LAist.png" alt="LAist">
+    <img src="Assets/Kareo.png" alt="Kareo">
+    <img src="Assets/American Century.png" alt="American Century">
+    <img src="Assets/logo 1.png" alt="Evolus">
+    <img src="Assets/Dexcare.png" alt="Dexcare">
   </div>
 </section>
 
@@ -796,47 +771,12 @@
 <!-- ============================================
      CONTACT (footer on every page)
      ============================================ -->
-<section class="contact-section" id="contact">
- <div class="contact">
-  <div class="contact-grid">
-    <div class="contact-heading">
-      <h2>Let's Work Together</h2>
-      <p>Good design starts with clear intent.</p>
-    </div>
-    <form class="contact-form" onsubmit="event.preventDefault();">
-      <div class="field"><input type="text" name="name" placeholder="Name" required></div>
-      <div class="field"><input type="email" name="email" placeholder="Email" required></div>
-      <div class="field"><textarea name="message" placeholder="Message" required></textarea></div>
-      <button type="submit" class="contact-submit">Make Good Work Together!</button>
-      <div class="contact-links">
-        <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener">Linkedin</a>
-        <a href="mailto:neoqtran@gmail.com">neoqtran@gmail.com</a>
-        <a href="Assets/Neo%20Tran%20Resume.pdf" download>CV</a>
-      </div>
-    </form>
-  </div>
- </div>
-</section>
+<!-- CONTACT (shared component — see site-contact.js) -->
+<div id="site-contact"></div>
 
 
-<script>
-  // Nav refraction follows mouse
-  const nav = document.getElementById('nav');
-  if (nav) {
-    nav.addEventListener('mousemove', (e) => {
-      const rect = nav.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      nav.style.setProperty('--mx', x + '%');
-    });
-  }
-
-  // Scrolled nav state
-  function handleNavScroll() {
-    if (window.scrollY > 12) document.body.classList.add('scrolled');
-    else document.body.classList.remove('scrolled');
-  }
-  window.addEventListener('scroll', handleNavScroll, { passive: true });
-  handleNavScroll();
-</script>
+<script src="page-transition.js"></script>
+<script src="site-contact.js"></script>
+<script src="alt-project-theme.js"></script>
 </body>
 </html>

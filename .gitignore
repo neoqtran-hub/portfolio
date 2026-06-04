@@ -32,3 +32,8 @@ out/
 # Commit web-optimized versions only. Uncomment if you keep masters in-repo:
 # *.mov
 # *.mp4
+
+# ===== Local-only (kept on disk, never served) =====
+# Old pages and unused source/working files moved out of the live site.
+archive/
+_local/
