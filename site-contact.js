@@ -37,7 +37,7 @@
           '<a href="mailto:neoqtran@gmail.com">neoqtran@gmail.com</a>' +
           '<a href="Assets/Neo%20Tran%20Resume.pdf" download>CV</a>' +
         '</div>' +
-        '<p class="site-contact-note">Designed by me, raised by Claude &amp; Codex. It has my eyes and their work ethic.</p>' +
+        '<p class="site-contact-note">This website was conceived in a threesome, in a summer night, between me, Codex &amp; Claude.</p>' +
       '</div>' +
     '</section>';
 

@@ -27,7 +27,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Unbounded:wght@400;500;600;700;800;900&family=Abel&display=swap" rel="stylesheet">
 <script>
   /* Apply saved theme before paint (default dark) */
-  (function(){ try{ if(localStorage.getItem("theme")==="light") document.documentElement.setAttribute("data-theme","light"); }catch(e){} })();
+  (function(){ try{ var h=new Date().getHours(); var bucket=(h>=7&&h<19)?"day":"night"; var theme=bucket==="day"?"light":"dark"; var raw=localStorage.getItem("themeOverride"); if(raw){ var o=JSON.parse(raw); if(o&&o.bucket===bucket) theme=o.theme; else localStorage.removeItem("themeOverride"); } if(theme==="light") document.documentElement.setAttribute("data-theme","light"); else document.documentElement.removeAttribute("data-theme"); }catch(e){} })();
 </script>
 <style>
   /* ============================================

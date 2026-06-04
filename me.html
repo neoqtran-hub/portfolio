@@ -2,9 +2,18 @@
 <html lang="en">
 <head>
 <script>
-  /* Apply saved theme before paint so there's no flash (default = dark) */
+  /* Resolve theme before paint: time of day (light 7am–7pm, dark otherwise),
+     unless a manual toggle override is still active for the current day/night period. */
   (function () {
-    try { if (localStorage.getItem('theme') === 'light') document.documentElement.setAttribute('data-theme', 'light'); } catch (e) {}
+    try {
+      var h = new Date().getHours();
+      var bucket = (h >= 7 && h < 19) ? 'day' : 'night';
+      var theme = bucket === 'day' ? 'light' : 'dark';
+      var raw = localStorage.getItem('themeOverride');
+      if (raw) { var o = JSON.parse(raw); if (o && o.bucket === bucket) theme = o.theme; else localStorage.removeItem('themeOverride'); }
+      if (theme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      else document.documentElement.removeAttribute('data-theme');
+    } catch (e) {}
   })();
 </script>
 <link rel="icon" type="image/png" href="Assets/favicon.png">

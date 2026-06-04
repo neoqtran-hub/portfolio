@@ -196,6 +196,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    overflow: hidden;   /* let the oversized hero name clip at the edge instead of scrolling the page */
   }
   .hero-eyebrow {
     font-family: var(--display);
@@ -381,6 +382,7 @@
   .statement {
     padding: 0 0 50px;
     margin-top: -80px;       /* tuck up so the last card overlaps it */
+    overflow: hidden;        /* guard against the oversized line ever scrolling the page */
   }
   .statement span {
     display: block;
@@ -742,6 +744,8 @@
     .snav-links { gap: 22px; }
     .hero { padding: 96px 22px 48px; min-height: 92vh; }
     .hero-sub { font-size: 18px; }
+    .statement span { font-size: clamp(34px, 11vw, 96px); }
+    .contact-head h2 { font-size: clamp(40px, 8vw, 96px); }
     .scroll-hint { display: none; }
     .work { padding: 0 22px 32px; }
     .work-title { margin-bottom: 18px; }
@@ -754,11 +758,31 @@
     .about-grid { grid-template-columns: 1fr; gap: 44px; }
     .about-stats { gap: 28px; }
   }
+
+  @media (max-width: 560px) {
+    /* Work history: stack company/role over the date so the role can wrap
+       instead of being truncated to nothing on narrow screens */
+    .hist-head { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .hist-info { white-space: normal; overflow: visible; flex-wrap: wrap; }
+    .hist-info .ro { overflow: visible; text-overflow: clip; white-space: normal; }
+    .about-stats { gap: 22px 32px; }
+    /* let the big statement wrap so it stays readable instead of being clipped */
+    .statement span { white-space: normal; padding-left: 22px; }
+  }
 </style>
 <script>
-  /* Apply saved theme before paint so there's no flash (default = dark) */
+  /* Resolve theme before paint: time of day (light 7am–7pm, dark otherwise),
+     unless a manual toggle override is still active for the current day/night period. */
   (function () {
-    try { if (localStorage.getItem('theme') === 'light') document.documentElement.setAttribute('data-theme', 'light'); } catch (e) {}
+    try {
+      var h = new Date().getHours();
+      var bucket = (h >= 7 && h < 19) ? 'day' : 'night';
+      var theme = bucket === 'day' ? 'light' : 'dark';
+      var raw = localStorage.getItem('themeOverride');
+      if (raw) { var o = JSON.parse(raw); if (o && o.bucket === bucket) theme = o.theme; else localStorage.removeItem('themeOverride'); }
+      if (theme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      else document.documentElement.removeAttribute('data-theme');
+    } catch (e) {}
   })();
 </script>
 </head>
@@ -936,21 +960,38 @@
 
 <script>
   (function () {
-    // Theme toggle (default dark; persisted in localStorage)
+    // Theme: time of day decides (light 7am–7pm, dark otherwise); a manual
+    // toggle overrides only for the current day/night period, then time resumes.
     var themeBtn = document.getElementById('themeToggle');
     function syncPressed() {
       if (themeBtn) themeBtn.setAttribute('aria-pressed', document.documentElement.getAttribute('data-theme') === 'light' ? 'true' : 'false');
     }
-    syncPressed();
+    function currentBucket() {
+      var h = new Date().getHours();
+      return (h >= 7 && h < 19) ? 'day' : 'night';
+    }
+    function resolveTheme() {
+      var theme = currentBucket() === 'day' ? 'light' : 'dark';
+      try {
+        var raw = localStorage.getItem('themeOverride');
+        if (raw) { var o = JSON.parse(raw); if (o && o.bucket === currentBucket()) theme = o.theme; else localStorage.removeItem('themeOverride'); }
+      } catch (e) {}
+      return theme;
+    }
+    function applyTheme(theme) {
+      if (theme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      else document.documentElement.removeAttribute('data-theme');
+      syncPressed();
+    }
+    applyTheme(resolveTheme());
     if (themeBtn) {
       themeBtn.addEventListener('click', function () {
-        var isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        if (isLight) { document.documentElement.removeAttribute('data-theme'); }
-        else { document.documentElement.setAttribute('data-theme', 'light'); }
-        try { localStorage.setItem('theme', isLight ? 'dark' : 'light'); } catch (e) {}
-        syncPressed();
+        var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        applyTheme(next);
+        try { localStorage.setItem('themeOverride', JSON.stringify({ theme: next, bucket: currentBucket() })); } catch (e) {}
       });
     }
+    setInterval(function () { applyTheme(resolveTheme()); }, 60000);
 
     // Reveal the About section when scrolled into view
     var about = document.querySelector('.about');

@@ -476,4 +476,30 @@ body.nav-hidden .section-header.pinned {
     text-align: left;
     align-items: flex-start;
   }
+
+  /* Keep the top nav from overflowing on phones */
+  .snav {
+    height: 64px;
+    padding: 0 16px;
+  }
+
+  .snav-brand { font-size: 15px; }
+
+  .snav-links {
+    gap: 14px;
+  }
+
+  .snav-links a { font-size: 14px; }
+
+  /* Pinned section headers use the same compact horizontal padding */
+  body.nav-hidden .section-header.pinned {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 380px) {
+  .snav-brand { font-size: 13px; }
+  .snav-links { gap: 10px; }
+  .snav-links a { font-size: 13px; }
 }

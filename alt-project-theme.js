@@ -12,17 +12,40 @@
     }
   }
 
-  syncPressed();
+  // Time of day decides the theme (light 7am–7pm, dark otherwise). A manual
+  // toggle writes an override that lasts only for the current day/night period,
+  // then the time-based default resumes.
+  function currentBucket() {
+    var h = new Date().getHours();
+    return (h >= 7 && h < 19) ? 'day' : 'night';
+  }
+  function resolveTheme() {
+    var theme = currentBucket() === 'day' ? 'light' : 'dark';
+    try {
+      var raw = localStorage.getItem('themeOverride');
+      if (raw) { var o = JSON.parse(raw); if (o && o.bucket === currentBucket()) theme = o.theme; else localStorage.removeItem('themeOverride'); }
+    } catch (e) {}
+    return theme;
+  }
+  function applyTheme(theme) {
+    if (theme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+    else document.documentElement.removeAttribute('data-theme');
+    syncPressed();
+  }
+
+  applyTheme(resolveTheme());
 
   if (t) {
     t.addEventListener('click', function () {
-      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      if (isLight) document.documentElement.removeAttribute('data-theme');
-      else document.documentElement.setAttribute('data-theme', 'light');
-      try { localStorage.setItem('theme', isLight ? 'dark' : 'light'); } catch (e) {}
-      syncPressed();
+      var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      applyTheme(next);
+      try { localStorage.setItem('themeOverride', JSON.stringify({ theme: next, bucket: currentBucket() })); } catch (e) {}
     });
   }
+
+  // Re-evaluate periodically so the theme flips automatically when the clock
+  // crosses the day/night boundary (and stale overrides expire).
+  setInterval(function () { applyTheme(resolveTheme()); }, 60000);
 
   var tx = 50;
   var ty = 18;
