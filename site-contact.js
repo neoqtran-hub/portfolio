@@ -30,14 +30,14 @@
     '<section class="site-contact" id="contact" aria-label="Contact">' +
       '<div class="site-contact-inner">' +
         '<h2>Let\'s Work Together</h2>' +
-        '<p>Good designs start with good intentions.</p>' +
-        '<a class="site-contact-cta" href="mailto:neoqtran@gmail.com?subject=Let%27s%20work%20together">Make Good Work Together!</a>' +
+        '<p>Let\'s make something worth shipping.</p>' +
+        '<a class="site-contact-cta" href="mailto:neoqtran@gmail.com?subject=Let%27s%20work%20together">Let\'s make great work</a>' +
         '<div class="site-contact-links">' +
           '<a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener">LinkedIn</a>' +
           '<a href="mailto:neoqtran@gmail.com">neoqtran@gmail.com</a>' +
           '<a href="Assets/Neo%20Tran%20Resume.pdf" download>CV</a>' +
         '</div>' +
-        '<p class="site-contact-note">This website was conceived in a threesome, in a summer night, between me, Codex &amp; Claude.</p>' +
+        '<p class="site-contact-note">This website was conceived from the love between three people — Claude, Codex and Me.</p>' +
       '</div>' +
     '</section>';
 
