@@ -33,6 +33,9 @@ out/
 # *.mov
 # *.mp4
 
+# ===== Unused local font masters (site uses the system SF Pro stack, not @font-face) =====
+Assets/fonts/SF Pro/
+
 # ===== Local-only (kept on disk, never served) =====
 # Old pages and unused source/working files moved out of the live site.
 archive/

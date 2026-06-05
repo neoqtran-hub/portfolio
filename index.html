@@ -634,6 +634,30 @@
     letter-spacing: -0.02em;
     line-height: 1;
   }
+  /* Coffee counter: last digit rolls like a slow odometer */
+  .about-stats .stat .n.coffee {
+    display: inline-flex;
+    align-items: flex-end;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .coffee-lead { line-height: 1; }
+  .coffee-roll {
+    display: inline-block;
+    height: 1em;
+    line-height: 1;
+    overflow: hidden;
+  }
+  .coffee-strip {
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+  }
+  .coffee-strip > span {
+    display: block;
+    height: 1em;
+    line-height: 1;
+  }
   .about-stats .stat .l {
     margin-top: 8px;
     font-size: 14px;
@@ -923,7 +947,7 @@
       <p>Across CMS migrations, dashboards, mobile apps, and full design systems, the throughline stays the same: details that compound. Clear hierarchy and interactions that feel inevitable.</p>
       <div class="about-stats">
         <div class="stat"><div class="n">10+</div><div class="l">Years Designing</div></div>
-        <div class="stat"><div class="n">5+</div><div class="l">Brands Shipped</div></div>
+        <div class="stat"><div class="n" id="coffeeCount" data-start="2015-09-01">0</div><div class="l">Cups of Coffee</div></div>
         <div class="stat"><div class="n">∞</div><div class="l">Good Intentions</div></div>
       </div>
     </div>
@@ -1004,6 +1028,100 @@
       aio.observe(about);
     } else if (about) {
       about.classList.add('in');
+    }
+
+    // Cups of coffee: base is ~one per day since I started designing. On reveal
+    // it spins up to the base, then the last digit rolls slowly like an odometer,
+    // adding at most 3 more cups per view (re-entering allows up to 3 again).
+    var coffeeEl = document.getElementById('coffeeCount');
+    if (coffeeEl) {
+      var COFFEE_ROLL_MS = 7000;    // time for the last digit to roll one full step (very slow)
+      var COFFEE_PAUSE_MS = 20000;  // rest on each number before rolling the next
+      var COFFEE_CYCLE_MS = COFFEE_ROLL_MS + COFFEE_PAUSE_MS;
+      var MAX_PER_VIEW = 3;
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var startMs = new Date(coffeeEl.getAttribute('data-start') || '2015-09-01').getTime();
+      function baseCups() { return Math.max(0, Math.floor((Date.now() - startMs) / 86400000)); }
+
+      coffeeEl.classList.add('coffee');
+      coffeeEl.innerHTML = '<span class="coffee-lead"></span><span class="coffee-roll"><span class="coffee-strip"><span></span><span></span></span></span>';
+      var leadEl = coffeeEl.querySelector('.coffee-lead');
+      var stripEl = coffeeEl.querySelector('.coffee-strip');
+      var cellTop = stripEl.children[0];
+      var cellBot = stripEl.children[1];
+
+      var value = 0;
+      function setDigits(n) {
+        value = n;
+        var d = n % 10;
+        leadEl.textContent = n < 10 ? '' : String(Math.floor(n / 10));
+        cellTop.textContent = d;
+        cellBot.textContent = (d + 1) % 10;
+      }
+      setDigits(0);
+
+      var rafId = null, rolling = false, rollBaseValue = 0, rollT0 = 0;
+      function rollFrame(ts) {
+        var elapsed = ts - rollT0;
+        var k = Math.floor(elapsed / COFFEE_CYCLE_MS);   // which cup we're on
+        if (k >= MAX_PER_VIEW) {                          // hit the per-view cap: rest and stop (no loop)
+          if (value !== rollBaseValue + MAX_PER_VIEW) setDigits(rollBaseValue + MAX_PER_VIEW);
+          stripEl.style.transform = 'translateY(0)';
+          rolling = false; rafId = null; return;
+        }
+        var within = elapsed - k * COFFEE_CYCLE_MS;
+        if (within < COFFEE_ROLL_MS) {                    // rolling slowly toward the next cup
+          if (value !== rollBaseValue + k) setDigits(rollBaseValue + k);
+          stripEl.style.transform = 'translateY(' + (-(within / COFFEE_ROLL_MS)) + 'em)';
+        } else {                                          // landed — pause and rest on this number
+          if (value !== rollBaseValue + k + 1) setDigits(rollBaseValue + k + 1);
+          stripEl.style.transform = 'translateY(0)';
+        }
+        rafId = requestAnimationFrame(rollFrame);
+      }
+      function startRoll() {
+        if (rolling || reduceMotion) return;
+        rolling = true;
+        rollBaseValue = value;
+        rollT0 = performance.now();
+        rafId = requestAnimationFrame(rollFrame);
+      }
+      function stopRoll() {
+        rolling = false;
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        stripEl.style.transform = 'translateY(0)';   // rest on a whole number
+      }
+      function countUpThenRoll() {
+        var target = baseCups();
+        if (reduceMotion) { setDigits(target); return; }
+        var t0 = null, dur = 900;
+        function step(ts) {
+          if (t0 === null) t0 = ts;
+          var p = Math.min(1, (ts - t0) / dur);
+          setDigits(Math.round(target * (1 - Math.pow(1 - p, 3))));
+          stripEl.style.transform = 'translateY(0)';
+          if (p < 1) requestAnimationFrame(step);
+          else startRoll();
+        }
+        requestAnimationFrame(step);
+      }
+
+      var started = false, wasOut = true;
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting && wasOut) {
+              wasOut = false;
+              if (!started) { started = true; countUpThenRoll(); } else { startRoll(); }
+            } else if (!en.isIntersecting) {
+              wasOut = true;
+              stopRoll();
+            }
+          });
+        }, { threshold: 0.6 }).observe(coffeeEl);
+      } else {
+        setDigits(baseCups());
+      }
     }
 
     // Reveal the Work title when scrolled to
