@@ -793,6 +793,25 @@
     /* let the big statement wrap so it stays readable instead of being clipped */
     .statement span { white-space: normal; padding-left: 22px; }
   }
+
+  /* Mirror the shared canon top-nav (alt-project-theme.css) sizing on mobile so
+     the home nav matches the case pages — same 64px height and 15px brand on
+     phones, instead of the full 80px / 18px desktop nav. */
+  @media (max-width: 900px) {
+    .snav { padding: 0 20px; }
+    .snav-links { gap: 18px; }
+  }
+  @media (max-width: 700px) {
+    .snav { height: 64px; padding: 0 16px; }
+    .snav-brand { font-size: 15px; }
+    .snav-links { gap: 14px; }
+    .snav-links a { font-size: 14px; }
+  }
+  @media (max-width: 380px) {
+    .snav-brand { font-size: 13px; }
+    .snav-links { gap: 10px; }
+    .snav-links a { font-size: 13px; }
+  }
 </style>
 <script>
   /* Resolve theme before paint: time of day (light 7am–7pm, dark otherwise),

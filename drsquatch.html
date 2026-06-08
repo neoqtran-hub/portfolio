@@ -621,6 +621,7 @@
     font-weight: 700;
     line-height: 14px;
     text-align: center;
+    white-space: nowrap;
   }
   .product-tile-main {
     flex: 1 1 0;
@@ -1559,8 +1560,8 @@
       padding-right: 16px;
     }
     .bundle-star-card {
-      padding: 18px 12px;
-      align-items: center;
+      padding: 18px 16px; /* 16px inner gutter for the demos */
+      align-items: stretch;
     }
     .product-tile-stage,
     .bundle-stepper-stage,
@@ -1568,19 +1569,27 @@
       width: 100%;
     }
     .product-tile-stage {
-      min-height: 112px;
+      min-height: 0;
     }
-    /* Phone mockups are built at fixed pixel widths (440px / 390px) that are
-       wider than the card on a phone. Use `zoom` (not transform) so the demo's
-       LAYOUT box shrinks too — that lets it genuinely fit and center via normal
-       flow. (transform: scale keeps the original footprint, so the oversized
-       box overflow-aligns and ends up off-center.) */
+    /* Phone mockups are built at fixed pixel widths (440px / 390px). On a phone
+       make them fluid so they fill the card to its 16px gutters instead of
+       being shrunk and floated in whitespace. Internal carousels stay clipped
+       by the mockup's own overflow:hidden, as designed. */
     .product-tile {
-      padding-left: 16px; /* match right padding so the tile reads centered */
-      zoom: 0.64;
+      width: 100%;
+      padding: 8px 12px;
     }
-    .bottom-sheet-card .mobile-bottom-sheet {
-      zoom: 0.76;
+    .bottom-sheet-card .mobile-bottom-sheet,
+    .bottom-sheet-card .bs-header,
+    .bottom-sheet-card .bs-body {
+      width: 100%;
+    }
+    .bottom-sheet-card .bs-button {
+      width: 100%;
+    }
+    .bottom-sheet-card .bs-empty {
+      padding-left: 20px;
+      padding-right: 20px;
     }
   }
   .image-window-grid {
@@ -2315,12 +2324,10 @@
     .formula-marquee-item { width: 150px; }
     .ai-marquee-row { gap: 10px; }
     .impact-grid { grid-template-columns: 1fr 1fr; }
-    .impact-row { grid-template-columns: 1fr; }
-    .impact-row > div {
-      border-left: 0;
-      border-top: 1px solid var(--surface-2);
-    }
-    .impact-row > div:first-child { border-top: 0; }
+    /* Landing-page table: keep it horizontal and scroll sideways on mobile
+       instead of stacking each row into a column. */
+    .impact-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .impact-row { min-width: 600px; }
   }
 
   /* Highlight for emphasized phrases — works anywhere on the page */
@@ -2835,10 +2842,12 @@
       flex-direction: column;
       align-items: flex-start;
       gap: 10px;
-      padding: 18px 20px;
+      padding: 18px 16px;
     }
     .section-header h2 { font-size: 22px; }
-    .section-body { padding: 20px 20px 32px; }
+    /* Content containers fill to the page's 16px gutters on mobile (case-page
+       already supplies the 16px), so drop the section-body side padding. */
+    .section-body { padding: 20px 0 32px; }
     .stepper { justify-content: flex-start; gap: 6px; }
     .stepper a { font-size: 14px; }
     .contact { padding: 60px 20px 80px; }
