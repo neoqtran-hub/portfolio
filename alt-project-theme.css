@@ -459,6 +459,17 @@ body.nav-hidden .section-header.pinned {
   .snav-links {
     gap: 18px;
   }
+
+  /* Let the sub nav grow to fit its stacked title + stepper on mobile.
+     Without this, the unconditional height: 80px above clips the wrapped
+     content ("cut off" sub nav). Each page supplies the column layout. */
+  .section-header {
+    height: auto;
+  }
+
+  body.nav-hidden .section-header.pinned {
+    height: auto;
+  }
 }
 
 @media (max-width: 1200px) {
@@ -466,6 +477,13 @@ body.nav-hidden .section-header.pinned {
 }
 
 @media (max-width: 700px) {
+  /* Top nav shrinks to 64px on phones — match the offset and tighten the
+     gap to the sub nav to 8px when both are present together. */
+  :root {
+    --global-nav-h: 64px;
+    --nav-subnav-gap: 8px;
+  }
+
   .project-nav {
     grid-template-columns: 1fr;
     gap: 28px;
