@@ -499,29 +499,37 @@
   .bundle-device {
     width: 286px;
     margin: 0 auto;
-    padding: 12px;
-    border-radius: 36px;
+    padding: 16px;
+    border-radius: 16px;
     background: #111;
     box-shadow: 0 18px 44px rgba(0,0,0,0.18);
     position: relative;
   }
-  .bundle-device::before {
-    content: '';
-    position: absolute;
-    top: 12px;
-    left: 50%;
-    width: 86px;
-    height: 24px;
-    transform: translateX(-50%);
-    border-radius: 0 0 14px 14px;
-    background: #111;
-    z-index: 2;
+  /* Screen wrapper forces the video to clip to rounded corners.
+     A bare <video> ignores its own border-radius in some browsers. */
+  .bundle-screen {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #000;
+    -webkit-mask-image: -webkit-radial-gradient(white, black); /* Safari clip fix */
   }
-  .bundle-device video {
+  .bundle-screen video {
     width: 100%;
     display: block;
-    border-radius: 26px;
-    background: #000;
+  }
+  /* Notch sits on top of the screen. */
+  .bundle-screen::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 92px;
+    height: 26px;
+    transform: translateX(-50%);
+    border-radius: 0 0 16px 16px;
+    background: #111;
+    z-index: 2;
   }
   .sheet-note {
     position: absolute;
@@ -3583,7 +3591,9 @@
               <p>Built to feel effortless: pick your bars, watch the price react instantly, and check out without losing your place. Fast, playful, and ready for daily shopping.</p>
             </div>
             <div class="bundle-device" aria-label="Dynamic bundle builder mobile demo">
-              <video src="Assets/Demo.mov" autoplay loop muted playsinline></video>
+              <div class="bundle-screen">
+                <video src="Assets/Demo.mov" autoplay loop muted playsinline></video>
+              </div>
               <div class="sheet-note">
                 <span class="sheet-text"><strong>Persistent bottom sheet</strong> keeps live pricing &amp; checkout in reach as you build.</span>
               </div>
