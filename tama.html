@@ -1680,13 +1680,16 @@
         zzzEl.classList.remove('show');
       }
       function sleepToggle() {
-        if (asleep) { wake(); idle(); return; }
+        // already napping → wake immediately
+        if (asleep) { clearTimeout(reactTimer); wake(); idle(); return; }
         asleep = true;
+        busy = true;
         lcd.classList.add('asleep');
         zzzEl.classList.add('show');
         setChar('sleep', false);
-        busy = false;
+        // a short nap, then wake and brighten back on its own
         clearTimeout(reactTimer);
+        reactTimer = setTimeout(function () { wake(); idle(); }, 3400);
       }
       function die() {
         dead = true;
