@@ -1,0 +1,1780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/png" href="Assets/favicon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neo Tran — Senior Product Designer</title>
+
+<!-- Hidden easter-egg page: reachable only at /tama, kept out of search -->
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Social share / Open Graph -->
+<meta name="description" content="Neo Tran — Senior Product Designer turning friction into final products that convert.">
+<link rel="canonical" href="https://www.neobydesign.com/tama">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="neo by design">
+<meta property="og:title" content="Neo Tran — Senior Product Designer">
+<meta property="og:description" content="Senior Product Designer turning friction into final products that convert.">
+<meta property="og:url" content="https://www.neobydesign.com/tama">
+<meta property="og:image" content="https://www.neobydesign.com/Assets/thumbnail.jpg">
+<meta property="og:image:width" content="4941">
+<meta property="og:image:height" content="3706">
+<meta property="og:image:alt" content="NEO TRAN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Neo Tran — Senior Product Designer">
+<meta name="twitter:description" content="Senior Product Designer turning friction into final products that convert.">
+<meta name="twitter:image" content="https://www.neobydesign.com/Assets/thumbnail.jpg">
+
+<!-- Fonts: Unbounded (display) + Abel (body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Abel&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #131314;
+    --bg-soft: #0f0f10;
+    --ink: #f2f0ec;
+    --muted: #8d8d89;
+    --line: rgba(255,255,255,0.14);
+    --display: 'Unbounded', system-ui, sans-serif;
+    --body: 'Abel', system-ui, sans-serif;
+    /* themeable surface bits (dark is the default) */
+    --glow-1: rgba(255,255,255,0.13);
+    --glow-2: rgba(255,255,255,0.05);
+    --nav-bg: rgba(19,19,20,0.72);
+    --grain-opacity: 0.24;
+    --logo-filter: grayscale(1) brightness(0) invert(0.78);
+    --logo-dr-filter: grayscale(1);
+    --nav-icon-filter: invert(1) brightness(1.6);
+    --btn-bg: #f2f0ec;
+    --btn-ink: #131314;
+    /* shared top nav (.snav / .theme-toggle) bits */
+    --pill-radius: 8px;
+    --glass: rgba(255,255,255,0.06);
+    --glass-brd: rgba(255,255,255,0.12);
+  }
+  :root[data-theme="light"] {
+    --bg: #f2f0ec;
+    --bg-soft: #e8e5de;
+    --ink: #1a1a1b;
+    --muted: #6f6f6a;
+    --line: rgba(0,0,0,0.14);
+    --glow-1: rgba(0,0,0,0.08);
+    --glow-2: rgba(0,0,0,0.03);
+    --nav-bg: rgba(242,240,236,0.72);
+    --grain-opacity: 0.12;
+    --logo-filter: grayscale(1) brightness(0) invert(0.18);
+    /* Dr. Squatch is a light/reversed mark — keep it as light gray, same as dark theme */
+    --logo-dr-filter: grayscale(1);
+    --nav-icon-filter: none;
+    --btn-bg: #1a1a1b;
+    --btn-ink: #f2f0ec;
+    --glass: rgba(255,255,255,0.30);
+    --glass-brd: rgba(255,255,255,0.55);
+  }
+  html { transition: background-color 0.4s ease; }
+  body, .snav, .marquee img, .snav-links .snav-ln img {
+    transition: background-color 0.4s ease, color 0.4s ease, filter 0.4s ease;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    font-family: var(--body);
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  /* Soft spotlight glow — follows the cursor */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(circle 34vmax at var(--mx, 50%) var(--my, 18%),
+      var(--glow-1) 0%,
+      var(--glow-2) 32%,
+      transparent 62%);
+  }
+  /* Film grain / noise */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  /* Keep content above the background layers */
+  .snav, .hero, .work, .statement, .marquee, .contact { position: relative; z-index: 1; }
+  .statement { z-index: 1; }   /* sits behind the cards */
+  .work { z-index: 2; }        /* cards overlap the statement */
+  .snav { z-index: 60; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  /* ---------- NAV (shared top nav — .snav) ---------- */
+  .snav {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    padding: 0 40px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    transition: background 0.4s ease;
+  }
+  .snav-brand {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .snav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+  .snav-links a {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .snav-links a:hover { opacity: 0.7; }
+  .snav-ln {
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    opacity: 0.85;
+  }
+  .snav-ln img { width: 100%; height: 100%; object-fit: contain; filter: var(--nav-icon-filter); }
+
+  /* ---------- THEME TOGGLE (shared — floats bottom-right) ---------- */
+  .theme-toggle {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 90;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--pill-radius);
+    border: 1px solid var(--line);
+    background: var(--nav-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--ink);
+    cursor: pointer;
+    box-shadow: 0 12px 32px -18px var(--glow-1);
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+  }
+  .theme-toggle:hover { background: var(--glass); border-color: var(--glass-brd); transform: translateY(-1px); }
+  .theme-toggle svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  /* show the icon for the theme you'd switch TO (dark → sun, light → moon) */
+  .theme-toggle .ic-sun { display: block; }
+  .theme-toggle .ic-moon { display: none; }
+  :root[data-theme="light"] .theme-toggle .ic-sun { display: none; }
+  :root[data-theme="light"] .theme-toggle .ic-moon { display: block; }
+
+  /* ---------- HERO (first view) ---------- */
+  .hero {
+    position: relative;
+    min-height: calc(100vh - 80px);   /* account for the sticky nav so it stays contained */
+    padding: 40px 48px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;   /* let the oversized hero name clip at the edge instead of scrolling the page */
+  }
+  .hero-eyebrow {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-left: 4px;
+    margin-bottom: 10px;
+  }
+  .hero-name {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(96px, 18vw, 270px);
+    line-height: 0.86;
+    letter-spacing: -0.03em;
+    margin-left: -6px;
+    white-space: nowrap;
+    transform: translateX(var(--hx, 0px));
+    will-change: transform;
+  }
+  .hero-sub {
+    max-width: 420px;
+    margin-top: 40px;
+    padding-left: 6px;
+    font-size: 21px;
+    line-height: 1.3;
+    color: var(--muted);
+  }
+  .cycle-word {
+    display: inline-block;
+    color: var(--ink);
+    font-weight: bold;
+    transition: opacity 0.32s ease, transform 0.32s cubic-bezier(0.2, 0.75, 0.2, 1);
+  }
+  .scroll-hint {
+    margin-top: 26px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .scroll-hint svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: scrollBounce 1.6s ease-in-out infinite;
+  }
+  @keyframes scrollBounce {
+    0%, 100% { transform: translateY(0); opacity: 0.7; }
+    50% { transform: translateY(5px); opacity: 1; }
+  }
+
+  /* ---------- TAMAGOTCHI (interactive hero toy) ---------- */
+  /* The hang wrapper is the pendulum: it pivots from its top edge, just under
+     the nav on the top-left, so the device swings on its chain. */
+  .tama-hang {
+    position: absolute;
+    top: 0;
+    right: 84px;
+    z-index: 5;
+    width: 188px;
+    transform-origin: 50% 0%;
+    animation: tamaSwing 6.5s ease-in-out infinite;
+    --tama-push: 0deg;
+    cursor: grab;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .tama-hang:active { cursor: grabbing; }
+  @keyframes tamaSwing {
+    0%, 100% { transform: rotate(-2.6deg); }
+    50%      { transform: rotate(2.6deg); }
+  }
+  /* ball-chain: dotted line climbing off the top of the device */
+  .tama-chain {
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    width: 5px;
+    height: 30px;
+    transform: translateX(-50%);
+    background-image: radial-gradient(circle at 50% 50%, #d9dde4 0 2px, transparent 2.4px);
+    background-size: 5px 6px;
+    background-repeat: repeat-y;
+    opacity: 0.9;
+  }
+  .tama-ring {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    transform: translateX(-50%);
+    border: 2.5px solid #c7ccd4;
+    border-radius: 50%;
+    background: transparent;
+  }
+  .tama-device {
+    position: relative;
+    margin-top: 30px;
+    padding: 30px 18px 18px;
+    border-radius: 48% 48% 46% 46% / 40% 40% 52% 52%;
+    background:
+      radial-gradient(120% 90% at 32% 18%, #5b97e6 0%, #3c79d6 38%, #2b5fc0 70%, #21509f 100%);
+    box-shadow:
+      inset 0 3px 10px rgba(255,255,255,0.35),
+      inset 0 -10px 24px rgba(0,0,0,0.32),
+      0 26px 46px -16px rgba(0,0,0,0.6);
+    overflow: hidden;
+  }
+  /* little decorative stars sprinkled on the shell */
+  .tama-star {
+    position: absolute;
+    color: rgba(255,255,255,0.85);
+    font-size: 11px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .tama-star.s2 { color: #ffd76a; }
+  .tama-star.s3 { color: #ff9b8a; }
+  .tama-brand {
+    position: relative;
+    text-align: center;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    color: #ffd76a;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.25);
+    margin-bottom: 7px;
+  }
+  /* the LCD: greenish panel inside a scalloped white bezel */
+  .tama-screen {
+    position: relative;
+    padding: 9px;
+    border-radius: 14px;
+    background: #eef0e8;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.28);
+  }
+  .tama-lcd {
+    position: relative;
+    padding: 7px 6px;
+    border-radius: 7px;
+    background: #c2cdaf;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.18), inset 0 1px 4px rgba(0,0,0,0.22);
+    overflow: hidden;
+    transition: background 0.4s ease, filter 0.4s ease;
+  }
+  /* faint LCD scanline texture */
+  .tama-lcd::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.05) 0 1px, transparent 1px 3px);
+    opacity: 0.5;
+  }
+  .tama-lcd.lights-off { background: #8c9a78; filter: brightness(0.62); }
+  .tama-lcd.asleep { background: #9aa886; filter: brightness(0.7); }
+  .tama-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2px;
+    position: relative;
+    z-index: 2;
+  }
+  .tama-icon {
+    position: relative;
+    width: 26px;
+    height: 26px;
+    border: none;
+    background: none;
+    padding: 2px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tama-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* push the gray source art to LCD-ink black */
+    filter: brightness(0) saturate(100%);
+    opacity: 0.42;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+  .tama-icon.sel img { opacity: 1; transform: scale(1.06); }
+  .tama-icon.active img { opacity: 1; }
+  /* selection caret beneath the chosen icon */
+  .tama-icon.sel::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -3px;
+    width: 0; height: 0;
+    transform: translateX(-50%);
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 4px solid #2c3324;
+  }
+  .tama-stage {
+    position: relative;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* no z-index here on purpose: a stacking context would isolate the
+       character's mix-blend-mode from the LCD behind it */
+  }
+  .tama-char {
+    width: 70px;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    /* the gif art is dark pixels on a white bg — multiply drops the white
+       into the LCD and keeps the character readable */
+    mix-blend-mode: multiply;
+  }
+  .tama-char.hop { animation: tamaHop 0.9s ease-in-out infinite; }
+  @keyframes tamaHop {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-5px); }
+  }
+  .tama-poop {
+    position: absolute;
+    left: 12%;
+    bottom: 4px;
+    width: 20px;
+    image-rendering: pixelated;
+    filter: brightness(0) saturate(100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .tama-poop.show { opacity: 0.92; }
+  .tama-zzz {
+    position: absolute;
+    top: 4px;
+    right: 14%;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 13px;
+    color: #2c3324;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .tama-zzz.show { opacity: 0.9; animation: tamaZzz 2s ease-in-out infinite; }
+  @keyframes tamaZzz {
+    0%, 100% { transform: translateY(0); opacity: 0.45; }
+    50%      { transform: translateY(-3px); opacity: 0.95; }
+  }
+  /* hearts / stats overlay */
+  .tama-hearts {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background: #c2cdaf;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 3;
+  }
+  .tama-hearts.show { opacity: 1; }
+  .tama-heart {
+    width: 13px; height: 13px;
+    background: #2c3324;
+    -webkit-mask: var(--heart) center/contain no-repeat;
+    mask: var(--heart) center/contain no-repeat;
+    --heart: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-7.5-4.9-10-9.2C.3 8.6 1.8 5 5.2 5c2 0 3.3 1.2 3.8 2.3C9.5 6.2 10.8 5 12.8 5c3.4 0 4.9 3.6 3.2 6.8C19.5 16.1 12 21 12 21z'/%3E%3C/svg%3E");
+  }
+  .tama-heart.empty { opacity: 0.22; }
+  /* three orange buttons */
+  .tama-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 16px;
+  }
+  .tama-btn {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    background: radial-gradient(circle at 35% 30%, #ffc46b 0%, #f6a531 55%, #d9871d 100%);
+    box-shadow: inset 0 -2px 3px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.3);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+  .tama-btn:active {
+    transform: translateY(1px);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+  }
+  /* a tiny floating hint that fades out on first interaction */
+  .tama-hint {
+    position: absolute;
+    top: 52px;
+    right: calc(100% + 14px);
+    width: 132px;
+    text-align: right;
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    opacity: 0.9;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+  .tama-hint::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    right: -12px;
+    width: 10px;
+    height: 1px;
+    background: var(--muted);
+  }
+  .tama-hang.touched .tama-hint { opacity: 0; }
+  @media (prefers-reduced-motion: reduce) {
+    .tama-hang { animation: none; }
+    .tama-char.hop { animation: none; }
+    .tama-zzz.show { animation: none; opacity: 0.9; }
+  }
+
+  /* ---------- WORK (stacked cards) ---------- */
+  .work {
+    position: relative;
+    padding: 0 48px 40px;
+    scroll-margin-top: 96px;   /* clear the sticky nav when jumped to via #work */
+  }
+  .work-title {
+    position: relative;
+    z-index: 5;
+    width: max-content;
+    margin: 0 0 24px;            /* stacked above the first card with a 24px gap */
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 48px);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    perspective: 1400px;
+    perspective-origin: 50% 0%;
+  }
+  .pcard {
+    display: grid;
+    grid-template-columns: 46% 1fr;
+    gap: 0;
+    background: #f4f2ee;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 18px 50px rgba(0,0,0,0.30);
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transition: transform 0.4s cubic-bezier(0.2,0.75,0.2,1), box-shadow 0.3s ease;
+  }
+  .pcard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 26px 64px rgba(0,0,0,0.38);
+  }
+  .pcard-media {
+    position: relative;
+    aspect-ratio: 16 / 11;
+    background: #1c2b1c;
+    overflow: hidden;
+  }
+  .pcard-media > img:first-child {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.2,0.75,0.2,1);
+  }
+  .pcard:hover .pcard-media > img:first-child { transform: scale(1.04); }
+  .pcard-media.is-aci > img:first-child {
+    height: calc(100% + 18px);
+    object-position: center top;
+  }
+  .pcard-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 56%;
+    max-height: 46%;
+    object-fit: contain;
+    z-index: 2;
+  }
+  .pcard-body {
+    display: flex;
+    flex-direction: column;
+    padding: 40px 40px 32px;
+    color: #131314;
+  }
+  .pcard-tags {
+    list-style: none;
+  }
+  .pcard-tags li {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(22px, 2.4vw, 34px);
+    line-height: 1.06;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: #131314;
+  }
+  .pcard-name {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-top: 16px;
+    margin-bottom: auto;
+    color: #131314;
+  }
+  .pcard-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 32px;
+    padding: 16px 22px;
+    border: 1px solid rgba(0,0,0,0.18);
+    border-radius: 12px;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    color: #131314;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+  .pcard:hover .pcard-cta { background: #131314; color: #f4f2ee; border-color: #131314; }
+  .pcard-cta .arrow { transition: transform 0.3s ease; }
+  .pcard:hover .pcard-cta .arrow { transform: translateX(4px); }
+
+  /* ---------- BIG STATEMENT ---------- */
+  .statement {
+    padding: 0 0 50px;
+    margin-top: -80px;       /* tuck up so the last card overlaps it */
+    overflow: hidden;        /* guard against the oversized line ever scrolling the page */
+  }
+  .statement span {
+    display: block;
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(56px, 13.5vw, 210px);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+    padding-left: 40px;
+    will-change: transform;
+  }
+
+  /* ---------- LOGO MARQUEE ---------- */
+  .marquee {
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 30px 0;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    align-items: center;
+    gap: 72px;
+    width: max-content;
+    animation: scroll-x 38s linear infinite;
+  }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  .marquee-label {
+    font-size: 17px;
+    color: var(--muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .marquee img {
+    height: 26px;
+    width: auto;
+    object-fit: contain;
+    filter: var(--logo-filter);
+    opacity: 0.78;
+    flex-shrink: 0;
+  }
+  /* Dr. Squatch: it's already a light/reversed logo, so it gets its own filter per theme */
+  .marquee img.ms-dr {
+    height: 34px;
+    filter: var(--logo-dr-filter);
+    opacity: 0.72;
+  }
+  @keyframes scroll-x {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact {
+    background: var(--bg-soft);
+    padding: 110px 48px 80px;
+    margin-top: 8px;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .contact-head h2 {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(56px, 9vw, 132px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+  .contact-head p {
+    margin-top: 22px;
+    font-size: 20px;
+    color: var(--muted);
+  }
+  /* form — reference only, reused from existing site */
+  .contact-form { padding-top: 6px; }
+  .contact-form .field {
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 30px;
+  }
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: var(--body);
+    font-size: 20px;
+    color: var(--ink);
+    padding: 10px 2px;
+    outline: none;
+    resize: none;
+  }
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder { color: var(--muted); }
+  .contact-form textarea { min-height: 70px; }
+  .contact-submit {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 40px;
+    background: var(--btn-bg);
+    color: var(--btn-ink);
+    padding: 20px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 16px;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .contact-submit:hover { filter: brightness(1.12); transform: translateY(-1px); }
+  .contact-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 26px;
+    font-size: 16px;
+    color: var(--muted);
+  }
+  .contact-links a:hover { color: var(--ink); }
+
+  /* ---------- ENTRANCE / REVEAL ANIMATIONS ---------- */
+  @keyframes riseFade {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  /* Work title leads in from much farther + a slight overshoot scale = a fast foreground layer */
+  @keyframes riseFadeFloat {
+    0%   { opacity: 0; transform: translateY(110px) scale(0.94); }
+    70%  { opacity: 1; transform: translateY(-6px) scale(1.012); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  /* Hero text rises on page load */
+  .hero-eyebrow, .hero-sub, .scroll-hint {
+    opacity: 0;
+    animation: riseFade 1.5s cubic-bezier(0.2, 0.75, 0.2, 1) forwards;
+  }
+  /* The job/work title eases up once on load (no perpetual motion) */
+  .hero-eyebrow {
+    display: inline-block;
+    width: max-content;
+    animation: riseFadeFloat 1.25s cubic-bezier(0.16, 0.9, 0.2, 1) 0.1s forwards;
+  }
+  .hero-sub      { animation-delay: 0.8s; }
+  .scroll-hint   { animation-delay: 1.15s; }
+  /* Name: slow ease-in (opacity only, so the scroll translateX is preserved) */
+  @keyframes slowFade { from { opacity: 0; } to { opacity: 1; } }
+  .hero-name {
+    opacity: 0;
+    animation: slowFade 3s cubic-bezier(0.16, 0.7, 0.16, 1) 0.25s forwards;
+  }
+  /* "Work" title eases in (opacity only — transform is driven by scroll parallax) */
+  .work-title {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .work.in .work-title { opacity: 1; }
+  /* Project cards flip in on scroll like a rolodex */
+  @keyframes rolodexCard {
+    from { opacity: 0; transform: rotateX(-82deg); }
+    to   { opacity: 1; transform: rotateX(0deg); }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .pcard {
+      transform-origin: 50% 0%;
+      animation: rolodexCard linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 40%;
+    }
+    body.no-sda .pcard {
+      opacity: 0;
+      transform: rotateX(-82deg);
+      transition: transform 0.7s cubic-bezier(0.2,0.8,0.2,1), opacity 0.5s ease, box-shadow 0.3s ease;
+    }
+    body.no-sda .pcard.is-in {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  /* Statement: scroll-linked horizontal sweep — lines scroll through the screen */
+  .statement span {
+    will-change: transform;
+  }
+  .statement span:nth-child(1) { transform: translateX(var(--sx1, 0px)); }
+  .statement span:nth-child(2) { transform: translateX(var(--sx2, 0px)); }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-eyebrow, .hero-name, .hero-sub, .scroll-hint,
+    .work-title, .pcard,
+    .about-copy > *, .about-history > * {
+      animation: none !important; opacity: 1 !important; transform: none !important; transition: none !important;
+    }
+    .statement span { transform: none !important; }
+  }
+
+  /* ---------- ABOUT ME ---------- */
+  .about {
+    position: relative;
+    z-index: 1;
+    padding: 110px 48px 100px;
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 72px;
+    align-items: start;
+  }
+  .about-eyebrow {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 22px;
+  }
+  .about-copy h2 {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(38px, 5.4vw, 76px);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    margin-bottom: 26px;
+  }
+  .about-copy p {
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--muted);
+    margin-bottom: 18px;
+    max-width: 56ch;
+  }
+  .about-copy p strong { color: var(--ink); font-weight: 400; }
+  .about-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 38px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+  .about-stats .stat .n {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(30px, 3.4vw, 44px);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  /* Coffee counter: last digit rolls like a slow odometer */
+  .about-stats .stat .n.coffee {
+    display: inline-flex;
+    align-items: flex-end;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .coffee-lead { line-height: 1; }
+  .coffee-roll {
+    display: inline-block;
+    height: 1em;
+    line-height: 1;
+    overflow: hidden;
+  }
+  .coffee-strip {
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+  }
+  .coffee-strip > span {
+    display: block;
+    height: 1em;
+    line-height: 1;
+  }
+  .about-stats .stat .l {
+    margin-top: 8px;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  /* Work history list (right column) */
+  .about-history { padding-top: 6px; }
+  .about-history .hist-label {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .hist-row {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+  .hist-row:last-child { border-bottom: 1px solid var(--line); }
+  /* header line: company + role on the left, date pinned right — all one line */
+  .hist-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  /* left side: company + role, kept on one line (role truncates before it could wrap) */
+  .hist-info {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .hist-info .co {
+    flex-shrink: 0;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+  .hist-info .ro {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 15px;
+    color: var(--muted);
+  }
+  /* date pinned to the right column, never wraps */
+  .hist-row .yr {
+    flex-shrink: 0;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    color: var(--muted);
+  }
+  .skills-block { margin-top: 36px; }
+  .hist-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 2px;
+  }
+  .hist-chips .chip {
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    padding: 5px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+
+  /* About reveals on scroll — every element in both columns, staggered */
+  .about-copy > *, .about-history > * {
+    opacity: 0;
+    transform: translateY(44px);
+    transition: opacity 0.8s ease, transform 0.9s cubic-bezier(0.2,0.75,0.2,1);
+  }
+  .about.in .about-copy > *,
+  .about.in .about-history > * { opacity: 1; transform: translateY(0); }
+  /* left column cascade */
+  .about.in .about-copy > *:nth-child(1) { transition-delay: 0.00s; }
+  .about.in .about-copy > *:nth-child(2) { transition-delay: 0.06s; }
+  .about.in .about-copy > *:nth-child(3) { transition-delay: 0.12s; }
+  .about.in .about-copy > *:nth-child(4) { transition-delay: 0.18s; }
+  .about.in .about-copy > *:nth-child(5) { transition-delay: 0.24s; }
+  /* right column cascade (Work History label, rows, then Skills) */
+  .about.in .about-history > *:nth-child(1) { transition-delay: 0.06s; }
+  .about.in .about-history > *:nth-child(2) { transition-delay: 0.14s; }
+  .about.in .about-history > *:nth-child(3) { transition-delay: 0.22s; }
+  .about.in .about-history > *:nth-child(4) { transition-delay: 0.30s; }
+  .about.in .about-history > *:nth-child(5) { transition-delay: 0.38s; }
+  .about.in .about-history > *:nth-child(6) { transition-delay: 0.46s; }
+  .about.in .about-history > *:nth-child(7) { transition-delay: 0.56s; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 820px) {
+    .snav { padding: 0 22px; }
+    .snav-links { gap: 22px; }
+    .hero { padding: 132px 22px 48px; min-height: 92vh; }
+    .hero-sub { font-size: 18px; }
+    /* Tamagotchi: centered + resting (no dangle/swing) on phones */
+    .tama-hang {
+      left: 50%;
+      right: auto;
+      top: 78px;
+      transform: translateX(-50%) !important;
+      animation: none;
+      cursor: default;
+    }
+    .tama-hint { display: none; }
+    .statement span { font-size: clamp(34px, 11vw, 96px); }
+    .contact-head h2 { font-size: clamp(40px, 8vw, 96px); }
+    .scroll-hint { display: none; }
+    .work { padding: 0 22px 32px; }
+    .work-title { margin-bottom: 18px; }
+    .pcard { grid-template-columns: 1fr; }
+    .pcard-body { padding: 26px 24px 24px; }
+    .statement span { padding-left: 22px; }
+    .contact { padding: 72px 22px 64px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about { padding: 72px 22px 80px; }
+    .about-grid { grid-template-columns: 1fr; gap: 44px; }
+    .about-stats { gap: 28px; }
+  }
+
+  @media (max-width: 560px) {
+    /* Work history: stack company/role over the date so the role can wrap
+       instead of being truncated to nothing on narrow screens */
+    .hist-head { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .hist-info { white-space: normal; overflow: visible; flex-wrap: wrap; }
+    .hist-info .ro { overflow: visible; text-overflow: clip; white-space: normal; }
+    .about-stats { gap: 22px 32px; }
+    /* let the big statement wrap so it stays readable instead of being clipped */
+    .statement span { white-space: normal; padding-left: 22px; }
+  }
+
+  /* Mirror the shared canon top-nav (alt-project-theme.css) sizing on mobile so
+     the home nav matches the case pages — same 64px height and 15px brand on
+     phones, instead of the full 80px / 18px desktop nav. */
+  @media (max-width: 900px) {
+    .snav { padding: 0 20px; }
+    .snav-links { gap: 18px; }
+  }
+  @media (max-width: 700px) {
+    .snav { height: 64px; padding: 0 16px; }
+    .snav-brand { font-size: 15px; }
+    .snav-links { gap: 14px; }
+    .snav-links a { font-size: 14px; }
+  }
+  @media (max-width: 380px) {
+    .snav-brand { font-size: 13px; }
+    .snav-links { gap: 10px; }
+    .snav-links a { font-size: 13px; }
+  }
+</style>
+<script>
+  /* Resolve theme before paint: time of day (light 7am–7pm, dark otherwise),
+     unless a manual toggle override is still active for the current day/night period. */
+  (function () {
+    try {
+      var h = new Date().getHours();
+      var bucket = (h >= 7 && h < 19) ? 'day' : 'night';
+      var theme = bucket === 'day' ? 'light' : 'dark';
+      var raw = localStorage.getItem('themeOverride');
+      if (raw) { var o = JSON.parse(raw); if (o && o.bucket === bucket) theme = o.theme; else localStorage.removeItem('themeOverride'); }
+      if (theme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      else document.documentElement.removeAttribute('data-theme');
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="snav">
+  <a href="#" class="snav-brand">NEO BY DESIGN</a>
+  <div class="snav-links">
+    <a href="#work">Work</a>
+    <a href="me.html">About</a>
+    <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener" class="snav-ln" aria-label="LinkedIn">
+      <img src="Assets/linkedin.png" alt="LinkedIn">
+    </a>
+  </div>
+</nav>
+<!-- Theme toggle lives outside .snav so its fixed positioning anchors to the viewport, not the nav's backdrop-filter box -->
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false">
+  <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.5" y1="4.5" x2="6.6" y2="6.6"/><line x1="17.4" y1="17.4" x2="19.5" y2="19.5"/><line x1="4.5" y1="19.5" x2="6.6" y2="17.4"/><line x1="17.4" y1="6.6" x2="19.5" y2="4.5"/></svg>
+  <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.3 6.3 0 0 0 10.5 10.5z"/></svg>
+</button>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+
+  <!-- Interactive Tamagotchi — dangles from the top-left on its chain -->
+  <div class="tama-hang" id="tamaHang">
+    <div class="tama-ring"></div>
+    <div class="tama-chain"></div>
+    <p class="tama-hint">Pick me up — feed, wash &amp; play with your Tama.</p>
+    <div class="tama-device" id="tamaDevice">
+      <span class="tama-star"    style="top:34px;left:16px;">✦</span>
+      <span class="tama-star s2" style="top:58px;left:160px;font-size:9px;">✦</span>
+      <span class="tama-star s3" style="top:150px;left:22px;font-size:13px;">✦</span>
+      <span class="tama-star"    style="top:176px;left:150px;font-size:9px;">✦</span>
+      <span class="tama-star s2" style="top:210px;left:30px;">✦</span>
+      <span class="tama-star"    style="top:128px;left:150px;font-size:8px;">✦</span>
+      <div class="tama-brand">TAMAGOTCHI</div>
+      <div class="tama-screen">
+        <div class="tama-lcd" id="tamaLcd">
+          <div class="tama-row tama-row-top">
+            <button class="tama-icon" data-act="stats"  title="Stats"  aria-label="Stats"><img src="Assets/Tamagotchi/stats.svg"  alt=""></button>
+            <button class="tama-icon" data-act="food"   title="Feed"   aria-label="Feed"><img src="Assets/Tamagotchi/food.svg"   alt=""></button>
+            <button class="tama-icon" data-act="music"  title="Play"   aria-label="Play"><img src="Assets/Tamagotchi/music.svg"  alt=""></button>
+            <button class="tama-icon" data-act="sleep"  title="Sleep"  aria-label="Sleep"><img src="Assets/Tamagotchi/sleep.svg"  alt=""></button>
+          </div>
+          <div class="tama-stage">
+            <img class="tama-char" id="tamaChar" src="Assets/Tamagotchi/character.gif" alt="Your Tamagotchi">
+            <img class="tama-poop" id="tamaPoop" src="Assets/Tamagotchi/poop.svg" alt="">
+            <div class="tama-zzz" id="tamaZzz">Z z z</div>
+            <div class="tama-hearts" id="tamaHearts" aria-hidden="true"></div>
+          </div>
+          <div class="tama-row tama-row-bot">
+            <button class="tama-icon" data-act="shower" title="Wash"   aria-label="Wash"><img src="Assets/Tamagotchi/shower.svg" alt=""></button>
+            <button class="tama-icon" data-act="lights" title="Lights" aria-label="Lights"><img src="Assets/Tamagotchi/lights.svg" alt=""></button>
+            <button class="tama-icon" data-act="poop"   title="Clean"  aria-label="Clean"><img src="Assets/Tamagotchi/poop.svg"   alt=""></button>
+            <button class="tama-icon" data-act="dead"   title="Health" aria-label="Health"><img src="Assets/Tamagotchi/dead.svg"   alt=""></button>
+          </div>
+        </div>
+      </div>
+      <div class="tama-buttons">
+        <button class="tama-btn" data-btn="a" aria-label="Move selection left"></button>
+        <button class="tama-btn" data-btn="b" aria-label="Move selection right"></button>
+        <button class="tama-btn" data-btn="c" aria-label="Confirm"></button>
+      </div>
+    </div>
+  </div>
+
+  <p class="hero-eyebrow">Senior Product Designer</p>
+  <h1 class="hero-name">NEO TRAN</h1>
+  <p class="hero-sub">I'm working alongside designers and builders, turning <span class="cycle-word" id="cycleWord">friction</span> into products that convert.</p>
+  <span class="scroll-hint" aria-hidden="true">
+    Scroll
+    <svg viewBox="0 0 24 24"><line x1="12" y1="4" x2="12" y2="19"/><polyline points="6 13 12 19 18 13"/></svg>
+  </span>
+</header>
+
+<!-- ===== WORK ===== -->
+<section class="work" id="work">
+  <h2 class="work-title">Work</h2>
+
+  <div class="cards">
+    <a href="drsquatch.html" class="pcard">
+      <div class="pcard-media">
+        <img src="Assets/cards/empty/Drsquatch.jpg" alt="Dr. Squatch case study" onerror="this.style.display='none'">
+        <img class="pcard-logo" src="Assets/cards/logos/Squatch.png" alt="Dr. Squatch">
+      </div>
+      <div class="pcard-body">
+        <ul class="pcard-tags">
+          <li>CMS Migration</li><li>Growth</li><li>Features</li><li>Design System</li>
+        </ul>
+        <h3 class="pcard-name">Dr.Squatch</h3>
+        <span class="pcard-cta">View Project <span class="arrow">&#8594;</span></span>
+      </div>
+    </a>
+
+    <a href="american-century.html" class="pcard">
+      <div class="pcard-media is-aci">
+        <img src="Assets/cards/empty/American Century Investments.jpg" alt="American Century case study" onerror="this.style.display='none'">
+        <img class="pcard-logo" src="Assets/cards/logos/American Century.png" alt="American Century Investments">
+      </div>
+      <div class="pcard-body">
+        <ul class="pcard-tags">
+          <li>CMS Migration</li><li>Features</li><li>Dashboard</li><li>Design System</li>
+        </ul>
+        <h3 class="pcard-name">American Century</h3>
+        <span class="pcard-cta">View Project <span class="arrow">&#8594;</span></span>
+      </div>
+    </a>
+
+    <a href="beachbody.html" class="pcard">
+      <div class="pcard-media">
+        <img src="Assets/cards/empty/BODi.jpg" alt="Beachbody case study" onerror="this.style.display='none'">
+        <img class="pcard-logo" src="Assets/cards/logos/Bodcast.png" alt="Beachbody">
+      </div>
+      <div class="pcard-body">
+        <ul class="pcard-tags">
+          <li>BODcast</li><li>Mobile App</li><li>Web App</li><li>Video Player</li>
+        </ul>
+        <h3 class="pcard-name">Beachbody</h3>
+        <span class="pcard-cta">View Project <span class="arrow">&#8594;</span></span>
+      </div>
+    </a>
+
+    <a href="ring.html" class="pcard">
+      <div class="pcard-media">
+        <img src="Assets/cards/empty/Ring.jpg" alt="Ring case study" onerror="this.style.display='none'">
+        <img class="pcard-logo" src="Assets/cards/logos/Ring_logo 1.png" alt="Ring">
+      </div>
+      <div class="pcard-body">
+        <ul class="pcard-tags">
+          <li>Headless CMS</li><li>Migration Support</li><li>Developer Specs</li>
+        </ul>
+        <h3 class="pcard-name">Ring</h3>
+        <span class="pcard-cta">View Project <span class="arrow">&#8594;</span></span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ===== BIG STATEMENT ===== -->
+<section class="statement" aria-label="Design with good intentions">
+  <span>DESIGN WITH</span>
+  <span>GOOD INTENTIONS</span>
+</section>
+
+<!-- ===== LOGO MARQUEE (reference — reused logos) ===== -->
+<section class="marquee" aria-label="Brands I have worked with">
+  <div class="marquee-track" id="marqueeTrack">
+    <!-- set repeated twice for seamless loop -->
+    <span class="marquee-label">Brands I have worked with</span>
+    <img class="ms-dr" src="Assets/drsquatch-horizontal-logo-reversed 1.png" alt="Dr. Squatch">
+    <img src="Assets/Springtheory.png" alt="Spring Theory">
+    <img src="Assets/Ring.png" alt="Ring">
+    <img src="Assets/Simpluris.png" alt="Simpluris">
+    <img src="Assets/LAist.png" alt="LAist">
+    <img src="Assets/Kareo.png" alt="Kareo">
+    <img src="Assets/American Century.png" alt="American Century">
+    <img src="Assets/logo 1.png" alt="Evolus">
+    <img src="Assets/Dexcare.png" alt="Dexcare">
+
+    <span class="marquee-label">Brands I have worked with</span>
+    <img class="ms-dr" src="Assets/drsquatch-horizontal-logo-reversed 1.png" alt="Dr. Squatch">
+    <img src="Assets/Springtheory.png" alt="Spring Theory">
+    <img src="Assets/Ring.png" alt="Ring">
+    <img src="Assets/Simpluris.png" alt="Simpluris">
+    <img src="Assets/LAist.png" alt="LAist">
+    <img src="Assets/Kareo.png" alt="Kareo">
+    <img src="Assets/American Century.png" alt="American Century">
+    <img src="Assets/logo 1.png" alt="Evolus">
+    <img src="Assets/Dexcare.png" alt="Dexcare">
+  </div>
+</section>
+
+<!-- ===== ABOUT ME ===== -->
+<section class="about" id="about" aria-label="About Neo Tran">
+  <div class="about-grid">
+    <div class="about-copy">
+      <p class="about-eyebrow">About Me</p>
+      <h2>Designing with intent, shipping with care.</h2>
+      <p>I'm a <strong>Senior Product Designer</strong> who partners with designers, engineers, and founders to turn ambiguity into products people want to use. My focus sits where <strong>growth, design systems, and craft</strong> meet.</p>
+      <p>Across CMS migrations, dashboards, mobile apps, and full design systems, the throughline stays the same: details that compound. Clear hierarchy and interactions that feel inevitable.</p>
+      <div class="about-stats">
+        <div class="stat"><div class="n">10+</div><div class="l">Years Designing</div></div>
+        <div class="stat"><div class="n" id="coffeeCount" data-start="2015-09-01">0</div><div class="l">Cups of Coffee</div></div>
+        <div class="stat"><div class="n">∞</div><div class="l">Good Intentions</div></div>
+      </div>
+    </div>
+    <div class="about-history">
+      <p class="hist-label">Work History</p>
+      <div class="hist-row">
+        <div class="hist-head"><span class="hist-info"><span class="co">Dr. Squatch</span><span class="ro">Senior Product Designer, Growth, Design System</span></span><span class="yr">Feb 2024 — Present</span></div>
+      </div>
+      <div class="hist-row">
+        <div class="hist-head"><span class="hist-info"><span class="co">American Century Investments</span><span class="ro">Senior Product Designer</span></span><span class="yr">Mar 2022 — Feb 2024</span></div>
+      </div>
+      <div class="hist-row">
+        <div class="hist-head"><span class="hist-info"><span class="co">Beachbody</span><span class="ro">Senior Product Designer</span></span><span class="yr">Feb 2021 — Feb 2022</span></div>
+      </div>
+      <div class="hist-row">
+        <div class="hist-head"><span class="hist-info"><span class="co">Ring</span><span class="ro">Digital Designer</span></span><span class="yr">Jan 2020 — Jan 2021</span></div>
+      </div>
+      <div class="hist-row">
+        <div class="hist-head"><span class="hist-info"><span class="co">Dr. Squatch</span><span class="ro">Digital / Visual Designer</span></span><span class="yr">Apr 2018 — Nov 2019</span></div>
+      </div>
+
+      <div class="skills-block">
+        <p class="hist-label">Skills</p>
+        <div class="hist-chips">
+          <span class="chip">Product Strategy</span><span class="chip">Design Systems</span><span class="chip">Systems Thinking</span><span class="chip">0→1 Product Design</span><span class="chip">Growth &amp; Experimentation</span><span class="chip">Data-informed Design</span><span class="chip">Rapid Prototyping</span><span class="chip">A/B Testing</span><span class="chip">User Research &amp; Synthesis</span><span class="chip">Interaction Design</span><span class="chip">Conversion Optimization</span><span class="chip">Cross-functional Collaboration</span><span class="chip">Stakeholder Alignment</span><span class="chip">Design × Engineering</span><span class="chip">AI-assisted Workflows</span><span class="chip">Claude Code</span><span class="chip">Figma Make</span><span class="chip">Codex</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT (shared component — see site-contact.js) ===== -->
+<div id="site-contact"></div>
+
+<script>
+  (function () {
+    // Theme: time of day decides (light 7am–7pm, dark otherwise); a manual
+    // toggle overrides only for the current day/night period, then time resumes.
+    var themeBtn = document.getElementById('themeToggle');
+    function syncPressed() {
+      if (themeBtn) themeBtn.setAttribute('aria-pressed', document.documentElement.getAttribute('data-theme') === 'light' ? 'true' : 'false');
+    }
+    function currentBucket() {
+      var h = new Date().getHours();
+      return (h >= 7 && h < 19) ? 'day' : 'night';
+    }
+    function resolveTheme() {
+      var theme = currentBucket() === 'day' ? 'light' : 'dark';
+      try {
+        var raw = localStorage.getItem('themeOverride');
+        if (raw) { var o = JSON.parse(raw); if (o && o.bucket === currentBucket()) theme = o.theme; else localStorage.removeItem('themeOverride'); }
+      } catch (e) {}
+      return theme;
+    }
+    function applyTheme(theme) {
+      if (theme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      else document.documentElement.removeAttribute('data-theme');
+      syncPressed();
+    }
+    applyTheme(resolveTheme());
+    if (themeBtn) {
+      themeBtn.addEventListener('click', function () {
+        var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        applyTheme(next);
+        try { localStorage.setItem('themeOverride', JSON.stringify({ theme: next, bucket: currentBucket() })); } catch (e) {}
+      });
+    }
+    setInterval(function () { applyTheme(resolveTheme()); }, 60000);
+
+    // Reveal the About section when scrolled into view
+    var about = document.querySelector('.about');
+    if (about && 'IntersectionObserver' in window) {
+      var aio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { about.classList.add('in'); aio.unobserve(about); }
+        });
+      }, { threshold: 0.18 });
+      aio.observe(about);
+    } else if (about) {
+      about.classList.add('in');
+    }
+
+    // Cups of coffee: base is ~one per day since I started designing. On reveal
+    // it spins up to the base, then the last digit rolls slowly like an odometer,
+    // adding at most 3 more cups per view (re-entering allows up to 3 again).
+    var coffeeEl = document.getElementById('coffeeCount');
+    if (coffeeEl) {
+      var COFFEE_ROLL_MS = 7000;    // time for the last digit to roll one full step (very slow)
+      var COFFEE_PAUSE_MS = 20000;  // rest on each number before rolling the next
+      var COFFEE_CYCLE_MS = COFFEE_ROLL_MS + COFFEE_PAUSE_MS;
+      var MAX_PER_VIEW = 3;
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var startMs = new Date(coffeeEl.getAttribute('data-start') || '2015-09-01').getTime();
+      function baseCups() { return Math.max(0, Math.floor((Date.now() - startMs) / 86400000)); }
+
+      coffeeEl.classList.add('coffee');
+      coffeeEl.innerHTML = '<span class="coffee-lead"></span><span class="coffee-roll"><span class="coffee-strip"><span></span><span></span></span></span>';
+      var leadEl = coffeeEl.querySelector('.coffee-lead');
+      var stripEl = coffeeEl.querySelector('.coffee-strip');
+      var cellTop = stripEl.children[0];
+      var cellBot = stripEl.children[1];
+
+      var value = 0;
+      function setDigits(n) {
+        value = n;
+        var d = n % 10;
+        leadEl.textContent = n < 10 ? '' : String(Math.floor(n / 10));
+        cellTop.textContent = d;
+        cellBot.textContent = (d + 1) % 10;
+      }
+      setDigits(0);
+
+      var rafId = null, rolling = false, rollBaseValue = 0, rollT0 = 0;
+      function rollFrame(ts) {
+        var elapsed = ts - rollT0;
+        var k = Math.floor(elapsed / COFFEE_CYCLE_MS);   // which cup we're on
+        if (k >= MAX_PER_VIEW) {                          // hit the per-view cap: rest and stop (no loop)
+          if (value !== rollBaseValue + MAX_PER_VIEW) setDigits(rollBaseValue + MAX_PER_VIEW);
+          stripEl.style.transform = 'translateY(0)';
+          rolling = false; rafId = null; return;
+        }
+        var within = elapsed - k * COFFEE_CYCLE_MS;
+        if (within < COFFEE_ROLL_MS) {                    // rolling slowly toward the next cup
+          if (value !== rollBaseValue + k) setDigits(rollBaseValue + k);
+          stripEl.style.transform = 'translateY(' + (-(within / COFFEE_ROLL_MS)) + 'em)';
+        } else {                                          // landed — pause and rest on this number
+          if (value !== rollBaseValue + k + 1) setDigits(rollBaseValue + k + 1);
+          stripEl.style.transform = 'translateY(0)';
+        }
+        rafId = requestAnimationFrame(rollFrame);
+      }
+      function startRoll() {
+        if (rolling || reduceMotion) return;
+        rolling = true;
+        rollBaseValue = value;
+        rollT0 = performance.now();
+        rafId = requestAnimationFrame(rollFrame);
+      }
+      function stopRoll() {
+        rolling = false;
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        stripEl.style.transform = 'translateY(0)';   // rest on a whole number
+      }
+      function countUpThenRoll() {
+        var target = baseCups();
+        if (reduceMotion) { setDigits(target); return; }
+        var t0 = null, dur = 900;
+        function step(ts) {
+          if (t0 === null) t0 = ts;
+          var p = Math.min(1, (ts - t0) / dur);
+          setDigits(Math.round(target * (1 - Math.pow(1 - p, 3))));
+          stripEl.style.transform = 'translateY(0)';
+          if (p < 1) requestAnimationFrame(step);
+          else startRoll();
+        }
+        requestAnimationFrame(step);
+      }
+
+      var started = false, wasOut = true;
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting && wasOut) {
+              wasOut = false;
+              if (!started) { started = true; countUpThenRoll(); } else { startRoll(); }
+            } else if (!en.isIntersecting) {
+              wasOut = true;
+              stopRoll();
+            }
+          });
+        }, { threshold: 0.6 }).observe(coffeeEl);
+      } else {
+        setDigits(baseCups());
+      }
+    }
+
+    // Reveal the Work title when scrolled to
+    var work = document.querySelector('.work');
+    if (work && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { work.classList.add('in'); io.unobserve(work); }
+        });
+      }, { threshold: 0.12 });
+      io.observe(work);
+    } else if (work) {
+      work.classList.add('in');
+    }
+
+    // Rolodex fallback for browsers without scroll-driven animations
+    var supportsSDA = window.CSS && CSS.supports && CSS.supports('animation-timeline: view()');
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!supportsSDA && !reduceMotion) {
+      document.body.classList.add('no-sda');
+      if ('IntersectionObserver' in window) {
+        var cardIo = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) {
+              en.target.classList.add('is-in');
+              cardIo.unobserve(en.target);
+            }
+          });
+        }, { threshold: 0.25 });
+        document.querySelectorAll('.pcard').forEach(function (card) {
+          cardIo.observe(card);
+        });
+      } else {
+        document.querySelectorAll('.pcard').forEach(function (card) {
+          card.classList.add('is-in');
+        });
+      }
+    }
+
+    // Spotlight follows the cursor (rAF-throttled)
+    var tx = 50, ty = 18, raf = null;
+    window.addEventListener('pointermove', function (e) {
+      tx = (e.clientX / window.innerWidth) * 100;
+      ty = (e.clientY / window.innerHeight) * 100;
+      if (!raf) {
+        raf = requestAnimationFrame(function () {
+          document.body.style.setProperty('--mx', tx + '%');
+          document.body.style.setProperty('--my', ty + '%');
+          raf = null;
+        });
+      }
+    }, { passive: true });
+
+    // Statement: scroll-linked horizontal sweep — the two lines scroll through the screen
+    // in opposite directions and align (fully readable) when centered in view.
+    var statement = document.querySelector('.statement');
+    var sRaf = null;
+    var SWEEP1 = 320;  // line 1 (top) travel
+    var SWEEP2 = 1040; // line 2 (bottom) travels much further
+    function updateStatement() {
+      sRaf = null;
+      var r = statement.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var mid = r.top + r.height / 2;
+      // d: 0 when centered; spread over ~1.7 viewport heights so the sweep is slow
+      var d = -(mid - vh / 2) / (vh * 0.85);
+      d = Math.max(-1, Math.min(1, d));      // -1 .. 0 (centered) .. 1
+      statement.style.setProperty('--sx1', ( d * SWEEP1).toFixed(1) + 'px');  // line 1 (top): enters from left
+      statement.style.setProperty('--sx2', (-d * SWEEP2).toFixed(1) + 'px');  // line 2 (bottom): enters from right
+    }
+    function onStatementScroll() {
+      if (!sRaf) sRaf = requestAnimationFrame(updateStatement);
+    }
+    if (statement) {
+      window.addEventListener('scroll', onStatementScroll, { passive: true });
+      window.addEventListener('resize', onStatementScroll);
+      updateStatement();
+    }
+
+    // Hero name: scrolls left as the page scrolls
+    var heroName = document.querySelector('.hero-name');
+    var hRaf = null;
+    function updateHero() {
+      hRaf = null;
+      heroName.style.setProperty('--hx', (-window.scrollY * 0.4).toFixed(1) + 'px');
+    }
+    if (heroName) {
+      window.addEventListener('scroll', function () {
+        if (!hRaf) hRaf = requestAnimationFrame(updateHero);
+      }, { passive: true });
+      updateHero();
+    }
+
+    // Blurb: cycle the key word with a vertical roll
+    var cycleEl = document.getElementById('cycleWord');
+    if (cycleEl) {
+      var words = ['friction', 'chaos', 'constraints'];
+      var ci = 0;
+      setInterval(function () {
+        cycleEl.style.opacity = '0';
+        cycleEl.style.transform = 'translateY(-10px)';
+        setTimeout(function () {
+          ci = (ci + 1) % words.length;
+          cycleEl.textContent = words[ci];
+          cycleEl.style.transition = 'none';
+          cycleEl.style.transform = 'translateY(10px)';
+          void cycleEl.offsetHeight;               // reflow so the next transition runs
+          cycleEl.style.transition = '';
+          cycleEl.style.opacity = '1';
+          cycleEl.style.transform = 'translateY(0)';
+        }, 330);
+      }, 2400);
+    }
+
+    /* ----- Tamagotchi: clickable hero toy ----- */
+    (function () {
+      var hang   = document.getElementById('tamaHang');
+      if (!hang) return;
+      var device = document.getElementById('tamaDevice');
+      var lcd    = document.getElementById('tamaLcd');
+      var charEl = document.getElementById('tamaChar');
+      var poopEl = document.getElementById('tamaPoop');
+      var zzzEl  = document.getElementById('tamaZzz');
+      var hearts = document.getElementById('tamaHearts');
+      var icons  = Array.prototype.slice.call(hang.querySelectorAll('.tama-icon'));
+      var btns   = hang.querySelectorAll('.tama-btn');
+      var BASE   = 'Assets/Tamagotchi/';
+      var GIF = {
+        idle:   BASE + 'character.gif',
+        food:   BASE + 'character_food.gif',
+        music:  BASE + 'character_music.gif',
+        shower: BASE + 'character_shower.gif',
+        sleep:  BASE + 'character_sleep.gif',
+        poop:   BASE + 'character_poop.gif',
+        dead:   BASE + 'character_dead.gif',
+        egg:    BASE + 'character_egg.gif'
+      };
+      // preload so swaps are instant
+      Object.keys(GIF).forEach(function (k) { var i = new Image(); i.src = GIF[k]; });
+
+      var sel = 0;               // selected icon index
+      var busy = false;          // a timed reaction is playing
+      var asleep = false;
+      var lightsOff = false;
+      var hasPoop = false;
+      var dead = false;
+      var happy = 4;             // 0..4 hearts
+      var reactTimer = null;
+      var heartsTimer = null;
+
+      function touched() { hang.classList.add('touched'); }
+
+      function setChar(state, hop) {
+        charEl.src = GIF[state] || GIF.idle;
+        charEl.classList.toggle('hop', !!hop);
+      }
+      function idle() {
+        if (dead) return;
+        busy = false;
+        setChar(asleep ? 'sleep' : 'idle', !asleep);
+      }
+      function hideHearts() {
+        hearts.classList.remove('show');
+        clearTimeout(heartsTimer);
+      }
+      function react(state, hop, ms) {
+        if (dead) { revive(); return; }
+        hideHearts();
+        busy = true;
+        if (asleep && state !== 'sleep') wake();
+        setChar(state, hop);
+        clearTimeout(reactTimer);
+        reactTimer = setTimeout(idle, ms || 2600);
+      }
+
+      function highlight() {
+        icons.forEach(function (ic, i) { ic.classList.toggle('sel', i === sel); });
+      }
+      function flashActive(i) {
+        icons[i].classList.add('active');
+        setTimeout(function () { icons[i].classList.remove('active'); }, 450);
+      }
+
+      function showHearts() {
+        hearts.innerHTML = '';
+        for (var i = 0; i < 4; i++) {
+          var h = document.createElement('span');
+          h.className = 'tama-heart' + (i < happy ? '' : ' empty');
+          hearts.appendChild(h);
+        }
+        hearts.classList.add('show');
+        clearTimeout(heartsTimer);
+        heartsTimer = setTimeout(function () { hearts.classList.remove('show'); }, 2400);
+      }
+      function bumpHappy(d) { happy = Math.max(0, Math.min(4, happy + d)); }
+
+      function setPoop(on) {
+        hasPoop = on;
+        poopEl.classList.toggle('show', on);
+      }
+      function wake() {
+        asleep = false;
+        lcd.classList.remove('asleep');
+        zzzEl.classList.remove('show');
+      }
+      function sleepToggle() {
+        if (asleep) { wake(); idle(); return; }
+        asleep = true;
+        lcd.classList.add('asleep');
+        zzzEl.classList.add('show');
+        setChar('sleep', false);
+        busy = false;
+        clearTimeout(reactTimer);
+      }
+      function die() {
+        dead = true;
+        wake();
+        busy = true;
+        clearTimeout(reactTimer);
+        setChar('dead', false);
+      }
+      function revive() {
+        dead = false;
+        happy = 4;
+        setPoop(false);
+        react('egg', false, 1400);
+        setTimeout(idle, 1450);
+      }
+
+      function doAction(act) {
+        touched();
+        if (act !== 'stats') hideHearts();
+        if (dead) { revive(); return; }
+        switch (act) {
+          case 'food':
+            bumpHappy(1); react('food', false);
+            // sometimes nature calls a moment later
+            if (Math.random() < 0.5) setTimeout(function () { setPoop(true); }, 2800);
+            break;
+          case 'music':
+            bumpHappy(1); react('music', true); break;
+          case 'shower':
+            setPoop(false); bumpHappy(1); react('shower', false); break;
+          case 'poop':
+            setPoop(true); react('poop', false); break;
+          case 'sleep':
+            sleepToggle(); break;
+          case 'lights':
+            lightsOff = !lightsOff;
+            lcd.classList.toggle('lights-off', lightsOff);
+            break;
+          case 'stats':
+            showHearts(); break;
+          case 'dead':
+            react('dead', false); break;
+        }
+      }
+
+      // direct icon clicks: select + activate
+      icons.forEach(function (ic, i) {
+        ic.addEventListener('click', function (e) {
+          e.stopPropagation();
+          sel = i; highlight(); flashActive(i);
+          doAction(ic.getAttribute('data-act'));
+        });
+      });
+
+      // 3-button console: A = move left, B = move right, C = confirm
+      btns.forEach(function (b) {
+        b.addEventListener('click', function (e) {
+          e.stopPropagation();
+          touched();
+          var n = icons.length;
+          var which = b.getAttribute('data-btn');
+          if (which === 'a') {
+            sel = (sel - 1 + n) % n; highlight();
+          } else if (which === 'b') {
+            sel = (sel + 1) % n; highlight();
+          } else {
+            if (sel < 0) sel = 0;
+            flashActive(sel);
+            doAction(icons[sel].getAttribute('data-act'));
+          }
+        });
+      });
+
+      // gentle life: a poop or a mood dip shows up now and then if left alone
+      setInterval(function () {
+        if (dead || busy || asleep) return;
+        if (!hasPoop && Math.random() < 0.25) setPoop(true);
+        else if (Math.random() < 0.2) { bumpHappy(-1); }
+      }, 18000);
+
+      // start on the idle character (character.gif)
+      sel = 1; highlight();
+      idle();
+    })();
+  })();
+</script>
+
+<script src="page-transition.js"></script>
+<script src="site-contact.js"></script>
+</body>
+</html>
