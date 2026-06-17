@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/png" href="Assets/favicon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Neo Tran</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="This page wandered off.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Abel&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f2f0ec;
+    --ink: #1a1a1b;
+    --muted: #6f6f6a;
+    --display: 'Unbounded', system-ui, sans-serif;
+    --body: 'Abel', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html,
+  body { min-height: 100%; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 300px 24px 56px;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    text-align: center;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.22;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .code-mark {
+    position: absolute;
+    top: 124px;
+    left: 50%;
+    z-index: 0;
+    color: rgba(26,26,27,0.08);
+    font-family: var(--display);
+    font-size: clamp(128px, 23vw, 260px);
+    font-weight: 800;
+    line-height: 0.8;
+    transform: translateX(-50%);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .tama-hang {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    z-index: 1;
+    width: 188px;
+    transform-origin: 50% 0%;
+    animation: tamaSwing 6.5s ease-in-out infinite;
+    cursor: grab;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .tama-hang:active { cursor: grabbing; }
+
+  @keyframes tamaSwing {
+    0%, 100% { transform: translateX(-50%) rotate(-2.6deg); }
+    50% { transform: translateX(-50%) rotate(2.6deg); }
+  }
+
+  .tama-chain {
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    width: 5px;
+    height: 58px;
+    transform: translateX(-50%);
+    background-image: radial-gradient(circle at 50% 50%, #d9dde4 0 2px, transparent 2.4px);
+    background-repeat: repeat-y;
+    background-size: 5px 6px;
+    opacity: 0.9;
+  }
+
+  .tama-ring {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    transform: translateX(-50%);
+    border: 2.5px solid #c7ccd4;
+    border-radius: 50%;
+  }
+
+  .tama-device {
+    position: relative;
+    margin-top: 58px;
+    padding: 30px 18px 18px;
+    border-radius: 48% 48% 46% 46% / 40% 40% 52% 52%;
+    background: radial-gradient(120% 90% at 32% 18%, #5b97e6 0%, #3c79d6 38%, #2b5fc0 70%, #21509f 100%);
+    box-shadow:
+      inset 0 3px 10px rgba(255,255,255,0.35),
+      inset 0 -10px 24px rgba(0,0,0,0.32),
+      0 26px 46px -16px rgba(0,0,0,0.6);
+    overflow: hidden;
+  }
+
+  .tama-star {
+    position: absolute;
+    color: rgba(255,255,255,0.85);
+    font-size: 11px;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .tama-star.s2 { color: #ffd76a; }
+  .tama-star.s3 { color: #ff9b8a; }
+
+  .tama-brand {
+    position: relative;
+    margin-bottom: 7px;
+    color: #ffd76a;
+    font-family: var(--display);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.25);
+  }
+
+  .tama-screen {
+    position: relative;
+    padding: 9px;
+    border-radius: 14px;
+    background: #eef0e8;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.28);
+  }
+
+  .tama-lcd {
+    position: relative;
+    padding: 7px 6px;
+    border-radius: 7px;
+    background: #c2cdaf;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.18), inset 0 1px 4px rgba(0,0,0,0.22);
+    overflow: hidden;
+  }
+
+  .tama-lcd::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.05) 0 1px, transparent 1px 3px);
+    opacity: 0.5;
+  }
+
+  .tama-row {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2px;
+  }
+
+  .tama-icon {
+    position: relative;
+    width: 26px;
+    height: 26px;
+    border: 0;
+    background: none;
+    padding: 2px;
+    cursor: pointer;
+  }
+
+  .tama-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: brightness(0) saturate(100%);
+    opacity: 0.46;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+
+  .tama-icon.sel img,
+  .tama-icon.active img {
+    opacity: 1;
+  }
+
+  .tama-icon.sel img { transform: scale(1.06); }
+
+  .tama-icon.sel::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -3px;
+    width: 0;
+    height: 0;
+    transform: translateX(-50%);
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 4px solid #2c3324;
+  }
+
+  .tama-stage {
+    position: relative;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tama-char {
+    width: 70px;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    mix-blend-mode: multiply;
+  }
+
+  .tama-char.hop { animation: tamaHop 0.9s ease-in-out infinite; }
+
+  @keyframes tamaHop {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  .tama-poop {
+    position: absolute;
+    left: 12%;
+    bottom: 4px;
+    width: 20px;
+    image-rendering: pixelated;
+    filter: brightness(0) saturate(100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .tama-poop.show { opacity: 0.92; }
+
+  .tama-zzz {
+    position: absolute;
+    top: 4px;
+    right: 14%;
+    color: #2c3324;
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .tama-zzz.show {
+    opacity: 0.9;
+    animation: tamaZzz 2s ease-in-out infinite;
+  }
+
+  @keyframes tamaZzz {
+    0%, 100% { transform: translateY(0); opacity: 0.45; }
+    50% { transform: translateY(-3px); opacity: 0.95; }
+  }
+
+  .tama-hearts {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background: #c2cdaf;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .tama-hearts.show { opacity: 1; }
+
+  .tama-heart {
+    width: 13px;
+    height: 13px;
+    background: #2c3324;
+    -webkit-mask: var(--heart) center/contain no-repeat;
+    mask: var(--heart) center/contain no-repeat;
+    --heart: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-7.5-4.9-10-9.2C.3 8.6 1.8 5 5.2 5c2 0 3.3 1.2 3.8 2.3C9.5 6.2 10.8 5 12.8 5c3.4 0 4.9 3.6 3.2 6.8C19.5 16.1 12 21 12 21z'/%3E%3C/svg%3E");
+  }
+
+  .tama-heart.empty { opacity: 0.22; }
+
+  .tama-lcd.lights-off { background: #8c9a78; filter: brightness(0.62); }
+  .tama-lcd.asleep { background: #9aa886; filter: brightness(0.7); }
+
+  .tama-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 16px;
+  }
+
+  .tama-btn {
+    width: 22px;
+    height: 22px;
+    border: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ffc46b 0%, #f6a531 55%, #d9871d 100%);
+    box-shadow: inset 0 -2px 3px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+
+  .tama-btn:active {
+    transform: translateY(1px);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+  }
+
+  main {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    width: min(100%, 760px);
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(32px, 6vw, 60px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+
+  .eyebrow {
+    margin-bottom: 12px;
+    color: var(--muted);
+    font-family: var(--display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  p {
+    max-width: 360px;
+    margin: 18px auto 28px;
+    color: var(--muted);
+    font-size: 22px;
+    line-height: 1.25;
+  }
+
+  a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 18px;
+    border: 1px solid rgba(26,26,27,0.18);
+    border-radius: 8px;
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+
+  a:hover {
+    background: var(--ink);
+    color: var(--bg);
+    transform: translateY(-1px);
+  }
+
+  @media (max-height: 680px) {
+    body { padding-top: 260px; }
+    .tama-hang { top: -28px; transform: scale(0.82); }
+    @keyframes tamaSwing {
+      0%, 100% { transform: translateX(-50%) scale(0.82) rotate(-2.6deg); }
+      50% { transform: translateX(-50%) scale(0.82) rotate(2.6deg); }
+    }
+  }
+
+  @media (max-width: 520px) {
+    h1 { white-space: normal; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tama-hang { animation: none; transform: translateX(-50%); }
+    .tama-char.hop,
+    .tama-zzz.show { animation: none; }
+    a { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="tama-hang" id="tamaHang" aria-label="Interactive Tamagotchi">
+    <div class="code-mark">404</div>
+    <div class="tama-ring"></div>
+    <div class="tama-chain"></div>
+    <div class="tama-device" id="tamaDevice">
+      <span class="tama-star" style="top:34px;left:16px;">✦</span>
+      <span class="tama-star s2" style="top:58px;left:160px;font-size:9px;">✦</span>
+      <span class="tama-star s3" style="top:150px;left:22px;font-size:13px;">✦</span>
+      <span class="tama-star" style="top:176px;left:150px;font-size:9px;">✦</span>
+      <span class="tama-star s2" style="top:210px;left:30px;">✦</span>
+      <span class="tama-star" style="top:128px;left:150px;font-size:8px;">✦</span>
+      <div class="tama-brand">TAMAGOTCHI</div>
+      <div class="tama-screen">
+        <div class="tama-lcd" id="tamaLcd">
+          <div class="tama-row">
+            <button class="tama-icon" data-act="stats" title="Stats" aria-label="Stats"><img src="Assets/Tamagotchi/stats.svg" alt=""></button>
+            <button class="tama-icon" data-act="food" title="Feed" aria-label="Feed"><img src="Assets/Tamagotchi/food.svg" alt=""></button>
+            <button class="tama-icon" data-act="music" title="Play" aria-label="Play"><img src="Assets/Tamagotchi/music.svg" alt=""></button>
+            <button class="tama-icon" data-act="sleep" title="Sleep" aria-label="Sleep"><img src="Assets/Tamagotchi/sleep.svg" alt=""></button>
+          </div>
+          <div class="tama-stage">
+            <img class="tama-char" id="tamaChar" src="Assets/Tamagotchi/character.gif" alt="Your Tamagotchi">
+            <img class="tama-poop" id="tamaPoop" src="Assets/Tamagotchi/poop.svg" alt="">
+            <div class="tama-zzz" id="tamaZzz">Z z z</div>
+            <div class="tama-hearts" id="tamaHearts" aria-hidden="true"></div>
+          </div>
+          <div class="tama-row">
+            <button class="tama-icon" data-act="shower" title="Wash" aria-label="Wash"><img src="Assets/Tamagotchi/shower.svg" alt=""></button>
+            <button class="tama-icon" data-act="lights" title="Lights" aria-label="Lights"><img src="Assets/Tamagotchi/lights.svg" alt=""></button>
+            <button class="tama-icon" data-act="poop" title="Clean" aria-label="Clean"><img src="Assets/Tamagotchi/poop.svg" alt=""></button>
+            <button class="tama-icon" data-act="dead" title="Health" aria-label="Health"><img src="Assets/Tamagotchi/dead.svg" alt=""></button>
+          </div>
+        </div>
+      </div>
+      <div class="tama-buttons">
+        <button class="tama-btn" data-btn="a" aria-label="Move selection left"></button>
+        <button class="tama-btn" data-btn="b" aria-label="Move selection right"></button>
+        <button class="tama-btn" data-btn="c" aria-label="Confirm"></button>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="eyebrow">neobydesign.com</div>
+    <h1>pet found.</h1>
+    <p>Page missing. Tiny guy is taking it personally.</p>
+    <a href="/">Back home</a>
+  </main>
+  <script>
+    (function () {
+      var hang = document.getElementById('tamaHang');
+      if (!hang) return;
+
+      var lcd = document.getElementById('tamaLcd');
+      var charEl = document.getElementById('tamaChar');
+      var poopEl = document.getElementById('tamaPoop');
+      var zzzEl = document.getElementById('tamaZzz');
+      var hearts = document.getElementById('tamaHearts');
+      var icons = Array.prototype.slice.call(hang.querySelectorAll('.tama-icon'));
+      var btns = hang.querySelectorAll('.tama-btn');
+      var BASE = 'Assets/Tamagotchi/';
+      var GIF = {
+        idle: BASE + 'character.gif',
+        food: BASE + 'character_food.gif',
+        music: BASE + 'character_music.gif',
+        shower: BASE + 'character_shower.gif',
+        sleep: BASE + 'character_sleep.gif',
+        poop: BASE + 'character_poop.gif',
+        dead: BASE + 'character_dead.gif',
+        egg: BASE + 'character_egg.gif'
+      };
+
+      Object.keys(GIF).forEach(function (k) {
+        var img = new Image();
+        img.src = GIF[k];
+      });
+
+      var sel = 1;
+      var busy = false;
+      var asleep = false;
+      var lightsOff = false;
+      var hasPoop = false;
+      var dead = false;
+      var happy = 4;
+      var reactTimer = null;
+      var heartsTimer = null;
+
+      function setChar(state, hop) {
+        charEl.src = GIF[state] || GIF.idle;
+        charEl.classList.toggle('hop', !!hop);
+      }
+
+      function idle() {
+        if (dead) return;
+        busy = false;
+        setChar(asleep ? 'sleep' : 'idle', !asleep);
+      }
+
+      function hideHearts() {
+        hearts.classList.remove('show');
+        clearTimeout(heartsTimer);
+      }
+
+      function react(state, hop, ms) {
+        if (dead) {
+          revive();
+          return;
+        }
+        hideHearts();
+        busy = true;
+        if (asleep && state !== 'sleep') wake();
+        setChar(state, hop);
+        clearTimeout(reactTimer);
+        reactTimer = setTimeout(idle, ms || 2600);
+      }
+
+      function highlight() {
+        icons.forEach(function (ic, i) {
+          ic.classList.toggle('sel', i === sel);
+        });
+      }
+
+      function flashActive(i) {
+        icons[i].classList.add('active');
+        setTimeout(function () {
+          icons[i].classList.remove('active');
+        }, 450);
+      }
+
+      function showHearts() {
+        hearts.innerHTML = '';
+        for (var i = 0; i < 4; i++) {
+          var h = document.createElement('span');
+          h.className = 'tama-heart' + (i < happy ? '' : ' empty');
+          hearts.appendChild(h);
+        }
+        hearts.classList.add('show');
+        clearTimeout(heartsTimer);
+        heartsTimer = setTimeout(function () {
+          hearts.classList.remove('show');
+        }, 2400);
+      }
+
+      function bumpHappy(d) {
+        happy = Math.max(0, Math.min(4, happy + d));
+      }
+
+      function setPoop(on) {
+        hasPoop = on;
+        poopEl.classList.toggle('show', on);
+      }
+
+      function wake() {
+        asleep = false;
+        lcd.classList.remove('asleep');
+        zzzEl.classList.remove('show');
+      }
+
+      function sleepToggle() {
+        if (asleep) {
+          clearTimeout(reactTimer);
+          wake();
+          idle();
+          return;
+        }
+        asleep = true;
+        busy = true;
+        lcd.classList.add('asleep');
+        zzzEl.classList.add('show');
+        setChar('sleep', false);
+        clearTimeout(reactTimer);
+        reactTimer = setTimeout(function () {
+          wake();
+          idle();
+        }, 3400);
+      }
+
+      function revive() {
+        dead = false;
+        happy = 4;
+        setPoop(false);
+        react('egg', false, 1400);
+        setTimeout(idle, 1450);
+      }
+
+      function doAction(act) {
+        if (act !== 'stats') hideHearts();
+        if (dead) {
+          revive();
+          return;
+        }
+        switch (act) {
+          case 'food':
+            bumpHappy(1);
+            react('food', false);
+            if (Math.random() < 0.5) {
+              setTimeout(function () { setPoop(true); }, 2800);
+            }
+            break;
+          case 'music':
+            bumpHappy(1);
+            react('music', true);
+            break;
+          case 'shower':
+            setPoop(false);
+            bumpHappy(1);
+            react('shower', false);
+            break;
+          case 'poop':
+            setPoop(true);
+            react('poop', false);
+            break;
+          case 'sleep':
+            sleepToggle();
+            break;
+          case 'lights':
+            lightsOff = !lightsOff;
+            lcd.classList.toggle('lights-off', lightsOff);
+            break;
+          case 'stats':
+            showHearts();
+            break;
+          case 'dead':
+            react('dead', false);
+            break;
+        }
+      }
+
+      icons.forEach(function (ic, i) {
+        ic.addEventListener('click', function (e) {
+          e.stopPropagation();
+          sel = i;
+          highlight();
+          flashActive(i);
+          doAction(ic.getAttribute('data-act'));
+        });
+      });
+
+      btns.forEach(function (b) {
+        b.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var n = icons.length;
+          var which = b.getAttribute('data-btn');
+          if (which === 'a') {
+            sel = (sel - 1 + n) % n;
+            highlight();
+          } else if (which === 'b') {
+            sel = (sel + 1) % n;
+            highlight();
+          } else {
+            flashActive(sel);
+            doAction(icons[sel].getAttribute('data-act'));
+          }
+        });
+      });
+
+      setInterval(function () {
+        if (dead || busy || asleep) return;
+        if (!hasPoop && Math.random() < 0.25) setPoop(true);
+        else if (Math.random() < 0.2) bumpHappy(-1);
+      }, 18000);
+
+      highlight();
+      idle();
+    })();
+  </script>
+</body>
+</html>
