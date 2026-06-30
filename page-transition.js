@@ -96,6 +96,19 @@
     });
   }
 
+  // Reset transition state whenever the page is shown. Critical for the
+  // back/forward cache: a bfcache restore returns the page exactly as it was
+  // left — still carrying `warp-out` (content faded to opacity:0, blurred) —
+  // which renders a blank page. Clearing the classes here restores it.
+  window.addEventListener('pageshow', function (e) {
+    if (!e.persisted) return; // only act on bfcache restores
+    var body = document.body;
+    if (!body) return;
+    body.classList.remove('warp-out', 'warp-in');
+    var wormholeEl = document.getElementById('wormhole');
+    if (wormholeEl) wormholeEl.classList.remove('active', 'out', 'in');
+  });
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

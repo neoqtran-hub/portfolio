@@ -302,7 +302,12 @@
   }
   .pcard-media {
     position: relative;
-    aspect-ratio: 16 / 11;
+    /* No aspect-ratio here: in the two-column layout the grid stretches the
+       media cell to the row height (matching the taller text column) for
+       free, so the image covers fully. Setting aspect-ratio would block that
+       stretch (leaving a gap) AND back-compute a width that overflows the
+       column. The stacked layout re-adds aspect-ratio below, where the media
+       sits alone in its row and needs an intrinsic height. */
     background: #1c2b1c;
     overflow: hidden;
   }
@@ -774,6 +779,8 @@
     .work { padding: 0 22px 32px; }
     .work-title { margin-bottom: 18px; }
     .pcard { grid-template-columns: 1fr; }
+    /* Stacked: media is alone in its row, so give it an intrinsic height. */
+    .pcard-media { aspect-ratio: 16 / 11; }
     .pcard-body { padding: 26px 24px 24px; }
     .statement span { padding-left: 22px; }
     .contact { padding: 72px 22px 64px; }
