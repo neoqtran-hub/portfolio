@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.setAttribute('data-theme', 'light');</script>
+<base href="/">
+<link rel="icon" type="image/png" href="Assets/favicon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neo Tran - Landing Page</title>
+<meta name="description" content="Neo Tran - Senior Product Designer working across growth, design systems, web, iOS, Android, and product features.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="alt-project-theme.css">
+<style>
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Light.ttf') format('truetype'); font-weight:300; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Regular.ttf') format('truetype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-SemiBold.ttf') format('truetype'); font-weight:600; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
+
+  :root {
+    --purple: #1a1a1b;
+    --purple-strong: #1a1a1b;
+    --accent-rgb: 26, 26, 27;
+    --ink: #1a1a1b;
+    --ink-soft: #2a2a2a;
+    --muted: #6f6f6a;
+    --muted-soft: #9a9a96;
+    --copy: #4a4a4a;
+    --bg: #f2f0ec;
+    --bg-soft: #e8e5de;
+    --surface: #ffffff;
+    --surface-2: #faf8f6;
+    --line: rgba(0,0,0,0.14);
+    --glass: rgba(255,255,255,0.30);
+    --glass-brd: rgba(255,255,255,0.55);
+    --hl-bg: rgba(0,0,0,0.10);
+    --glow-1: rgba(0,0,0,0.08);
+    --glow-2: rgba(0,0,0,0.03);
+    --nav-bg: rgba(242,240,236,0.72);
+    --grain-opacity: 0.12;
+    --btn-bg: #1a1a1b;
+    --btn-ink: #f2f0ec;
+    --nav-icon-filter: none;
+    --logo-filter: grayscale(1) brightness(0) invert(0.18);
+    --logo-dr-filter: grayscale(1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body {
+    font-family: var(--body);
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  button { font-family: inherit; border: 0; background: none; cursor: pointer; }
+  body.nav-hidden .snav { transform: none !important; }
+  .snav {
+    position: sticky;
+  }
+  .snav-links {
+    transition: opacity 0.22s ease, transform 0.22s ease;
+  }
+  .snav-current {
+    position: absolute;
+    left: 50%;
+    max-width: min(58vw, 680px);
+    transform: translate(-50%, 8px);
+    opacity: 0;
+    pointer-events: none;
+    font-family: var(--display);
+    font-size: clamp(16px, 2.4vw, 30px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+  }
+  .snav.is-section-mode .snav-links {
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+  }
+  .snav.is-section-mode .snav-current {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  .landing-hero,
+  .logo-marquee,
+  .profile,
+  .experience,
+  .software {
+    position: relative;
+    z-index: 1;
+  }
+
+  .landing-hero {
+    min-height: min(680px, calc(82vh - 80px));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 58px 48px 50px;
+    overflow: hidden;
+  }
+  .hero-kicker {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .landing-hero h1 {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(44px, 11vw, 180px);
+    line-height: 0.88;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+  }
+  .hero-copy {
+    max-width: 660px;
+    margin: 34px auto 0;
+    font-size: clamp(20px, 2.4vw, 32px);
+    line-height: 1.24;
+    color: var(--muted);
+  }
+  .hero-copy strong { color: var(--ink); font-weight: 500; }
+  .scroll-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 34px;
+    font-family: var(--display);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .scroll-hint svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: scrollBounce 1.6s ease-in-out infinite;
+  }
+  @keyframes scrollBounce {
+    0%, 100% { transform: translateY(0); opacity: 0.7; }
+    50% { transform: translateY(5px); opacity: 1; }
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 12px 20px;
+    border-radius: var(--pill-radius);
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid var(--line);
+  }
+  .btn-primary { background: var(--btn-bg); color: var(--btn-ink); }
+
+  .logo-marquee {
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 30px 0;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    align-items: center;
+    gap: 72px;
+    width: max-content;
+    animation: scroll-x 38s linear infinite;
+  }
+  .logo-marquee:hover .marquee-track { animation-play-state: paused; }
+  .marquee-label {
+    font-size: 17px;
+    color: var(--muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .logo-marquee img {
+    height: 26px;
+    width: auto;
+    object-fit: contain;
+    filter: var(--logo-filter);
+    opacity: 0.78;
+    flex-shrink: 0;
+  }
+  .logo-marquee img.ms-dr {
+    height: 34px;
+    filter: var(--logo-dr-filter);
+    opacity: 0.72;
+  }
+  @keyframes scroll-x {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .profile,
+  .experience,
+  .software {
+    padding: 110px 48px;
+    max-width: 1280px;
+    margin: 0 auto;
+    scroll-margin-top: 96px;
+  }
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .profile-photo {
+    aspect-ratio: 1 / 1.05;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg-soft);
+  }
+  .profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .eyebrow {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .section-title {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(38px, 5.4vw, 76px);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    margin-bottom: 26px;
+  }
+  .profile-copy p,
+  .experience-head p {
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--muted);
+    margin-bottom: 18px;
+    max-width: 58ch;
+  }
+  .profile-copy strong { color: var(--ink); font-weight: 500; }
+  .history-list {
+    margin-top: 36px;
+    border-top: 1px solid var(--line);
+  }
+  .history-item {
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    gap: 18px;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .history-logo {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--card-radius);
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+  }
+  .history-logo img {
+    width: 66%;
+    height: 66%;
+    object-fit: contain;
+  }
+  .history-company {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .history-role,
+  .history-date {
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .history-date { white-space: nowrap; }
+  .about-contact {
+    margin-top: 28px;
+    padding: 28px;
+    border-radius: var(--card-radius);
+    background: #fff;
+    color: #1a1a1b;
+  }
+  .about-contact h3 {
+    font-family: var(--display);
+    font-size: clamp(28px, 4vw, 48px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .about-contact p {
+    color: #6f6f6a;
+    margin-bottom: 18px;
+  }
+  .about-contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .sticky-cta {
+    position: fixed;
+    left: 50%;
+    bottom: 18px;
+    z-index: 80;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 14px 24px;
+    border-radius: var(--pill-radius);
+    background: var(--btn-bg);
+    color: var(--btn-ink);
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+    transform: translate(-50%, 88px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.28s ease, opacity 0.28s ease;
+  }
+  .sticky-cta.is-visible {
+    transform: translate(-50%, 0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .experience { padding-top: 40px; }
+  .experience-head {
+    display: grid;
+    grid-template-columns: 0.9fr 1fr;
+    gap: 64px;
+    align-items: end;
+    padding-bottom: 0;
+    border-bottom: 0;
+    margin-bottom: 28px;
+  }
+  .experience-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+    min-width: 0;
+  }
+  .experience-card {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+    padding: clamp(24px, 4vw, 42px);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: var(--card-radius);
+    background: rgba(250,248,246,0.92);
+    box-shadow: 0 24px 70px rgba(26,26,27,0.1);
+  }
+  .experience-card h3 {
+    font-family: var(--display);
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .experience-card p {
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.5;
+    max-width: 68ch;
+  }
+  .experience-lead p + p {
+    margin-top: 14px;
+  }
+  .experience-lead { text-align: center; }
+  .experience-lead > p { margin-left: auto; margin-right: auto; }
+  .experience-lead .skill-chips { justify-content: center; }
+  .experience-lead .goals-grid,
+  .experience-lead .impact-grid,
+  .experience-lead .impact-table { text-align: left; }
+  .goals-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .goal-card {
+    min-height: 132px;
+    padding: 18px;
+    border-radius: var(--card-radius);
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+  .goal-icon {
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    color: #1a1a1b;
+  }
+  .goal-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+  }
+  .goal-card h4 {
+    font-family: var(--display);
+    font-size: 14px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    color: #1a1a1b;
+  }
+  .goal-card p {
+    font-size: 14px;
+    line-height: 1.45;
+    color: #6f6f6a;
+    margin: 0;
+  }
+  .impact-grid {
+    max-width: 100%;
+    margin: 28px 0 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .impact-card {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: var(--card-radius);
+    padding: 20px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  }
+  .impact-card .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #9a9a96;
+    margin-bottom: 8px;
+  }
+  .impact-card .value {
+    font-family: var(--display);
+    font-size: clamp(26px, 3vw, 40px);
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .impact-card .note {
+    font-size: 13px;
+    color: #6f6f6a;
+    margin-top: 8px;
+    line-height: 1.4;
+  }
+  .impact-table {
+    max-width: 100%;
+    margin: 28px 0 0;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  }
+  .impact-row {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--bg-soft);
+  }
+  .impact-row:last-child { border-bottom: 0; }
+  .impact-row > div {
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--copy);
+    border-left: 1px solid var(--bg-soft);
+  }
+  .impact-row > div:first-child {
+    border-left: 0;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .impact-row.header > div {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #9a9a96;
+  }
+  .experience-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    min-width: 0;
+  }
+  .experience-fullwidth {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+  .experience-fullwidth img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--card-radius);
+  }
+  .experience-example {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: center;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+    min-width: 0;
+  }
+  .experience-lead,
+  .experience-text {
+    min-width: 0;
+  }
+  .experience-example:nth-child(even) .experience-text { order: 2; }
+  .experience-example:nth-child(even) .experience-figure { order: 1; }
+  .experience-example strong {
+    display: block;
+    font-family: var(--display);
+    font-size: clamp(18px, 2vw, 28px);
+    line-height: 1.2;
+    margin-bottom: 14px;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 1;
+  }
+  .experience-example p {
+    font-size: 15px;
+    line-height: 1.55;
+    margin: 0;
+    max-width: none;
+  }
+  .experience-figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: start;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 1 / 1;
+    background: var(--bg-soft);
+  }
+  .experience-figure.is-white {
+    background: #fff;
+  }
+  .experience-figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .experience-figure.is-cover img {
+    object-fit: cover;
+  }
+  .bundle-demo-figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    background: #dcecff;
+    aspect-ratio: 1 / 1;
+    min-height: 0;
+    padding: clamp(18px, 8%, 40px);
+    max-width: 100%;
+  }
+  .bundle-demo-phone {
+    position: relative;
+    width: auto;
+    height: 100%;
+    max-width: 330px;
+    max-height: 100%;
+    aspect-ratio: 642 / 1398;
+    padding: 0;
+    border-radius: clamp(8px, 8px, 8px);
+    background: linear-gradient(180deg, #202124, #050506);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.22);
+    overflow: hidden;
+  }
+  .bundle-demo-phone video {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: none;
+    object-fit: initial;
+    display: block;
+    border-radius: inherit;
+    background: #fff;
+  }
+  .framework-stack-figure {
+    background: #fff;
+    padding: 34px;
+  }
+  .framework-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+  }
+  .framework-mini-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #ececea;
+    border-radius: 16px;
+    padding: 22px 24px;
+    background: #f8f7f3;
+  }
+  .framework-mini-card::after {
+    content: '';
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .framework-mini-card.lighthouse::after {
+    top: -42px;
+    right: -40px;
+    background: radial-gradient(circle, rgba(212,136,42,0.14) 0%, transparent 70%);
+  }
+  .framework-mini-card.driftwood::after {
+    bottom: -42px;
+    left: -40px;
+    background: radial-gradient(circle, rgba(58,112,104,0.12) 0%, transparent 70%);
+  }
+  .framework-mini-card .name {
+    display: block;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: clamp(24px, 2.5vw, 32px);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+  .framework-mini-card.lighthouse .name { color: #B36A14; }
+  .framework-mini-card.driftwood .name { color: #235952; }
+  .framework-mini-card .desc {
+    display: block;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 16px;
+    max-width: none;
+  }
+  .framework-mini-card .problem-label {
+    display: block;
+    color: #a5a39e;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin: 0 0 6px;
+  }
+  .framework-mini-card .problem {
+    display: block;
+    color: #6f6f6a;
+    font-size: 13px;
+    font-style: italic;
+    line-height: 1.45;
+    margin: 0;
+  }
+  .experience-figure video {
+    width: calc(100% - 32px);
+    height: calc(100% - 32px);
+    object-fit: contain;
+    display: block;
+  }
+  .ai-animation-window {
+    position: relative;
+    background: #fff;
+  }
+  .ai-animation-window .pumpkin-sequence-frame {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .device-fade {
+    position: relative;
+  }
+  .device-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    opacity: 0;
+    animation: deviceFade 9s ease-in-out infinite;
+  }
+  .device-label {
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #1a1a1b;
+  }
+  .device-slide:nth-child(1) { animation-delay: 0s; }
+  .device-slide:nth-child(2) { animation-delay: 3s; }
+  .device-slide:nth-child(3) { animation-delay: 6s; }
+  .device-laptop {
+    position: relative;
+    width: min(92%, 560px);
+    padding: 10px 10px 12px;
+    border-radius: 18px 18px 8px 8px;
+    background: linear-gradient(180deg, #1b1b1d, #080809);
+    border: 1px solid #2a2a2c;
+    box-shadow: 0 26px 54px rgba(0,0,0,0.22);
+  }
+  .device-laptop::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -18px;
+    width: 118%;
+    height: 22px;
+    border-radius: 0 0 28px 28px;
+    background: linear-gradient(180deg, #d8d8d8, #a9a9a9);
+    box-shadow: 0 16px 24px rgba(0,0,0,0.18);
+    transform: translateX(-50%);
+  }
+  .device-laptop::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -9px;
+    width: 20%;
+    height: 5px;
+    border-radius: 0 0 999px 999px;
+    background: #8f8f8f;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+  .device-phone {
+    position: relative;
+    width: min(60%, 300px);
+    padding: 8px;
+    border-radius: 34px;
+    background: linear-gradient(180deg, #202124, #050506);
+    border: 1px solid #303033;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.22);
+  }
+  .device-laptop img,
+  .device-phone img {
+    width: 100%;
+    object-fit: contain;
+    background: #fff;
+  }
+  .device-laptop img {
+    border-radius: 8px 8px 3px 3px;
+  }
+  .device-phone img {
+    border-radius: 27px;
+  }
+  .sections-marquee-window {
+    position: relative;
+    display: block;
+    background: #e8e5de;
+  }
+  .sections-marquee-window::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, #e8e5de 0%, rgba(232,229,222,0) 16%, rgba(232,229,222,0) 84%, #e8e5de 100%);
+  }
+  .sections-marquee-window .ai-marquee-title,
+  .sections-marquee-window .sections-marquee-subtitle {
+    position: absolute;
+    left: 24px;
+    z-index: 2;
+    color: #1a1a1b;
+  }
+  .sections-marquee-window .ai-marquee-title {
+    top: 22px;
+    font-family: var(--display);
+    font-size: clamp(22px, 3vw, 36px);
+    line-height: 1;
+  }
+  .sections-marquee-window .sections-marquee-subtitle {
+    top: 62px;
+    font-size: 14px;
+    color: #6f6f6a;
+  }
+  .ai-marquee-row {
+    display: flex;
+    gap: 14px;
+    width: max-content;
+    animation: aiMarquee 28s linear infinite;
+  }
+  .ai-marquee-row.reverse {
+    animation-direction: reverse;
+  }
+  .sections-marquee-window .ai-marquee-row {
+    position: absolute;
+    left: 0;
+  }
+  .sections-marquee-window .ai-marquee-row:nth-of-type(1) { top: 116px; }
+  .sections-marquee-window .ai-marquee-row:nth-of-type(2) { top: 284px; }
+  .sections-marquee-window .ai-marquee-row:nth-of-type(3) { top: 452px; }
+  .ai-marquee-card {
+    width: auto;
+    height: 165px;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    background: #fff;
+    flex: 0 0 auto;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.10);
+  }
+  .ai-marquee-card img {
+    width: auto;
+    height: 100%;
+    object-fit: contain;
+    max-width: none;
+    display: block;
+  }
+  @keyframes aiMarquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes deviceFade {
+    0%, 8% { opacity: 0; }
+    14%, 31% { opacity: 1; }
+    39%, 100% { opacity: 0; }
+  }
+  .experience-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .experience-links a,
+  .experience-links span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 7px 12px;
+    border-radius: var(--pill-radius);
+    border: 1px solid var(--line);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .experience-links a:hover { opacity: 0.68; }
+
+  .skill-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 22px;
+  }
+  .skill-chips .chips-label {
+    flex-basis: 100%;
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+  .skill-chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 6px 14px;
+    border-radius: var(--pill-radius);
+    background: #1a1a1b;
+    color: #f2f0ec;
+    font-family: var(--display);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+  @media (max-width: 560px) {
+    .skill-chip { font-size: 11px; min-height: 28px; padding: 6px 12px; }
+  }
+
+  .chapter-head {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-top: clamp(44px, 7vw, 96px);
+  }
+  .experience-grid > .chapter-head:first-child { margin-top: 0; }
+  .chapter-index {
+    font-family: var(--display);
+    font-size: clamp(40px, 6vw, 84px);
+    font-weight: 500;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .chapter-total {
+    font-family: var(--display);
+    font-size: clamp(13px, 1.4vw, 16px);
+    color: var(--muted-soft);
+    align-self: flex-start;
+    margin-top: 8px;
+  }
+  .chapter-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  @media (max-width: 560px) {
+    .chapter-head { gap: 14px; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+
+  .software { padding-top: 20px; }
+  .software-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+  }
+  .soft-tile {
+    aspect-ratio: 1 / 1;
+    background: var(--surface);
+    border-radius: var(--card-radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: transform .2s ease, background .2s ease;
+    border: 1px solid var(--line);
+  }
+  .soft-tile { background: #fff; }
+  .soft-tile:hover { transform: translateY(-2px); background: var(--bg-soft); }
+  .soft-logo {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .soft-logo svg,
+  .soft-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .soft-name { font-size: 12px; color: #6f6f6a; }
+
+  @media (max-width: 900px) {
+    .landing-hero { min-height: 300px; padding: 32px 22px 28px; }
+    .landing-hero h1 { font-size: clamp(42px, 13vw, 76px); white-space: nowrap; }
+    .profile,
+    .experience,
+    .software { padding: 72px 22px; }
+    .profile-grid,
+    .experience-head,
+    .experience-grid,
+    .experience-card,
+    .experience-content,
+    .experience-example { grid-template-columns: 1fr; gap: 24px; }
+    .experience-example:nth-child(even) .experience-text,
+    .experience-example:nth-child(even) .experience-figure { order: initial; }
+    .goals-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .impact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .impact-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .impact-row { min-width: 600px; }
+    .experience-figure {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      align-self: start;
+    }
+    .software-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .snav { height: 68px; padding: 0 16px; }
+    .snav-brand { font-size: 15px; max-width: 52vw; }
+    .snav-links { gap: 14px; }
+    .snav-links a { font-size: 12px; }
+    .profile,
+    .experience,
+    .software { padding: 40px 16px; }
+    .landing-hero { padding: 30px 16px 28px; }
+    .hero-kicker { font-size: 11px; margin-bottom: 8px; }
+    .landing-hero h1 {
+      font-size: clamp(34px, 11vw, 48px);
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+    .hero-copy { margin-top: 16px; font-size: 18px; line-height: 1.25; }
+    .scroll-hint { margin-top: 20px; font-size: 10px; }
+    .profile-grid,
+    .experience-head,
+    .experience-grid,
+    .experience-card,
+    .experience-content,
+    .experience-example { gap: 18px; }
+    .section-title { font-size: clamp(30px, 10vw, 42px); }
+    .experience-card { padding: 22px 16px; }
+    .experience-card h3 {
+      font-size: clamp(28px, 9vw, 40px);
+      overflow-wrap: anywhere;
+    }
+    .experience-card p { font-size: 16px; }
+    .experience-text strong { font-size: clamp(20px, 7vw, 28px); overflow-wrap: anywhere; }
+    .goals-grid,
+    .impact-grid { grid-template-columns: 1fr; }
+    .goal-card,
+    .impact-card { min-height: 0; padding: 16px; }
+    .impact-table { border-radius: var(--card-radius); }
+    .impact-row { min-width: 520px; }
+    .experience-figure { max-width: 100%; aspect-ratio: 1 / 1; }
+    .bundle-demo-figure {
+      max-width: 100%;
+      aspect-ratio: 1 / 1;
+      padding: clamp(14px, 8%, 24px);
+    }
+    .snav-current {
+      left: auto;
+      right: 16px;
+      max-width: calc(100vw - 176px);
+      transform: translateY(8px);
+      text-align: right;
+      font-size: 16px;
+    }
+    .snav.is-section-mode .snav-current {
+      transform: translateY(0);
+    }
+    .history-item { grid-template-columns: 44px 1fr; gap: 12px; align-items: start; }
+    .history-logo { width: 44px; height: 44px; grid-row: span 2; }
+    .history-date { grid-column: 2; }
+    .marquee-track { gap: 48px; }
+    .marquee-label { font-size: 15px; }
+    .software-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .experience-figure.is-white > video {
+      width: calc(100% - 32px);
+      height: auto;
+      max-height: calc(100% - 32px);
+      object-fit: contain;
+    }
+    .sections-marquee-window .ai-marquee-title { top: 18px; left: 18px; font-size: 26px; }
+    .sections-marquee-window .sections-marquee-subtitle { top: 56px; left: 18px; font-size: 13px; }
+    .sections-marquee-window .ai-marquee-row:nth-of-type(1) { top: 116px; }
+    .sections-marquee-window .ai-marquee-row:nth-of-type(2) { top: 240px; }
+    .sections-marquee-window .ai-marquee-row:nth-of-type(3) { top: 364px; }
+    .ai-marquee-card { height: 108px; }
+    .device-fade { min-height: 360px; }
+    .device-laptop { width: 100%; }
+    .device-phone { width: min(72%, 230px); }
+    .framework-stack-figure {
+      aspect-ratio: auto;
+      padding: 16px;
+    }
+    .framework-mini-card {
+      padding: 18px;
+    }
+    .framework-mini-card .name { font-size: 26px; }
+    .framework-mini-card .desc { font-size: 13px; }
+    .framework-mini-card .problem { font-size: 12px; }
+    .bundle-demo-phone {
+      width: auto;
+      height: 100%;
+      max-width: 210px;
+      max-height: 100%;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+  }
+</style>
+</head>
+<body>
+<nav class="snav">
+  <a href="index.html" class="snav-brand">NEO BY DESIGN</a>
+  <div class="snav-current" id="snavCurrent" aria-live="polite">About Me</div>
+  <div class="snav-links">
+    <a href="/overview/#experience">Work</a>
+    <a href="/overview/#about">About</a>
+    <a href="/overview/#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="landing-hero">
+  <p class="hero-kicker">Senior Product Designer</p>
+  <h1>NEO TRAN</h1>
+  <p class="hero-copy">I design <strong>growth-focused products</strong>, scalable design systems, and polished web and mobile experiences for teams shipping at speed.</p>
+  <a class="scroll-hint" href="/overview/#about" aria-label="Scroll to about section">
+    Scroll
+    <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="4" x2="12" y2="19"/><polyline points="6 13 12 19 18 13"/></svg>
+  </a>
+</header>
+
+<section class="logo-marquee" aria-label="Brands I have worked with">
+  <div class="marquee-track">
+    <span class="marquee-label">Brands I have worked with</span>
+    <img class="ms-dr" src="Assets/drsquatch-horizontal-logo-reversed 1.png" alt="Dr. Squatch">
+    <img src="Assets/American Century.png" alt="American Century">
+    <img src="Assets/Resume Logo/Beachbody.svg" alt="Beachbody">
+    <img src="Assets/Ring.png" alt="Ring">
+    <img src="Assets/Simpluris.png" alt="Simpluris">
+    <img src="Assets/LAist.png" alt="LAist">
+    <img src="Assets/Kareo.png" alt="Kareo">
+    <img src="Assets/Dexcare.png" alt="Dexcare">
+    <span class="marquee-label">Brands I have worked with</span>
+    <img class="ms-dr" src="Assets/drsquatch-horizontal-logo-reversed 1.png" alt="Dr. Squatch">
+    <img src="Assets/American Century.png" alt="American Century">
+    <img src="Assets/Resume Logo/Beachbody.svg" alt="Beachbody">
+    <img src="Assets/Ring.png" alt="Ring">
+    <img src="Assets/Simpluris.png" alt="Simpluris">
+    <img src="Assets/LAist.png" alt="LAist">
+    <img src="Assets/Kareo.png" alt="Kareo">
+    <img src="Assets/Dexcare.png" alt="Dexcare">
+  </div>
+</section>
+
+<main>
+  <section class="profile" id="about" data-nav-title="About Me">
+    <div class="profile-grid">
+      <div class="profile-photo">
+        <img src="Assets/neo-portrait.jpg" alt="Portrait of Neo Tran">
+      </div>
+      <div class="profile-copy">
+        <p class="eyebrow">About</p>
+        <p>I am a <strong>Senior Product Designer</strong> with experience across ecommerce, financial products, fitness, smart home, and growth systems.</p>
+        <p>My work spans design systems, CMS migrations, web apps, iOS and Android flows, conversion experiments, and customer-facing features.</p>
+        <div class="history-list" aria-label="Work history summary">
+          <div class="history-item"><div class="history-logo"><img src="Assets/Resume Logo/Squatch.svg" alt=""></div><div><div class="history-company">Dr. Squatch</div><div class="history-role">Senior Product Designer, Growth, Design System</div></div><div class="history-date">2024 - Present</div></div>
+          <div class="history-item"><div class="history-logo"><img src="Assets/Resume Logo/ACI.svg" alt=""></div><div><div class="history-company">American Century Investments</div><div class="history-role">Senior Product Designer</div></div><div class="history-date">2022 - 2024</div></div>
+          <div class="history-item"><div class="history-logo"><img src="Assets/Resume Logo/Beachbody.svg" alt=""></div><div><div class="history-company">Beachbody</div><div class="history-role">Senior Product Designer</div></div><div class="history-date">2021 - 2022</div></div>
+          <div class="history-item"><div class="history-logo"><img src="Assets/Resume Logo/Ring.svg" alt=""></div><div><div class="history-company">Ring</div><div class="history-role">Digital Designer</div></div><div class="history-date">2020 - 2021</div></div>
+        </div>
+        <div class="about-contact">
+          <h3>Contact me</h3>
+          <p>Open to product design, growth, design system, and cross-platform work.</p>
+          <div class="about-contact-links">
+            <a class="btn btn-primary" href="mailto:neoqtran@gmail.com?subject=Let%27s%20work%20together">Email me</a>
+            <a class="btn" href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="experience" id="experience">
+    <div class="experience-head">
+      <div>
+        <p class="eyebrow">Work Experience</p>
+        <h2 class="section-title">What I do, in plain terms.</h2>
+      </div>
+      <p>Focused examples across systems, product surfaces, UX frameworks, and feature work.</p>
+    </div>
+
+    <div class="experience-grid">
+      <div class="chapter-head reveal"><span class="chapter-index">01</span><span class="chapter-rule"></span><span class="chapter-total">/ 04</span></div>
+      <article class="experience-card reveal" id="design-system" data-nav-title="Design System">
+        <div class="experience-lead">
+          <h3>Design System</h3>
+          <p>I build design systems that help teams move faster without losing quality — foundations, reusable components, clear usage rules, and clean handoff to engineering.</p>
+          <p>I work from both sides: visual consistency in Figma and how components behave in real product flows. I make systems useful, not just organized.</p>
+          <div class="skill-chips" aria-label="Design system skills">
+            <span class="chips-label">What I bring</span>
+            <span class="skill-chip">Figma</span>
+            <span class="skill-chip">Component Libraries</span>
+            <span class="skill-chip">CMS Headless Migration</span>
+            <span class="skill-chip">Design Tokens</span>
+            <span class="skill-chip">Accessibility (WCAG AA)</span>
+            <span class="skill-chip">Documentation</span>
+            <span class="skill-chip">Engineering Handoff</span>
+          </div>
+          <div class="goals-grid" aria-label="Design system goals">
+            <div class="goal-card">
+              <div class="goal-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.098 19.902a3.75 3.75 0 0 0 5.304 0l6.401-6.402M6.75 21A3.75 3.75 0 0 1 3 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 0 0 3.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008Z"/></svg></div>
+              <h4>Consistent Design Language</h4>
+              <p>One source of truth for color, type, spacing, and visual rules.</p>
+            </div>
+            <div class="goal-card">
+              <div class="goal-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z"/></svg></div>
+              <h4>Building-Block Structure</h4>
+              <p>Small reusable pieces combine into larger, predictable components.</p>
+            </div>
+            <div class="goal-card">
+              <div class="goal-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z"/></svg></div>
+              <h4>Better UX Through Consistency</h4>
+              <p>Familiar patterns everywhere, with less friction for shoppers.</p>
+            </div>
+            <div class="goal-card">
+              <div class="goal-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25Zm.75-12h9v9h-9v-9Z"/></svg></div>
+              <h4>Scalable and AI-Adaptive</h4>
+              <p>A system that extends cleanly and supports AI-assisted workflows.</p>
+            </div>
+            <div class="goal-card">
+              <div class="goal-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.746 3.746 0 0 1 21 12Z"/></svg></div>
+              <h4>Accessible by Default</h4>
+              <p>WCAG AA contrast, focus states, and semantics built into patterns.</p>
+            </div>
+            <div class="goal-card">
+              <div class="goal-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"/></svg></div>
+              <h4>Cross-Team Adoption</h4>
+              <p>Easy for marketing, growth, product, and engineering teams to use.</p>
+            </div>
+          </div>
+        </div>
+        <div class="experience-content">
+          <div class="experience-example">
+            <div class="experience-text">
+              <strong>Component libraries</strong>
+              <p>Built methods, tokens, components, and governance to improve consistency across ecommerce modules and product storytelling.</p>
+            </div>
+            <a class="experience-figure" href="drsquatch.html#ds-components"><img src="Assets/component_libraries.png" alt="Component library examples"></a>
+          </div>
+          <div class="experience-example">
+            <div class="experience-text">
+              <strong>CMS-ready modules</strong>
+              <p>Created foundations and reusable building blocks for Contentful landing pages, client portal patterns, and internal dashboard work.</p>
+            </div>
+            <a class="experience-figure" href="american-century.html#design-system"><img src="Assets/CMS.jpg" alt="CMS-ready module examples"></a>
+          </div>
+        </div>
+      </article>
+
+      <div class="chapter-head reveal"><span class="chapter-index">02</span><span class="chapter-rule"></span><span class="chapter-total">/ 04</span></div>
+      <article class="experience-card reveal" id="web-ios-android" data-nav-title="Web, iOS and Android">
+        <div class="experience-lead">
+          <h3>Web, iOS and Android</h3>
+          <p>I design across platforms with attention to how each surface behaves. A web flow, mobile app flow, and dashboard should feel connected, but not copied one-to-one.</p>
+          <p>I have worked on responsive web experiences, iOS and Android product flows, portals, live video experiences, ecommerce pages, and account dashboards. My focus is making complex actions feel clear, usable, and polished across screen sizes.</p>
+          <div class="skill-chips" aria-label="Cross-platform skills">
+            <span class="chips-label">What I bring</span>
+            <span class="skill-chip">Responsive Web</span>
+            <span class="skill-chip">iOS</span>
+            <span class="skill-chip">Android</span>
+            <span class="skill-chip">Dashboards</span>
+            <span class="skill-chip">Ecommerce</span>
+            <span class="skill-chip">Cross-Platform</span>
+          </div>
+        </div>
+        <div class="experience-fullwidth">
+          <img src="Assets/Presentations/ACI.jpg" alt="American Century client portal presentation">
+          <img src="Assets/Presentations/frame-8673.jpg" alt="American Century client portal screen">
+          <img src="Assets/Presentations/Responsive.jpg" alt="Responsive design layouts">
+          <img src="Assets/Presentations/Responsive-1.jpg" alt="Responsive design layouts continued">
+          <img src="Assets/Mobile Flow.jpg" alt="Mobile flow: buy, exchange, and auto-invest request screens">
+        </div>
+        <div class="experience-content">
+          <div class="experience-example">
+            <div class="experience-text">
+              <strong>Web dashboards</strong>
+              <p>Designed client portal features including Move Money, allocation views, balance history, RMD, ESG dashboards, and document management.</p>
+            </div>
+            <a class="experience-figure" href="american-century.html#client-portal"><img src="Assets/dashboards.png" alt="Dashboard examples"></a>
+          </div>
+          <div class="experience-example">
+            <div class="experience-text">
+              <strong>Mobile App Experience</strong>
+              <p>Designed one BODcast experience across iOS, Android, desktop, and tablet so members could join live classes with camera-based participation.</p>
+            </div>
+            <a class="experience-figure is-white" href="beachbody.html#design"><video src="Assets/screen.mp4" autoplay muted loop playsinline aria-label="Mobile app flow screen recording"></video></a>
+          </div>
+          <div class="experience-example">
+            <div class="experience-text">
+              <strong>Responsive Variants</strong>
+              <p>Designed platform-specific variations of the same product experience, adapting layout, interaction patterns, and content density across desktop, mobile web, and mobile app.</p>
+            </div>
+            <a class="experience-figure is-white device-fade" href="drsquatch.html#growth-design" aria-label="Responsive commerce examples">
+              <span class="device-slide"><span class="device-label">Desktop</span><span class="device-laptop"><img src="Assets/APP_Desktop.png" alt="Desktop commerce experience"></span></span>
+              <span class="device-slide"><span class="device-label">Mobile web</span><span class="device-phone"><img src="Assets/APP_Mobile web.png" alt="Mobile web commerce experience"></span></span>
+              <span class="device-slide"><span class="device-label">Mobile app</span><span class="device-phone"><img src="Assets/APP_Mobile App.png" alt="Mobile app commerce experience"></span></span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <div class="chapter-head reveal"><span class="chapter-index">03</span><span class="chapter-rule"></span><span class="chapter-total">/ 04</span></div>
+      <article class="experience-card reveal" id="ux-framework" data-nav-title="UX Framework">
+        <div class="experience-lead">
+          <h3>UX Framework</h3>
+          <p>I create UX frameworks when a product needs more structure. That means finding repeated problems, turning them into clear patterns, and creating a system the team can reuse across pages and features.</p>
+          <div class="skill-chips" aria-label="UX framework skills">
+            <span class="chips-label">What I bring</span>
+            <span class="skill-chip">UX Strategy</span>
+            <span class="skill-chip">Design Patterns</span>
+            <span class="skill-chip">User Research</span>
+            <span class="skill-chip">Information Architecture</span>
+            <span class="skill-chip">Systems Thinking</span>
+          </div>
+        </div>
+        <div class="experience-content">
+          <div class="experience-example">
+            <div class="experience-text">
+              <strong>Lighthouse and Driftwood</strong>
+              <p>Built two connected UX frameworks: one for guided clarity and one for reusable modular growth across the Dr. Squatch site.</p>
+            </div>
+            <a class="experience-figure framework-stack-figure" href="drsquatch.html#ux-framework" aria-label="Lighthouse and Driftwood UX frameworks">
+              <span class="framework-stack">
+                <span class="framework-mini-card lighthouse">
+                  <span class="name">Lighthouse</span>
+                  <span class="desc">Strategically surface education, trust signals, and product information at the exact moments users need them, so they feel confident enough to convert.</span>
+                  <span class="problem-label">Opportunity</span>
+                  <span class="problem">Users need the right product information at the right moment to make confident purchase decisions.</span>
+                </span>
+                <span class="framework-mini-card driftwood">
+                  <span class="name">Driftwood</span>
+                  <span class="desc">Intentionally design entry and exit points throughout the experience so users always have a clear path forward, creating connected paths and improving discoverability.</span>
+                  <span class="problem-label">Opportunity</span>
+                  <span class="problem">Users need clearer pathways that keep them connected to relevant products and next steps.</span>
+                </span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="about-contact experience-contact">
+        <h3>Contact me</h3>
+        <p>Open to product design, growth, design system, and cross-platform work.</p>
+        <div class="about-contact-links">
+          <a class="btn primary" href="mailto:neoqtran@gmail.com?subject=Let%27s%20work%20together">Email me</a>
+          <a class="btn" href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </article>
+
+      <div class="chapter-head reveal"><span class="chapter-index">04</span><span class="chapter-rule"></span><span class="chapter-total">/ 04</span></div>
+      <article class="experience-card reveal" id="features" data-nav-title="Features">
+        <div class="experience-lead">
+          <h3>Features Design</h3>
+          <p>I design features from early concept to final handoff. I think through the flow, edge cases, empty states, responsive behavior, interaction details, and how the feature fits into the larger product.</p>
+          <div class="skill-chips" aria-label="Feature design skills">
+            <span class="chips-label">What I bring</span>
+            <span class="skill-chip">End-to-End Design</span>
+            <span class="skill-chip">Prototyping</span>
+            <span class="skill-chip">Edge Cases &amp; Empty States</span>
+            <span class="skill-chip">Responsive Behavior</span>
+            <span class="skill-chip">Design Handoff</span>
+          </div>
+        </div>
+        <div class="experience-content">
+          <div class="experience-example">
+            <div class="experience-text">
+              <strong>Bundle builder</strong>
+              <p>Designed dynamic bundle builder and cart free gift widgets for subscription growth and higher-value purchase paths.</p>
+            </div>
+            <a class="bundle-demo-figure" href="drsquatch.html#features" aria-label="Dynamic bundle builder mobile demo">
+              <span class="bundle-demo-phone">
+                <video src="Assets/Demo.mov" autoplay loop muted playsinline></video>
+              </span>
+            </a>
+          </div>
+          <div class="experience-example">
+            <div class="experience-text">
+              <strong>Dashboard features</strong>
+              <p>Designed mature dashboard features such as Move Money, allocation views, ESG dashboards, balance history, and document flows.</p>
+            </div>
+            <a class="experience-figure" href="american-century.html#cp-features"><img src="movemoney.jpg" alt="Move Money feature example"></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="software" id="software" data-nav-title="Tools I Use">
+    <p class="eyebrow">Software Competence</p>
+    <h2 class="section-title">Tools I use to design, prototype, build, and ship.</h2>
+    <div class="software-grid">
+      <div class="soft-tile"><div class="soft-logo"><svg viewBox="0 0 38 57" xmlns="http://www.w3.org/2000/svg"><path d="M19 28.5a9.5 9.5 0 1 1 9.5 9.5H19V28.5z" fill="#1ABCFE"/><path d="M9.5 57A9.5 9.5 0 0 1 9.5 38H19v9.5A9.5 9.5 0 0 1 9.5 57z" fill="#0ACF83"/><path d="M19 0h9.5a9.5 9.5 0 0 1 0 19H19V0z" fill="#FF7262"/><path d="M0 9.5A9.5 9.5 0 0 1 9.5 0H19v19H9.5A9.5 9.5 0 0 1 0 9.5z" fill="#F24E1E"/><path d="M0 28.5A9.5 9.5 0 0 1 9.5 19H19v19H9.5A9.5 9.5 0 0 1 0 28.5z" fill="#A259FF"/></svg></div><div class="soft-name">Figma</div></div>
+      <div class="soft-tile"><div class="soft-logo"><img src="https://wpforms.com/wp-content/uploads/2024/08/claude-logo.png" alt="Claude"></div><div class="soft-name">Claude</div></div>
+      <div class="soft-tile"><div class="soft-logo"><img src="https://a.storyblok.com/f/310467/816x816/de8be483d3/codex-app.png" alt="Codex"></div><div class="soft-name">Codex</div></div>
+      <div class="soft-tile"><div class="soft-logo"><img src="https://www.cursor.com/apple-touch-icon.png" alt="Cursor"></div><div class="soft-name">Cursor</div></div>
+      <div class="soft-tile"><div class="soft-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/3840px-Adobe_Photoshop_CC_icon.svg.png" alt="Photoshop"></div><div class="soft-name">Photoshop</div></div>
+      <div class="soft-tile"><div class="soft-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Adobe_Illustrator_CC_icon.svg/1280px-Adobe_Illustrator_CC_icon.svg.png" alt="Illustrator"></div><div class="soft-name">Illustrator</div></div>
+      <div class="soft-tile"><div class="soft-logo"><svg viewBox="0 0 240 234" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="234" rx="42" fill="#00005B"/><text x="50%" y="62%" font-family="Helvetica, Arial Black, Arial" font-weight="900" font-size="120" fill="#D291FF" text-anchor="middle">Ae</text></svg></div><div class="soft-name">After Effects</div></div>
+      <div class="soft-tile"><div class="soft-logo"><img src="https://dhygzobemt712.cloudfront.net/Mark/Mark_Logo_Blue.svg" alt="Webflow"></div><div class="soft-name">Webflow</div></div>
+      <div class="soft-tile"><div class="soft-logo"><img src="https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/1/contentful-8lg04b2avylmh700pic73l.png/contentful-m9m0l34hql9xfsr0ejl3gf.png" alt="Contentful"></div><div class="soft-name">Contentful</div></div>
+      <div class="soft-tile"><div class="soft-logo"><img src="https://cdn.worldvectorlogo.com/logos/jira-3.svg" alt="Jira"></div><div class="soft-name">Jira</div></div>
+      <div class="soft-tile"><div class="soft-logo"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 2l1.7 19L12 23l7.3-2L21 2H3zm14.4 6H7.8l.2 2.5H17l-.6 6.5L12 18.3l-4.4-1.3-.3-3.4h2.2l.1 1.7 2.4.7 2.4-.7.3-3H6.9L6.3 5h11.3l-.2 3z" fill="#E44D26"/></svg></div><div class="soft-name">HTML / CSS</div></div>
+      <div class="soft-tile"><div class="soft-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Sketch_Logo.svg/1280px-Sketch_Logo.svg.png" alt="Sketch"></div><div class="soft-name">Sketch</div></div>
+      <div class="soft-tile"><div class="soft-logo"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 0h16v8h-8L4 0zm0 8h8l8 8H4V8zm0 8h8v8l-8-8z" fill="#0055FF"/></svg></div><div class="soft-name">Framer</div></div>
+    </div>
+  </section>
+</main>
+
+<div id="site-contact" data-nav-title="Contact Me"></div>
+<a class="sticky-cta" id="stickyCta" href="mailto:neoqtran@gmail.com?subject=Let%27s%20work%20together">Contact me</a>
+
+<script>
+  (function () {
+    var nav = document.querySelector('.snav');
+    var current = document.getElementById('snavCurrent');
+    if (!nav || !current) return;
+    var items = Array.from(document.querySelectorAll('[data-nav-title]'));
+
+    function refreshItems() {
+      items = Array.from(document.querySelectorAll('[data-nav-title]'));
+    }
+
+    function updateNavTitle() {
+      var y = window.scrollY || 0;
+      var offset = 120;
+      var active = items[0];
+      items.forEach(function (item) {
+        if (item.getBoundingClientRect().top <= offset) active = item;
+      });
+      nav.classList.toggle('is-section-mode', y > 120);
+      if (active) current.textContent = active.dataset.navTitle;
+    }
+
+    window.addEventListener('scroll', updateNavTitle, { passive: true });
+    window.addEventListener('resize', updateNavTitle);
+    window.addEventListener('load', function () {
+      refreshItems();
+      updateNavTitle();
+    });
+    window.setTimeout(function () {
+      refreshItems();
+      updateNavTitle();
+    }, 300);
+    updateNavTitle();
+  })();
+
+  (function () {
+    var wrap = document.querySelector('[data-pumpkin-sequence]');
+    var frame = wrap ? wrap.querySelector('.pumpkin-sequence-frame') : null;
+    if (!frame) return;
+    var frames = [
+      'Assets/Animation/Pumpkin/3.jpg',
+      'Assets/Animation/Pumpkin/4.jpg',
+      'Assets/Animation/Pumpkin/5.jpg',
+      'Assets/Animation/Pumpkin/6.jpg',
+      'Assets/Animation/Pumpkin/7.jpg',
+      'Assets/Animation/Pumpkin/8.jpg',
+      'Assets/Animation/Pumpkin/9.jpg',
+      'Assets/Animation/Pumpkin/10.jpg',
+      'Assets/Animation/Pumpkin/11.jpg',
+      'Assets/Animation/Pumpkin/12.jpg',
+      'Assets/Animation/Pumpkin/13.jpg',
+      'Assets/Animation/Pumpkin/14.jpg',
+      'Assets/Animation/Pumpkin/15.jpg',
+      'Assets/Animation/Pumpkin/16.jpg',
+      'Assets/Animation/Pumpkin/17.jpg',
+      'Assets/Animation/Pumpkin/Final Render.jpg'
+    ];
+    frames.forEach(function (src) {
+      var img = new Image();
+      img.src = src;
+    });
+    var index = 0;
+    function setFrame() {
+      frame.src = frames[index];
+      var delay = index === frames.length - 1 ? 5000 : 260;
+      index = (index + 1) % frames.length;
+      window.setTimeout(setFrame, delay);
+    }
+    setFrame();
+  })();
+
+  (function () {
+    var cta = document.getElementById('stickyCta');
+    if (!cta) return;
+    var lastY = window.scrollY || 0;
+    function update() {
+      var y = window.scrollY || 0;
+      var scrollingUp = y < lastY - 4;
+      var pastHero = y > 220;
+      cta.classList.toggle('is-visible', scrollingUp && pastHero);
+      if (Math.abs(y - lastY) > 4) lastY = y;
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!els.length) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('is-visible'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+<script src="page-transition.js"></script>
+<script src="site-contact.js"></script>
+</body>
+</html>
