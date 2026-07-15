@@ -331,16 +331,25 @@
     flex-wrap: wrap;
     gap: 12px;
   }
-  .sticky-cta {
+  .sticky-cta-group {
     position: fixed;
     left: 50%;
     bottom: 18px;
     z-index: 80;
     display: inline-flex;
     align-items: center;
+    gap: 10px;
+    transform: translate(-50%, 0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .sticky-cta {
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    min-height: 48px;
-    padding: 14px 24px;
+    min-height: 40px;
+    height: 40px;
+    padding: 0 20px;
     border-radius: var(--pill-radius);
     background: var(--btn-bg);
     color: var(--btn-ink);
@@ -348,15 +357,11 @@
     font-size: 14px;
     font-weight: 700;
     box-shadow: 0 16px 40px rgba(0,0,0,0.18);
-    transform: translate(-50%, 88px);
-    opacity: 0;
-    pointer-events: none;
-    transition: transform 0.28s ease, opacity 0.28s ease;
   }
-  .sticky-cta.is-visible {
-    transform: translate(-50%, 0);
-    opacity: 1;
-    pointer-events: auto;
+  .sticky-cta.is-secondary {
+    background: var(--card, #fff);
+    color: var(--btn-bg);
+    border: 1px solid rgba(0,0,0,0.12);
   }
 
   .experience { padding-top: 40px; }
@@ -1566,7 +1571,10 @@
 </main>
 
 <div id="site-contact" data-nav-title="Contact Me"></div>
-<a class="sticky-cta" id="stickyCta" href="mailto:neoqtran@gmail.com?subject=Let%27s%20work%20together">Contact me</a>
+<div class="sticky-cta-group" id="stickyCta">
+  <a class="sticky-cta is-secondary" href="/">View Full Portfolio</a>
+  <a class="sticky-cta" href="mailto:neoqtran@gmail.com?subject=Let%27s%20work%20together">Contact me</a>
+</div>
 
 <script>
   (function () {
@@ -1639,20 +1647,6 @@
     setFrame();
   })();
 
-  (function () {
-    var cta = document.getElementById('stickyCta');
-    if (!cta) return;
-    var lastY = window.scrollY || 0;
-    function update() {
-      var y = window.scrollY || 0;
-      var scrollingUp = y < lastY - 4;
-      var pastHero = y > 220;
-      cta.classList.toggle('is-visible', scrollingUp && pastHero);
-      if (Math.abs(y - lastY) > 4) lastY = y;
-    }
-    window.addEventListener('scroll', update, { passive: true });
-    update();
-  })();
 
   (function () {
     var els = document.querySelectorAll('.reveal');
