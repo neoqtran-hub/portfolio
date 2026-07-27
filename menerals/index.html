@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menerals — Healthy men are hard to kill.</title>
+<meta name="description" content="A full spectrum compound trace mineral, sourced from Wyoming. 100+ trace minerals in the ratios your body was built to absorb. Elemental restoration.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/img/menerals_favicon.png">
+<link rel="stylesheet" href="assets/css/brand.css">
+
+<!-- ===================== ACCESS GATE =====================
+     Client-side only. Deters casual visitors; not real security. -->
+<style>
+  html.gated body > *:not(#gate) { display: none !important; }
+  html.gated, html.gated body { overflow: hidden; height: 100%; }
+
+  #gate {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    background: #0a0a0a;
+    font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", Arial, sans-serif;
+  }
+  #gate .gate__inner { width: 100%; max-width: 340px; text-align: left; }
+  #gate .gate__logo { display: block; height: 22px; width: auto; margin-bottom: 40px; }
+  #gate .gate__label {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: rgba(255,255,255,.5); margin: 0 0 12px;
+  }
+  #gate form { display: flex; border: 1px solid rgba(255,255,255,.22); }
+  #gate input {
+    flex: 1 1 auto; min-width: 0;
+    background: transparent; border: 0; outline: none;
+    color: #fff; font: inherit; font-size: 15px; padding: 13px 14px;
+  }
+  #gate input::placeholder { color: rgba(255,255,255,.3); }
+  #gate form:focus-within { border-color: #ffce00; }
+  #gate button {
+    flex: 0 0 auto; border: 0; cursor: pointer;
+    background: #ffce00; color: #0a0a0a;
+    font: inherit; font-weight: 700; font-size: 13px;
+    letter-spacing: .06em; text-transform: uppercase; padding: 0 20px;
+  }
+  #gate .gate__error {
+    font-size: 13px; color: #ff6b6b; margin: 12px 0 0; min-height: 1em;
+    visibility: hidden;
+  }
+  #gate.is-error .gate__error { visibility: visible; }
+  #gate.is-error form { border-color: #ff6b6b; animation: gate-shake .35s; }
+  @keyframes gate-shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+</style>
+<script>
+  // Set before first paint so gated content never flashes.
+  if (sessionStorage.getItem('menerals_access') !== 'ok' &&
+      localStorage.getItem('menerals_access') !== 'ok') {
+    document.documentElement.className += ' gated';
+  }
+</script>
+</head>
+<body>
+
+<div id="gate" hidden>
+  <div class="gate__inner">
+    <img class="gate__logo" src="assets/img/logo-white.png" alt="Menerals">
+    <p class="gate__label">Private preview — enter password</p>
+    <form autocomplete="off">
+      <input type="password" name="pw" placeholder="Password" aria-label="Password" autocomplete="off" spellcheck="false">
+      <button type="submit">Enter</button>
+    </form>
+    <p class="gate__error">Incorrect password.</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  var PASSWORD = 'menerals';
+  var root = document.documentElement;
+  var gate = document.getElementById('gate');
+
+  if (!root.classList.contains('gated')) { gate.remove(); return; }
+
+  gate.hidden = false;
+  var form = gate.querySelector('form');
+  var input = gate.querySelector('input');
+  input.focus();
+
+  input.addEventListener('input', function () { gate.classList.remove('is-error'); });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (input.value.trim().toLowerCase() === PASSWORD) {
+      try { localStorage.setItem('menerals_access', 'ok'); } catch (err) {}
+      root.classList.remove('gated');
+      gate.remove();
+    } else {
+      gate.classList.add('is-error');
+      input.select();
+    }
+  });
+})();
+</script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="star" viewBox="0 0 24 24">
+    <path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/>
+  </symbol>
+</svg>
+
+<header class="header">
+  <div class="wrap header__inner">
+    <a href="#top" aria-label="Menerals home">
+      <img class="logo" src="assets/img/logo-white.png" alt="Menerals">
+    </a>
+    <span class="mono header__meta">SOURCED 43.0760° N · 107.2903° W · WYOMING, USA</span>
+    <a class="btn" href="#buy">Start today</a>
+  </div>
+</header>
+
+<!-- ============================ HERO ============================ -->
+<section class="hero" id="top">
+  <div class="hero__media">
+    <img src="assets/img/mineral-hero.png" alt="" aria-hidden="true">
+  </div>
+  <div class="hero__scrim" aria-hidden="true"></div>
+
+  <div class="wrap hero__inner">
+   <div class="hero__copy">
+    <h1 class="display">
+      You're not tired.<br>You're deficient.
+    </h1>
+
+    <p class="hero__sub">
+      100+ trace minerals, in the ratios your body was built to absorb.
+      Found in Wyoming. Never made in a lab.
+    </p>
+
+    <div class="hero__cta">
+      <a class="btn btn--lg" href="#buy">Try Menerals risk free →</a>
+      <a class="mono link-quiet" href="#mechanism">What's actually in it</a>
+    </div>
+
+    <ul class="hero__trust mono">
+      <li>90-DAY MONEY BACK</li>
+      <li>100% AMERICAN — SOURCE TO CAPSULE</li>
+      <li>ONE PRODUCT. DONE RIGHT.</li>
+    </ul>
+   </div>
+
+   <figure class="hero__product">
+     <img src="assets/img/bottle-single.png" alt="A bottle of Menerals — 60 capsules, 357mg per serving" fetchpriority="high">
+     <figcaption class="hero__spec mono">
+       <span>357MG / SERVING</span>
+       <span>60 CAPSULES</span>
+       <span>100+ TRACE MINERALS</span>
+     </figcaption>
+   </figure>
+  </div>
+</section>
+
+<div class="bar" aria-hidden="true">
+  <div class="bar__track">
+    <span>100+ TRACE MINERALS</span><span>200MG FULVIC ACID</span><span>140MG MAGNESIUM</span>
+    <span>15MG ZINC</span><span>2MG BORON</span><span>COLD WATER EXTRACTED</span><span>WYOMING, USA</span>
+    <span>100+ TRACE MINERALS</span><span>200MG FULVIC ACID</span><span>140MG MAGNESIUM</span>
+    <span>15MG ZINC</span><span>2MG BORON</span><span>COLD WATER EXTRACTED</span><span>WYOMING, USA</span>
+  </div>
+</div>
+
+<!-- ============================ PRESS ============================ -->
+<section class="press">
+  <div class="wrap press__inner">
+    <p class="mono press__label">AS SEEN IN</p>
+    <div class="press__logos">
+      <span>Forbes</span>
+      <span>Men's Journal</span>
+      <span>USA TODAY</span>
+      <span>Men's Health</span>
+      <span>GQ</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ THE INDICTMENT ============================ -->
+<section class="section">
+  <div class="wrap">
+    <h2 class="headline reveal" style="max-width:20ch;">
+      They poisoned the food. Then they sold you the cure. Forever.
+    </h2>
+
+    <div class="grid grid--3 reveal" style="margin-top:clamp(2.5rem,5vw,4rem);">
+      <article class="panel">
+        <p class="mono panel__num">01 — THE ENEMY</p>
+        <h3>Big Food</h3>
+        <p>Hormones in meat. Pesticides on produce. Optimized for shelf life, not human life.</p>
+      </article>
+      <article class="panel">
+        <p class="mono panel__num">02 — THE EFFECT</p>
+        <h3>Mineral deficiency</h3>
+        <p>Processed food arrives with the minerals stripped out. Your body has nothing to build with.</p>
+      </article>
+      <article class="panel">
+        <p class="mono panel__num">03 — THE RESULT</p>
+        <h3>Broken men</h3>
+        <p>Brain fog. Fatigue. No drive. Poor sleep. Every symptom men are told is "normal aging."</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ STATS ============================ -->
+<section class="stats">
+  <div class="wrap" style="padding-inline:0;">
+    <div class="stats__grid">
+      <div class="stats__cell">
+        <p class="stat">80+</p>
+        <p class="mono">CHEMICALS CLASSIFIED AS ENDOCRINE DISRUPTORS APPROVED IN U.S. FOOD</p>
+      </div>
+      <div class="stats__cell">
+        <p class="stat">96%</p>
+        <p class="mono">OF THE BODY'S CHEMICAL REACTIONS REQUIRE A MINERAL TO EXECUTE</p>
+      </div>
+      <div class="stats__cell">
+        <p class="stat">75%</p>
+        <p class="mono">DROP IN TESTOSTERONE FROM ZINC RESTRICTION ALONE, IN 20 WEEKS</p>
+      </div>
+      <div class="stats__cell">
+        <p class="stat">50%</p>
+        <p class="mono">DECLINE IN AVERAGE MALE TESTOSTERONE SINCE 1980</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ THE MECHANISM ============================ -->
+<section class="section" id="mechanism">
+  <div class="wrap grid grid--split">
+    <div class="reveal">
+      <h2 class="headline">It cannot be made.<br>Only found.</h2>
+      <p class="body muted" style="margin-top:1.5rem;">
+        Fulvic acid is a compound trace mineral — four billion years of heat and pressure,
+        not a lab. Cold water extracted from Wyoming. Bottled in America.
+      </p>
+      <ul class="includes" style="margin-top:1.75rem;">
+        <li><span class="mono">AGE — BILLIONS OF YEARS OF GEOLOGICAL FORMATION</span></li>
+        <li><span class="mono">BIOAVAILABILITY — 100%. YOUR BODY RECOGNIZES IT IMMEDIATELY</span></li>
+        <li><span class="mono">REPLICATION — IMPOSSIBLE. CANNOT BE SYNTHESIZED</span></li>
+        <li><span class="mono">MADE IN — USA. NOT IMPORTED. NOT RELABELED</span></li>
+      </ul>
+    </div>
+    <figure class="figure reveal">
+      <img src="assets/img/mineral-hand.png" alt="A raw mineral specimen held in an open hand" loading="lazy">
+      <figcaption class="mono">43.0760° N · 107.2903° W — WYOMING, USA · COLD WATER EXTRACTED</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============================ THE FORMULA ============================ -->
+<section class="section section--tight">
+  <div class="wrap">
+    <h2 class="headline reveal">Full spectrum. Plus the male kick.</h2>
+
+    <div class="formula reveal" style="margin-top:clamp(2rem,4vw,3rem);">
+      <div class="formula__row">
+        <p class="mono formula__dose">200MG</p>
+        <p class="formula__name">Fulvic Acid</p>
+        <p class="formula__role">The foundation. 100+ trace minerals in natural ratios, 100% bioavailable.</p>
+      </div>
+      <div class="formula__row">
+        <p class="mono formula__dose">140MG</p>
+        <p class="formula__name">Magnesium</p>
+        <p class="formula__role">The engine. 300+ enzymatic reactions, ATP, sleep. Most American men are short.</p>
+      </div>
+      <div class="formula__row">
+        <p class="mono formula__dose">15MG</p>
+        <p class="formula__name">Zinc</p>
+        <p class="formula__role">The gatekeeper. Supports healthy testosterone production and immune function.</p>
+      </div>
+      <div class="formula__row">
+        <p class="mono formula__dose">2MG</p>
+        <p class="formula__name">Boron</p>
+        <p class="formula__role">The amplifier. Reduces SHBG, freeing up the testosterone you already produce.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ TRUSTPILOT ============================ -->
+<section class="tp">
+  <div class="wrap tp__inner">
+    <div class="tp__score">
+      <span class="stars stars--tp" role="img" aria-label="Rated 4.8 out of 5 stars">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24"/><path d="M12 4.2l1.9 4.3 4.7.4-3.6 3.1 1.1 4.6L12 14.2l-4.1 2.4 1.1-4.6-3.6-3.1 4.7-.4z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24"/><path d="M12 4.2l1.9 4.3 4.7.4-3.6 3.1 1.1 4.6L12 14.2l-4.1 2.4 1.1-4.6-3.6-3.1 4.7-.4z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24"/><path d="M12 4.2l1.9 4.3 4.7.4-3.6 3.1 1.1 4.6L12 14.2l-4.1 2.4 1.1-4.6-3.6-3.1 4.7-.4z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24"/><path d="M12 4.2l1.9 4.3 4.7.4-3.6 3.1 1.1 4.6L12 14.2l-4.1 2.4 1.1-4.6-3.6-3.1 4.7-.4z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24"/><rect width="19.2" height="24" fill="#00b67a"/><path d="M12 4.2l1.9 4.3 4.7.4-3.6 3.1 1.1 4.6L12 14.2l-4.1 2.4 1.1-4.6-3.6-3.1 4.7-.4z"/></svg>
+      </span>
+      <span class="tp__num">4.8</span>
+    </div>
+
+    <span class="tp__divider" aria-hidden="true"></span>
+
+    <p class="mono tp__meta">RATED EXCELLENT — 3,412 REVIEWS</p>
+
+    <span class="tp__divider" aria-hidden="true"></span>
+
+    <span class="tp__brand">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.6 7.1H22l-6 4.6 2.3 7.2L12 16.4 5.7 20.9 8 13.7 2 9.1h7.4z"/></svg>
+      <b>Trustpilot</b>
+    </span>
+  </div>
+</section>
+
+<!-- ============================ BUY BOX ============================ -->
+<section class="buy" id="buy">
+  <div class="wrap section">
+    <div class="buy__grid">
+
+      <figure class="buy__art reveal">
+        <img src="assets/img/offer-buy2get1.png" alt="Three bottles of Menerals — buy two, get one free" loading="lazy">
+      </figure>
+
+      <div class="buy__panel reveal">
+        <p class="mono buy__live">339 MEN STARTED TODAY</p>
+
+        <h2 class="headline">Start where every man starts.</h2>
+        <p class="body muted" style="margin-top:1rem;">
+          One product. Clinical doses. Ninety days to decide.
+        </p>
+
+        <form class="plans" id="plan-form">
+          <label class="plan">
+            <input type="radio" name="plan" value="b2g1" checked>
+            <span class="plan__dot" aria-hidden="true"></span>
+            <span class="plan__body">
+              <span class="plan__name">Buy 2, Get 1 Free</span>
+              <span class="mono plan__meta">$0.97/DAY · 90 DAY CYCLE · SHIPS EVERY 3 MONTHS</span>
+            </span>
+            <span class="plan__price">
+              $88
+              <span class="mono plan__was">$225</span>
+            </span>
+            <span class="mono plan__flag">Best value</span>
+          </label>
+
+          <label class="plan">
+            <input type="radio" name="plan" value="monthly">
+            <span class="plan__dot" aria-hidden="true"></span>
+            <span class="plan__body">
+              <span class="plan__name">Monthly</span>
+              <span class="mono plan__meta">$1.46/DAY · 30 DAY CYCLE · SHIPS EVERY MONTH</span>
+            </span>
+            <span class="plan__price">
+              $44
+              <span class="mono plan__was">$75</span>
+            </span>
+          </label>
+        </form>
+
+        <ul class="includes">
+          <li>90-day money-back guarantee</li>
+          <li>Free shipping, every order</li>
+          <li>Pause or cancel anytime</li>
+          <li>Private group access</li>
+          <li>1:1 optimization session with a performance coach</li>
+        </ul>
+
+        <div class="buy__cta">
+          <a class="btn btn--lg btn--block" href="#buy" id="cta">Start today — $88 →</a>
+          <p class="mono buy__fine">OR BUY ONCE FOR $75 — NO PERKS, NO SUBSCRIPTION</p>
+        </div>
+
+        <ul class="badges mono">
+          <li>IN STOCK — SHIPS IN 1–2 DAYS</li>
+          <li>SECURE CHECKOUT</li>
+          <li>🇺🇸 USA MADE</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================ GUARANTEE ============================ -->
+<section class="section">
+  <div class="wrap">
+    <div class="guarantee reveal">
+      <h2 class="headline" style="max-width:20ch;">You either get the result, or you don't pay.</h2>
+      <p>
+        Take it for 90 days. If your sleep doesn't deepen and your head doesn't clear, we refund
+        every penny. No hoops. No shipping back empty bottles.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ WHY IT MATTERS ============================ -->
+<section class="section section--tight">
+  <div class="wrap grid grid--split">
+    <figure class="figure reveal" style="order:2;">
+      <img src="assets/img/xray-body.jpg" alt="Anatomical x-ray rendering of the human skeleton" loading="lazy">
+      <figcaption class="mono">96% OF THE BODY'S CHEMICAL REACTIONS REQUIRE A MINERAL</figcaption>
+    </figure>
+    <div class="reveal" style="order:1;">
+      <h2 class="headline">Your cells don't use herbs. They use minerals.</h2>
+      <p class="body muted" style="margin-top:1.5rem;">
+        Almost every reaction in your body needs a mineral to execute. Magnesium for ATP. Zinc
+        for synthesis. Boron to free what's bound.
+      </p>
+      <p class="body muted" style="margin-top:1rem;">
+        Not a testosterone product. Restore the foundation and everything moves — energy, focus,
+        recovery, sleep. T included.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ NOT A SUPPLEMENT ============================ -->
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="grid grid--4 reveal" style="margin-top:clamp(2rem,4vw,3rem);">
+      <article class="panel">
+        <p class="mono panel__num">MULTIVITAMINS</p>
+        <h3>Synthetic isolates</h3>
+        <p>Low bioavailability. Your body passes most of it straight through.</p>
+      </article>
+      <article class="panel">
+        <p class="mono panel__num">T BOOSTERS</p>
+        <h3>Downstream thinking</h3>
+        <p>Single-hormone focus. Never touches the root cause.</p>
+      </article>
+      <article class="panel">
+        <p class="mono panel__num">TRT CLINICS</p>
+        <h3>Dependency by design</h3>
+        <p>A subscription to what your body should make itself. We're the exit.</p>
+      </article>
+      <article class="panel">
+        <p class="mono panel__num">WELLNESS BRANDS</p>
+        <h3>Soft. Pastel.</h3>
+        <p>Talks to men like they're fragile. We don't.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FAQ ============================ -->
+<section class="section section--tight">
+  <div class="wrap">
+    <h2 class="headline reveal">Let's address your concerns.</h2>
+
+    <div class="faq reveal" style="margin-top:clamp(2rem,4vw,3rem);">
+      <details class="faq__item" open>
+        <summary>What is it, exactly?</summary>
+        <p>A naturally occurring compound trace mineral, billions of years in the making. Full
+        spectrum, in ratios your body can use — plus zinc, magnesium, and boron.</p>
+      </details>
+      <details class="faq__item">
+        <summary>How do I take it?</summary>
+        <p>Two capsules with food. Once a day. That's the whole protocol.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Will it keep me awake?</summary>
+        <p>No stimulants. Magnesium is why men report sleeping better.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Is it third-party tested?</summary>
+        <p>Every batch. Sourced, extracted, and bottled in the USA — not imported and relabeled.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Do I still need a multivitamin?</summary>
+        <p>No. Synthetic isolates are a different thing. This is the full spectrum.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Is it worth the price?</summary>
+        <p>Less than a Costco hot dog a day. And if it doesn't work, you get all of it back.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ REVIEWS ============================ -->
+<section class="section section--tight reviews">
+  <div class="wrap">
+
+    <div class="reviews__head">
+      <h2 class="headline reveal" style="max-width:18ch;">Men who were done trying things.</h2>
+      <div>
+        <span class="stars stars--plain" role="img" aria-label="Rated 4.8 out of 5 stars">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg>
+        </span>
+        <p class="mono dim" style="margin-top:0.5rem;">4.8 AVERAGE — 3,412 REVIEWS</p>
+      </div>
+    </div>
+
+    <div class="reviews__grid reveal">
+
+      <article class="review">
+        <div class="review__top">
+          <span class="stars stars--plain stars--sm" role="img" aria-label="5 out of 5">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg>
+          </span>
+          <span class="mono review__date">3 MONTHS IN</span>
+        </div>
+        <p>"I'm on my feet ten hours a day and I used to be finished by 3pm. That crash is just gone. I'm not wired, I'm not jittery — I just have something left at the end of the day."</p>
+        <div class="review__who">
+          <img class="review__avatar" src="assets/img/avatars/reviewer-3.jpeg" alt="" loading="lazy" style="object-position:55% 30%">
+          <span class="mono">CONTRACTOR, 38</span>
+        </div>
+      </article>
+
+      <article class="review">
+        <div class="review__top">
+          <span class="stars stars--plain stars--sm" role="img" aria-label="5 out of 5">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg>
+          </span>
+          <span class="mono review__date">1 MONTH IN</span>
+        </div>
+        <p>"Sleep was the first thing. I fall asleep now instead of lying there doing math on how many hours I have left. Everything else followed from that."</p>
+        <div class="review__who">
+          <img class="review__avatar" src="assets/img/avatars/reviewer-1.jpg" alt="" loading="lazy" style="object-position:24% 36%">
+          <span class="mono">DAD OF THREE, 36</span>
+        </div>
+      </article>
+
+      <article class="review">
+        <div class="review__top">
+          <span class="stars stars--plain stars--sm" role="img" aria-label="5 out of 5">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg>
+          </span>
+          <span class="mono review__date">2 MONTHS IN</span>
+        </div>
+        <p>"I don't trust much of anything in this category. Bought it to prove it wouldn't work. One product, one dose, and I can actually tell what it's doing. Still taking it."</p>
+        <div class="review__who">
+          <img class="review__avatar" src="assets/img/avatars/reviewer-4.png" alt="" loading="lazy" style="object-position:42% 32%">
+          <span class="mono">SALES DIRECTOR, 54</span>
+        </div>
+      </article>
+
+      <article class="review">
+        <div class="review__top">
+          <span class="stars stars--plain stars--sm" role="img" aria-label="5 out of 5">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg>
+          </span>
+          <span class="mono review__date">5 WEEKS IN</span>
+        </div>
+        <p>"Worked with my hands forty years and figured this was just what sixty-two feels like. Turns out it wasn't. My wife noticed before I said anything about it."</p>
+        <div class="review__who">
+          <img class="review__avatar" src="assets/img/avatars/reviewer-2.jpg" alt="" loading="lazy" style="object-position:38% 40%">
+          <span class="mono">RETIRED WELDER, 62</span>
+        </div>
+      </article>
+
+      <article class="review">
+        <div class="review__top">
+          <span class="stars stars--plain stars--sm" role="img" aria-label="5 out of 5">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg>
+          </span>
+          <span class="mono review__date">6 WEEKS IN</span>
+        </div>
+        <p>"I've taken every pre-workout and test booster on the shelf. This is the first thing where recovery actually changed. Two hard sessions back to back and I'm not wrecked."</p>
+        <div class="review__who">
+          <span class="review__mono-avatar" aria-hidden="true">JT</span>
+          <span class="mono">EX-COLLEGE WRESTLER, 34</span>
+        </div>
+      </article>
+
+      <article class="review">
+        <div class="review__top">
+          <span class="stars stars--plain stars--sm" role="img" aria-label="4 out of 5">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg>
+          </span>
+          <span class="mono review__date">3 WEEKS IN</span>
+        </div>
+        <p>"Not a miracle and I wouldn't say it is. But the fog lifted enough that I noticed, and I've stopped reaching for a third coffee. That's worth it to me."</p>
+        <div class="review__who">
+          <span class="review__mono-avatar" aria-hidden="true">RM</span>
+          <span class="mono">LONG-HAUL DRIVER, 49</span>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="reviews__foot">
+      <p class="mono dim">INDIVIDUAL RESULTS VARY.</p>
+      <a class="btn" href="#buy">Start today →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================ CLOSER ============================ -->
+<section class="section closer">
+  <div class="wrap">
+    <h2 class="display reveal">Healthy men are hard to kill.</h2>
+    <p class="body muted reveal" style="margin:1.75rem auto 0;text-align:center;">
+      The thing you are literally made of.
+    </p>
+    <p style="margin-top:2.5rem;"><a class="btn btn--lg" href="#buy">Try Menerals risk free →</a></p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__inner">
+      <img class="logo" src="assets/img/logo-white.png" alt="Menerals" style="height:22px;">
+      <span class="mono">HELP@MENERALS.COM</span>
+      <span class="mono">SOURCE TO CAPSULE — 100% AMERICAN</span>
+    </div>
+    <p class="disclaimer">
+      These statements have not been evaluated by the Food and Drug Administration. This product
+      is not intended to diagnose, treat, cure, or prevent any disease. Menerals provides
+      essential minerals the body needs to function and supports healthy testosterone
+      production, energy, focus, and recovery. Individual results vary.
+    </p>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <a class="btn btn--block" href="#buy" id="sticky-price">Start today — $88 →</a>
+</div>
+
+<script>
+  // Plan selection drives the CTA price.
+  var PRICES = { b2g1: '$88', monthly: '$44' };
+  var form = document.getElementById('plan-form');
+  var cta = document.getElementById('cta');
+  var sticky = document.getElementById('sticky-price');
+  form.addEventListener('change', function (e) {
+    var label = 'Start today — ' + PRICES[e.target.value] + ' →';
+    cta.textContent = label;
+    sticky.textContent = label;
+  });
+
+  // Reveal on scroll.
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -12% 0px' });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+</script>
+
+</body>
+</html>

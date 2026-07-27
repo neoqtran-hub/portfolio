@@ -40,3 +40,6 @@ Assets/fonts/SF Pro/
 # Old pages and unused source/working files moved out of the live site.
 archive/
 _local/
+
+# ===== Menerals working source (only the lean /menerals build is served) =====
+Menerals Landing Page/
