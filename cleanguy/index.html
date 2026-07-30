@@ -125,6 +125,8 @@ body{
   -webkit-font-smoothing:antialiased;
   transition:background-color .35s var(--ease),color .35s var(--ease);
 }
+body.cg-locked{overflow:hidden}
+body.cg-locked > :not(.password-gate){display:none!important}
 img,video{max-width:100%;display:block}
 a{color:inherit}
 button{font:inherit;color:inherit}
@@ -911,9 +913,68 @@ footer{padding:38px 0 calc(38px + 76px);background:var(--bg)}
 /* reveal */
 .rv{opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
 .rv.in{opacity:1;transform:none}
+
+/* password gate */
+.password-gate{
+  position:fixed;inset:0;z-index:9999;
+  display:grid;place-items:center;
+  min-height:100vh;padding:var(--gutter);
+  background:var(--bg);
+  color:var(--ink);
+}
+.password-panel{
+  width:min(100%,380px);
+  background:var(--surface);
+  border:1px solid var(--line);
+  box-shadow:var(--shadow-lg);
+  padding:28px;
+}
+.password-panel img{height:30px;width:auto;margin-bottom:24px;filter:var(--logo-filter)}
+.password-panel h1{
+  font-family:var(--font-secondary);
+  font-size:2rem;line-height:1;margin:0 0 8px;
+  text-transform:uppercase;
+}
+.password-panel p{margin:0 0 18px;color:var(--ink-3);font-size:.92rem;line-height:1.45}
+.password-panel label{
+  display:block;margin-bottom:8px;
+  font-family:var(--font-tertiary);
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+}
+.password-row{display:flex;gap:8px}
+.password-row input{
+  flex:1;min-width:0;height:48px;
+  border:1px solid var(--line-strong);
+  background:var(--bg);
+  color:var(--ink);
+  padding:0 12px;
+  font:inherit;
+}
+.password-row button{
+  height:48px;border:0;cursor:pointer;
+  background:var(--cta-bg);color:var(--cta-fg);
+  padding:0 18px;
+  font-family:var(--font-tertiary);
+  font-size:.84rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+}
+.password-error{min-height:20px;margin-top:10px;color:var(--brand-red);font-size:.84rem}
 </style>
 </head>
-<body>
+<body class="cg-locked">
+
+<div class="password-gate" id="passwordGate" role="dialog" aria-modal="true" aria-labelledby="passwordTitle">
+  <form class="password-panel" id="passwordForm">
+    <img src="assets/CLEANGUY_LOGO_0925_1_White_Bolt.png" alt="Clean Guy">
+    <h1 id="passwordTitle">Private preview</h1>
+    <p>Enter the password to view this page.</p>
+    <label for="pagePassword">Password</label>
+    <div class="password-row">
+      <input id="pagePassword" type="password" autocomplete="current-password" required>
+      <button type="submit">Enter</button>
+    </div>
+    <div class="password-error" id="passwordError" aria-live="polite"></div>
+  </form>
+</div>
 
 <!-- ============ TOP BAR + THEME TABS ============ -->
 <div class="announce">FREE SHIPPING <span>When You</span> SPEND $49</div>
@@ -1582,6 +1643,38 @@ footer{padding:38px 0 calc(38px + 76px);background:var(--bg)}
 <script>
 (function(){
   'use strict';
+
+  /* ---------- simple page password ---------- */
+  var PASSWORD = 'clean';
+  var AUTH_KEY = 'cg-page-unlocked';
+  var gate = document.getElementById('passwordGate');
+  var form = document.getElementById('passwordForm');
+  var input = document.getElementById('pagePassword');
+  var error = document.getElementById('passwordError');
+
+  function unlock(){
+    document.body.classList.remove('cg-locked');
+    if (gate) gate.remove();
+  }
+
+  try {
+    if (localStorage.getItem(AUTH_KEY) === 'true') unlock();
+  } catch(e){}
+
+  if (form && document.body.classList.contains('cg-locked')) {
+    setTimeout(function(){ input.focus(); }, 0);
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if (input.value.trim() === PASSWORD) {
+        try { localStorage.setItem(AUTH_KEY, 'true'); } catch(err){}
+        unlock();
+      } else {
+        error.textContent = 'Incorrect password.';
+        input.value = '';
+        input.focus();
+      }
+    });
+  }
 
   /* ---------- theme tabs ---------- */
   var root = document.documentElement;
