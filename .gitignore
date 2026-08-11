@@ -34,12 +34,9 @@ out/
 # *.mp4
 
 # ===== Unused local font masters (site uses the system SF Pro stack, not @font-face) =====
-Assets/fonts/SF Pro/
+assets/fonts/SF Pro/
 
-# ===== Local-only (kept on disk, never served) =====
-# Old pages and unused source/working files moved out of the live site.
-archive/
-_local/
-
-# ===== Menerals working source (only the lean /menerals build is served) =====
-Menerals Landing Page/
+# ===== Local-only (kept on disk, never served, never deployed) =====
+# Everything that is working material rather than site output lives here:
+# old pages, design source, client build sources, drafts, notes, exports.
+_source/
