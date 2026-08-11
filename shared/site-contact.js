@@ -1,7 +1,7 @@
 /* Shared contact section — one source, injected into every page.
    Each page provides a mount: <div id="site-contact"></div>
    (if absent, it's appended to <body>). Include after the page content:
-   <script src="site-contact.js"></script> */
+   <script src="/shared/site-contact.js"></script> */
 (function () {
   if (window.__siteContactInit) return;
   window.__siteContactInit = true;
@@ -35,7 +35,7 @@
         '<div class="site-contact-links">' +
           '<a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener">LinkedIn</a>' +
           '<a href="mailto:neoqtran@gmail.com">neoqtran@gmail.com</a>' +
-          '<a href="Assets/Neo%20Tran%20Resume.pdf" download>CV</a>' +
+          '<a href="/assets/docs/Neo%20Tran%20Resume.pdf" download>CV</a>' +
         '</div>' +
         '<p class="site-contact-note">This website was conceived from the love between three people — Claude, Codex and Me.</p>' +
       '</div>' +

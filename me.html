@@ -16,7 +16,7 @@
     } catch (e) {}
   })();
 </script>
-<link rel="icon" type="image/png" href="Assets/favicon.png">
+<link rel="icon" type="image/png" href="/assets/img/favicon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Me — neo by design</title>
@@ -39,16 +39,16 @@
 <meta name="twitter:image" content="https://www.neobydesign.com/Assets/thumbnail.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Unbounded:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="alt-project-theme.css">
+<link rel="stylesheet" href="/shared/alt-project-theme.css">
 <style>
   /* ============================================
      CONFIG FONT
      ============================================ */
-  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Light.ttf') format('truetype'); font-weight:300; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Regular.ttf') format('truetype'); font-weight:400; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-SemiBold.ttf') format('truetype'); font-weight:600; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Config'; src:url('Assets/fonts/Config-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('/assets/fonts/Config-Light.ttf') format('truetype'); font-weight:300; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('/assets/fonts/Config-Regular.ttf') format('truetype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('/assets/fonts/Config-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('/assets/fonts/Config-SemiBold.ttf') format('truetype'); font-weight:600; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Config'; src:url('/assets/fonts/Config-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
 
   /* ============================================
      RESET & BASE — matches index.html
@@ -68,7 +68,7 @@
   img { max-width: 100%; display: block; }
   button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
-  /* Color tokens come from the shared canon theme (alt-project-theme.css).
+  /* Color tokens come from the shared canon theme (/shared/alt-project-theme.css).
      Local :root / body.dark token blocks were removed so the canon theme wins. */
   body { background: var(--bg); color: var(--ink); transition: background 0.4s ease, color 0.4s ease; }
   /* Disable the shared nav's hide-on-scroll (disappear) behavior on this page */
@@ -487,7 +487,7 @@
   <div class="snav-links">
     <a href="index.html#work">Work</a>
     <a href="me.html">About</a>
-    <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener" class="snav-ln" aria-label="LinkedIn"><img src="Assets/linkedin.png" alt="LinkedIn"></a>
+    <a href="https://www.linkedin.com/in/neo-tran-29476370/" target="_blank" rel="noopener" class="snav-ln" aria-label="LinkedIn"><img src="/assets/img/linkedin.png" alt="LinkedIn"></a>
     <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false">
       <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.5" y1="4.5" x2="6.6" y2="6.6"/><line x1="17.4" y1="17.4" x2="19.5" y2="19.5"/><line x1="4.5" y1="19.5" x2="6.6" y2="17.4"/><line x1="17.4" y1="6.6" x2="19.5" y2="4.5"/></svg>
       <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.3 6.3 0 0 0 10.5 10.5z"/></svg>
@@ -512,7 +512,7 @@
     </div>
 
     <div class="intro-photo">
-      <img src="Assets/neo-portrait.jpg" alt="Portrait of Neo Tran" onerror="this.style.display='none'">
+      <img src="/assets/img/neo-portrait.jpg" alt="Portrait of Neo Tran" onerror="this.style.display='none'">
     </div>
   </section>
 
@@ -526,7 +526,7 @@
       <div class="resume-items">
 
         <div class="resume-item">
-          <div class="resume-logo"><img src="Assets/Resume Logo/Squatch.svg" alt="Dr. Squatch"></div>
+          <div class="resume-logo"><img src="/assets/img/logos/Squatch.svg" alt="Dr. Squatch"></div>
           <div>
             <div class="resume-item-head">
               <div class="resume-role">Senior Product Designer, Growth, Design System</div>
@@ -549,7 +549,7 @@
         </div>
 
         <div class="resume-item">
-          <div class="resume-logo"><img src="Assets/Resume Logo/ACI.svg" alt="American Century Investments"></div>
+          <div class="resume-logo"><img src="/assets/img/logos/ACI.svg" alt="American Century Investments"></div>
           <div>
             <div class="resume-item-head">
               <div class="resume-role">Senior Product Designer</div>
@@ -572,7 +572,7 @@
         </div>
 
         <div class="resume-item">
-          <div class="resume-logo"><img src="Assets/Resume Logo/Beachbody.svg" alt="Beachbody"></div>
+          <div class="resume-logo"><img src="/assets/img/logos/Beachbody.svg" alt="Beachbody"></div>
           <div>
             <div class="resume-item-head">
               <div class="resume-role">Senior Product Designer</div>
@@ -595,7 +595,7 @@
         </div>
 
         <div class="resume-item">
-          <div class="resume-logo"><img src="Assets/Resume Logo/Ring.svg" alt="Ring"></div>
+          <div class="resume-logo"><img src="/assets/img/logos/Ring.svg" alt="Ring"></div>
           <div>
             <div class="resume-item-head">
               <div class="resume-role">Digital Designer</div>
@@ -616,7 +616,7 @@
         </div>
 
         <div class="resume-item">
-          <div class="resume-logo"><img src="Assets/Resume Logo/Squatch.svg" alt="Dr. Squatch"></div>
+          <div class="resume-logo"><img src="/assets/img/logos/Squatch.svg" alt="Dr. Squatch"></div>
           <div>
             <div class="resume-item-head">
               <div class="resume-role">Digital / Visual Designer</div>
@@ -642,7 +642,7 @@
 
     <!-- DOWNLOAD RESUME — small, low-prominence CTA below resume -->
     <div class="resume-download">
-      <a href="Assets/Neo%20Tran%20Resume.pdf" download>
+      <a href="/assets/docs/Neo%20Tran%20Resume.pdf" download>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Download resume (PDF)
       </a>
@@ -770,26 +770,26 @@
   <div class="marquee-track">
     <!-- set repeated twice for seamless loop -->
     <span class="marquee-label">Brands I have worked with</span>
-    <img class="ms-dr" src="Assets/drsquatch-horizontal-logo-reversed 1.png" alt="Dr. Squatch">
-    <img src="Assets/Springtheory.png" alt="Spring Theory">
-    <img src="Assets/Ring.png" alt="Ring">
-    <img src="Assets/Simpluris.png" alt="Simpluris">
-    <img src="Assets/LAist.png" alt="LAist">
-    <img src="Assets/Kareo.png" alt="Kareo">
-    <img src="Assets/American Century.png" alt="American Century">
-    <img src="Assets/logo 1.png" alt="Evolus">
-    <img src="Assets/Dexcare.png" alt="Dexcare">
+    <img class="ms-dr" src="/assets/img/drsquatch-horizontal-logo-reversed 1.png" alt="Dr. Squatch">
+    <img src="/assets/img/Springtheory.png" alt="Spring Theory">
+    <img src="/assets/img/Ring.png" alt="Ring">
+    <img src="/assets/img/Simpluris.png" alt="Simpluris">
+    <img src="/assets/img/LAist.png" alt="LAist">
+    <img src="/assets/img/Kareo.png" alt="Kareo">
+    <img src="/assets/img/American Century.png" alt="American Century">
+    <img src="/assets/img/logo 1.png" alt="Evolus">
+    <img src="/assets/img/Dexcare.png" alt="Dexcare">
 
     <span class="marquee-label">Brands I have worked with</span>
-    <img class="ms-dr" src="Assets/drsquatch-horizontal-logo-reversed 1.png" alt="Dr. Squatch">
-    <img src="Assets/Springtheory.png" alt="Spring Theory">
-    <img src="Assets/Ring.png" alt="Ring">
-    <img src="Assets/Simpluris.png" alt="Simpluris">
-    <img src="Assets/LAist.png" alt="LAist">
-    <img src="Assets/Kareo.png" alt="Kareo">
-    <img src="Assets/American Century.png" alt="American Century">
-    <img src="Assets/logo 1.png" alt="Evolus">
-    <img src="Assets/Dexcare.png" alt="Dexcare">
+    <img class="ms-dr" src="/assets/img/drsquatch-horizontal-logo-reversed 1.png" alt="Dr. Squatch">
+    <img src="/assets/img/Springtheory.png" alt="Spring Theory">
+    <img src="/assets/img/Ring.png" alt="Ring">
+    <img src="/assets/img/Simpluris.png" alt="Simpluris">
+    <img src="/assets/img/LAist.png" alt="LAist">
+    <img src="/assets/img/Kareo.png" alt="Kareo">
+    <img src="/assets/img/American Century.png" alt="American Century">
+    <img src="/assets/img/logo 1.png" alt="Evolus">
+    <img src="/assets/img/Dexcare.png" alt="Dexcare">
   </div>
 </section>
 
@@ -797,12 +797,12 @@
 <!-- ============================================
      CONTACT (footer on every page)
      ============================================ -->
-<!-- CONTACT (shared component — see site-contact.js) -->
+<!-- CONTACT (shared component — see /shared/site-contact.js) -->
 <div id="site-contact"></div>
 
 
-<script src="page-transition.js"></script>
-<script src="site-contact.js"></script>
-<script src="alt-project-theme.js"></script>
+<script src="/shared/page-transition.js"></script>
+<script src="/shared/site-contact.js"></script>
+<script src="/shared/alt-project-theme.js"></script>
 </body>
 </html>

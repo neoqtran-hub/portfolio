@@ -1,6 +1,6 @@
 /* Shared page transition — edge-glow "wormhole" blur warp between pages.
    Self-injects its CSS + overlay markup and hooks every internal *.html link.
-   Include on every page: <script src="page-transition.js"></script> */
+   Include on every page: <script src="/shared/page-transition.js"></script> */
 (function () {
   if (window.__pageTransitionInit) return;
   window.__pageTransitionInit = true;
