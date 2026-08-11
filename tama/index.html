@@ -6,14 +6,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neo Tran — Senior Product Designer</title>
 
+<!-- Hidden easter-egg page: reachable only at /tama, kept out of search -->
+<meta name="robots" content="noindex, nofollow">
+
 <!-- Social share / Open Graph -->
 <meta name="description" content="Neo Tran — Senior Product Designer turning friction into final products that convert.">
-<link rel="canonical" href="https://www.neobydesign.com/">
+<link rel="canonical" href="https://www.neobydesign.com/tama">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="neo by design">
 <meta property="og:title" content="Neo Tran — Senior Product Designer">
 <meta property="og:description" content="Senior Product Designer turning friction into final products that convert.">
-<meta property="og:url" content="https://www.neobydesign.com/">
+<meta property="og:url" content="https://www.neobydesign.com/tama">
 <meta property="og:image" content="https://www.neobydesign.com/assets/img/thumbnail.jpg">
 <meta property="og:image:width" content="4941">
 <meta property="og:image:height" content="3706">
@@ -257,6 +260,282 @@
     50% { transform: translateY(5px); opacity: 1; }
   }
 
+  /* ---------- TAMAGOTCHI (interactive hero toy) ---------- */
+  /* The hang wrapper is the pendulum: it pivots from its top edge, just under
+     the nav on the top-left, so the device swings on its chain. */
+  .tama-hang {
+    position: absolute;
+    top: 0;
+    right: 84px;
+    z-index: 5;
+    width: 188px;
+    transform-origin: 50% 0%;
+    animation: tamaSwing 6.5s ease-in-out infinite;
+    --tama-push: 0deg;
+    cursor: grab;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .tama-hang:active { cursor: grabbing; }
+  @keyframes tamaSwing {
+    0%, 100% { transform: rotate(-2.6deg); }
+    50%      { transform: rotate(2.6deg); }
+  }
+  /* ball-chain: dotted line climbing off the top of the device */
+  .tama-chain {
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    width: 5px;
+    height: 30px;
+    transform: translateX(-50%);
+    background-image: radial-gradient(circle at 50% 50%, #d9dde4 0 2px, transparent 2.4px);
+    background-size: 5px 6px;
+    background-repeat: repeat-y;
+    opacity: 0.9;
+  }
+  .tama-ring {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    transform: translateX(-50%);
+    border: 2.5px solid #c7ccd4;
+    border-radius: 50%;
+    background: transparent;
+  }
+  .tama-device {
+    position: relative;
+    margin-top: 30px;
+    padding: 30px 18px 18px;
+    border-radius: 48% 48% 46% 46% / 40% 40% 52% 52%;
+    background:
+      radial-gradient(120% 90% at 32% 18%, #5b97e6 0%, #3c79d6 38%, #2b5fc0 70%, #21509f 100%);
+    box-shadow:
+      inset 0 3px 10px rgba(255,255,255,0.35),
+      inset 0 -10px 24px rgba(0,0,0,0.32),
+      0 26px 46px -16px rgba(0,0,0,0.6);
+    overflow: hidden;
+  }
+  /* little decorative stars sprinkled on the shell */
+  .tama-star {
+    position: absolute;
+    color: rgba(255,255,255,0.85);
+    font-size: 11px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .tama-star.s2 { color: #ffd76a; }
+  .tama-star.s3 { color: #ff9b8a; }
+  .tama-brand {
+    position: relative;
+    text-align: center;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    color: #ffd76a;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.25);
+    margin-bottom: 7px;
+  }
+  /* the LCD: greenish panel inside a scalloped white bezel */
+  .tama-screen {
+    position: relative;
+    padding: 9px;
+    border-radius: 14px;
+    background: #eef0e8;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.28);
+  }
+  .tama-lcd {
+    position: relative;
+    padding: 7px 6px;
+    border-radius: 7px;
+    background: #c2cdaf;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.18), inset 0 1px 4px rgba(0,0,0,0.22);
+    overflow: hidden;
+    transition: background 0.4s ease, filter 0.4s ease;
+  }
+  /* faint LCD scanline texture */
+  .tama-lcd::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.05) 0 1px, transparent 1px 3px);
+    opacity: 0.5;
+  }
+  .tama-lcd.lights-off { background: #8c9a78; filter: brightness(0.62); }
+  .tama-lcd.asleep { background: #9aa886; filter: brightness(0.7); }
+  .tama-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2px;
+    position: relative;
+    z-index: 2;
+  }
+  .tama-icon {
+    position: relative;
+    width: 26px;
+    height: 26px;
+    border: none;
+    background: none;
+    padding: 2px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tama-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* push the gray source art to LCD-ink black */
+    filter: brightness(0) saturate(100%);
+    opacity: 0.42;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+  .tama-icon.sel img { opacity: 1; transform: scale(1.06); }
+  .tama-icon.active img { opacity: 1; }
+  /* selection caret beneath the chosen icon */
+  .tama-icon.sel::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -3px;
+    width: 0; height: 0;
+    transform: translateX(-50%);
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 4px solid #2c3324;
+  }
+  .tama-stage {
+    position: relative;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* no z-index here on purpose: a stacking context would isolate the
+       character's mix-blend-mode from the LCD behind it */
+  }
+  .tama-char {
+    width: 70px;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    /* the gif art is dark pixels on a white bg — multiply drops the white
+       into the LCD and keeps the character readable */
+    mix-blend-mode: multiply;
+  }
+  .tama-char.hop { animation: tamaHop 0.9s ease-in-out infinite; }
+  @keyframes tamaHop {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-5px); }
+  }
+  .tama-poop {
+    position: absolute;
+    left: 12%;
+    bottom: 4px;
+    width: 20px;
+    image-rendering: pixelated;
+    filter: brightness(0) saturate(100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .tama-poop.show { opacity: 0.92; }
+  .tama-zzz {
+    position: absolute;
+    top: 4px;
+    right: 14%;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 13px;
+    color: #2c3324;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .tama-zzz.show { opacity: 0.9; animation: tamaZzz 2s ease-in-out infinite; }
+  @keyframes tamaZzz {
+    0%, 100% { transform: translateY(0); opacity: 0.45; }
+    50%      { transform: translateY(-3px); opacity: 0.95; }
+  }
+  /* hearts / stats overlay */
+  .tama-hearts {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background: #c2cdaf;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 3;
+  }
+  .tama-hearts.show { opacity: 1; }
+  .tama-heart {
+    width: 13px; height: 13px;
+    background: #2c3324;
+    -webkit-mask: var(--heart) center/contain no-repeat;
+    mask: var(--heart) center/contain no-repeat;
+    --heart: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-7.5-4.9-10-9.2C.3 8.6 1.8 5 5.2 5c2 0 3.3 1.2 3.8 2.3C9.5 6.2 10.8 5 12.8 5c3.4 0 4.9 3.6 3.2 6.8C19.5 16.1 12 21 12 21z'/%3E%3C/svg%3E");
+  }
+  .tama-heart.empty { opacity: 0.22; }
+  /* three orange buttons */
+  .tama-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 16px;
+  }
+  .tama-btn {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    background: radial-gradient(circle at 35% 30%, #ffc46b 0%, #f6a531 55%, #d9871d 100%);
+    box-shadow: inset 0 -2px 3px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.3);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+  .tama-btn:active {
+    transform: translateY(1px);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+  }
+  /* a tiny floating hint that fades out on first interaction */
+  .tama-hint {
+    position: absolute;
+    top: 52px;
+    right: calc(100% + 14px);
+    width: 132px;
+    text-align: right;
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    opacity: 0.9;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+  .tama-hint::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    right: -12px;
+    width: 10px;
+    height: 1px;
+    background: var(--muted);
+  }
+  .tama-hang.touched .tama-hint { opacity: 0; }
+  @media (prefers-reduced-motion: reduce) {
+    .tama-hang { animation: none; }
+    .tama-char.hop { animation: none; }
+    .tama-zzz.show { animation: none; opacity: 0.9; }
+  }
+
   /* ---------- WORK (stacked cards) ---------- */
   .work {
     position: relative;
@@ -302,12 +581,7 @@
   }
   .pcard-media {
     position: relative;
-    /* No aspect-ratio here: in the two-column layout the grid stretches the
-       media cell to the row height (matching the taller text column) for
-       free, so the image covers fully. Setting aspect-ratio would block that
-       stretch (leaving a gap) AND back-compute a width that overflows the
-       column. The stacked layout re-adds aspect-ratio below, where the media
-       sits alone in its row and needs an intrinsic height. */
+    aspect-ratio: 16 / 11;
     background: #1c2b1c;
     overflow: hidden;
   }
@@ -771,16 +1045,24 @@
   @media (max-width: 820px) {
     .snav { padding: 0 22px; }
     .snav-links { gap: 22px; }
-    .hero { padding: 96px 22px 48px; min-height: 92vh; }
+    .hero { padding: 132px 22px 48px; min-height: 92vh; }
     .hero-sub { font-size: 18px; }
+    /* Tamagotchi: centered + resting (no dangle/swing) on phones */
+    .tama-hang {
+      left: 50%;
+      right: auto;
+      top: 78px;
+      transform: translateX(-50%) !important;
+      animation: none;
+      cursor: default;
+    }
+    .tama-hint { display: none; }
     .statement span { font-size: clamp(34px, 11vw, 96px); }
     .contact-head h2 { font-size: clamp(40px, 8vw, 96px); }
     .scroll-hint { display: none; }
     .work { padding: 0 22px 32px; }
     .work-title { margin-bottom: 18px; }
     .pcard { grid-template-columns: 1fr; }
-    /* Stacked: media is alone in its row, so give it an intrinsic height. */
-    .pcard-media { aspect-ratio: 16 / 11; }
     .pcard-body { padding: 26px 24px 24px; }
     .statement span { padding-left: 22px; }
     .contact { padding: 72px 22px 64px; }
@@ -857,6 +1139,50 @@
 
 <!-- ===== HERO ===== -->
 <header class="hero">
+
+  <!-- Interactive Tamagotchi — dangles from the top-left on its chain -->
+  <div class="tama-hang" id="tamaHang">
+    <div class="tama-ring"></div>
+    <div class="tama-chain"></div>
+    <p class="tama-hint">Pick me up — feed, wash &amp; play with your Tama.</p>
+    <div class="tama-device" id="tamaDevice">
+      <span class="tama-star"    style="top:34px;left:16px;">✦</span>
+      <span class="tama-star s2" style="top:58px;left:160px;font-size:9px;">✦</span>
+      <span class="tama-star s3" style="top:150px;left:22px;font-size:13px;">✦</span>
+      <span class="tama-star"    style="top:176px;left:150px;font-size:9px;">✦</span>
+      <span class="tama-star s2" style="top:210px;left:30px;">✦</span>
+      <span class="tama-star"    style="top:128px;left:150px;font-size:8px;">✦</span>
+      <div class="tama-brand">TAMAGOTCHI</div>
+      <div class="tama-screen">
+        <div class="tama-lcd" id="tamaLcd">
+          <div class="tama-row tama-row-top">
+            <button class="tama-icon" data-act="stats"  title="Stats"  aria-label="Stats"><img src="/assets/tamagotchi/stats.svg"  alt=""></button>
+            <button class="tama-icon" data-act="food"   title="Feed"   aria-label="Feed"><img src="/assets/tamagotchi/food.svg"   alt=""></button>
+            <button class="tama-icon" data-act="music"  title="Play"   aria-label="Play"><img src="/assets/tamagotchi/music.svg"  alt=""></button>
+            <button class="tama-icon" data-act="sleep"  title="Sleep"  aria-label="Sleep"><img src="/assets/tamagotchi/sleep.svg"  alt=""></button>
+          </div>
+          <div class="tama-stage">
+            <img class="tama-char" id="tamaChar" src="/assets/tamagotchi/character.gif" alt="Your Tamagotchi">
+            <img class="tama-poop" id="tamaPoop" src="/assets/tamagotchi/poop.svg" alt="">
+            <div class="tama-zzz" id="tamaZzz">Z z z</div>
+            <div class="tama-hearts" id="tamaHearts" aria-hidden="true"></div>
+          </div>
+          <div class="tama-row tama-row-bot">
+            <button class="tama-icon" data-act="shower" title="Wash"   aria-label="Wash"><img src="/assets/tamagotchi/shower.svg" alt=""></button>
+            <button class="tama-icon" data-act="lights" title="Lights" aria-label="Lights"><img src="/assets/tamagotchi/lights.svg" alt=""></button>
+            <button class="tama-icon" data-act="poop"   title="Clean"  aria-label="Clean"><img src="/assets/tamagotchi/poop.svg"   alt=""></button>
+            <button class="tama-icon" data-act="dead"   title="Health" aria-label="Health"><img src="/assets/tamagotchi/dead.svg"   alt=""></button>
+          </div>
+        </div>
+      </div>
+      <div class="tama-buttons">
+        <button class="tama-btn" data-btn="a" aria-label="Move selection left"></button>
+        <button class="tama-btn" data-btn="b" aria-label="Move selection right"></button>
+        <button class="tama-btn" data-btn="c" aria-label="Confirm"></button>
+      </div>
+    </div>
+  </div>
+
   <p class="hero-eyebrow">Senior Product Designer</p>
   <h1 class="hero-name">NEO TRAN</h1>
   <p class="hero-sub">I'm working alongside designers and builders, turning <span class="cycle-word" id="cycleWord">friction</span> into products that convert.</p>
@@ -1261,6 +1587,193 @@
         }, 330);
       }, 2400);
     }
+
+    /* ----- Tamagotchi: clickable hero toy ----- */
+    (function () {
+      var hang   = document.getElementById('tamaHang');
+      if (!hang) return;
+      var device = document.getElementById('tamaDevice');
+      var lcd    = document.getElementById('tamaLcd');
+      var charEl = document.getElementById('tamaChar');
+      var poopEl = document.getElementById('tamaPoop');
+      var zzzEl  = document.getElementById('tamaZzz');
+      var hearts = document.getElementById('tamaHearts');
+      var icons  = Array.prototype.slice.call(hang.querySelectorAll('.tama-icon'));
+      var btns   = hang.querySelectorAll('.tama-btn');
+      var BASE   = '/assets/tamagotchi/';
+      var GIF = {
+        idle:   BASE + 'character.gif',
+        food:   BASE + 'character_food.gif',
+        music:  BASE + 'character_music.gif',
+        shower: BASE + 'character_shower.gif',
+        sleep:  BASE + 'character_sleep.gif',
+        poop:   BASE + 'character_poop.gif',
+        dead:   BASE + 'character_dead.gif',
+        egg:    BASE + 'character_egg.gif'
+      };
+      // preload so swaps are instant
+      Object.keys(GIF).forEach(function (k) { var i = new Image(); i.src = GIF[k]; });
+
+      var sel = 0;               // selected icon index
+      var busy = false;          // a timed reaction is playing
+      var asleep = false;
+      var lightsOff = false;
+      var hasPoop = false;
+      var dead = false;
+      var happy = 4;             // 0..4 hearts
+      var reactTimer = null;
+      var heartsTimer = null;
+
+      function touched() { hang.classList.add('touched'); }
+
+      function setChar(state, hop) {
+        charEl.src = GIF[state] || GIF.idle;
+        charEl.classList.toggle('hop', !!hop);
+      }
+      function idle() {
+        if (dead) return;
+        busy = false;
+        setChar(asleep ? 'sleep' : 'idle', !asleep);
+      }
+      function hideHearts() {
+        hearts.classList.remove('show');
+        clearTimeout(heartsTimer);
+      }
+      function react(state, hop, ms) {
+        if (dead) { revive(); return; }
+        hideHearts();
+        busy = true;
+        if (asleep && state !== 'sleep') wake();
+        setChar(state, hop);
+        clearTimeout(reactTimer);
+        reactTimer = setTimeout(idle, ms || 2600);
+      }
+
+      function highlight() {
+        icons.forEach(function (ic, i) { ic.classList.toggle('sel', i === sel); });
+      }
+      function flashActive(i) {
+        icons[i].classList.add('active');
+        setTimeout(function () { icons[i].classList.remove('active'); }, 450);
+      }
+
+      function showHearts() {
+        hearts.innerHTML = '';
+        for (var i = 0; i < 4; i++) {
+          var h = document.createElement('span');
+          h.className = 'tama-heart' + (i < happy ? '' : ' empty');
+          hearts.appendChild(h);
+        }
+        hearts.classList.add('show');
+        clearTimeout(heartsTimer);
+        heartsTimer = setTimeout(function () { hearts.classList.remove('show'); }, 2400);
+      }
+      function bumpHappy(d) { happy = Math.max(0, Math.min(4, happy + d)); }
+
+      function setPoop(on) {
+        hasPoop = on;
+        poopEl.classList.toggle('show', on);
+      }
+      function wake() {
+        asleep = false;
+        lcd.classList.remove('asleep');
+        zzzEl.classList.remove('show');
+      }
+      function sleepToggle() {
+        // already napping → wake immediately
+        if (asleep) { clearTimeout(reactTimer); wake(); idle(); return; }
+        asleep = true;
+        busy = true;
+        lcd.classList.add('asleep');
+        zzzEl.classList.add('show');
+        setChar('sleep', false);
+        // a short nap, then wake and brighten back on its own
+        clearTimeout(reactTimer);
+        reactTimer = setTimeout(function () { wake(); idle(); }, 3400);
+      }
+      function die() {
+        dead = true;
+        wake();
+        busy = true;
+        clearTimeout(reactTimer);
+        setChar('dead', false);
+      }
+      function revive() {
+        dead = false;
+        happy = 4;
+        setPoop(false);
+        react('egg', false, 1400);
+        setTimeout(idle, 1450);
+      }
+
+      function doAction(act) {
+        touched();
+        if (act !== 'stats') hideHearts();
+        if (dead) { revive(); return; }
+        switch (act) {
+          case 'food':
+            bumpHappy(1); react('food', false);
+            // sometimes nature calls a moment later
+            if (Math.random() < 0.5) setTimeout(function () { setPoop(true); }, 2800);
+            break;
+          case 'music':
+            bumpHappy(1); react('music', true); break;
+          case 'shower':
+            setPoop(false); bumpHappy(1); react('shower', false); break;
+          case 'poop':
+            setPoop(true); react('poop', false); break;
+          case 'sleep':
+            sleepToggle(); break;
+          case 'lights':
+            lightsOff = !lightsOff;
+            lcd.classList.toggle('lights-off', lightsOff);
+            break;
+          case 'stats':
+            showHearts(); break;
+          case 'dead':
+            react('dead', false); break;
+        }
+      }
+
+      // direct icon clicks: select + activate
+      icons.forEach(function (ic, i) {
+        ic.addEventListener('click', function (e) {
+          e.stopPropagation();
+          sel = i; highlight(); flashActive(i);
+          doAction(ic.getAttribute('data-act'));
+        });
+      });
+
+      // 3-button console: A = move left, B = move right, C = confirm
+      btns.forEach(function (b) {
+        b.addEventListener('click', function (e) {
+          e.stopPropagation();
+          touched();
+          var n = icons.length;
+          var which = b.getAttribute('data-btn');
+          if (which === 'a') {
+            sel = (sel - 1 + n) % n; highlight();
+          } else if (which === 'b') {
+            sel = (sel + 1) % n; highlight();
+          } else {
+            if (sel < 0) sel = 0;
+            flashActive(sel);
+            doAction(icons[sel].getAttribute('data-act'));
+          }
+        });
+      });
+
+      // gentle life: a poop or a mood dip shows up now and then if left alone
+      setInterval(function () {
+        if (dead || busy || asleep) return;
+        if (!hasPoop && Math.random() < 0.25) setPoop(true);
+        else if (Math.random() < 0.2) { bumpHappy(-1); }
+      }, 18000);
+
+      // start on the idle character (character.gif)
+      sel = 1; highlight();
+      idle();
+    })();
   })();
 </script>
 
