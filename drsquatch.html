@@ -4445,7 +4445,7 @@
         if (index === pumpkinFrames.length - 1) {
           window.clearInterval(pumpkinTimer);
           pumpkinTimer = null;
-          if (pumpkinReplay) pumpkinReplay.classList.add('is-visible');
+          window.setTimeout(playPumpkinSequence, 1400);
         }
       }, 260);
     }
@@ -4491,7 +4491,7 @@
         if (index === bagFrames.length - 1) {
           window.clearInterval(bagTimer);
           bagTimer = null;
-          if (bagReplay) bagReplay.classList.add('is-visible');
+          window.setTimeout(playBagSequence, 1400);
         }
       }, 260);
     }
