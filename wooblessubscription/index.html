@@ -83,6 +83,43 @@ body{
   clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
 /* ============================================================
+   PASSWORD GATE
+   Soft gate only — this is a static host, so the check runs in the
+   browser and the page's assets stay publicly fetchable. It keeps
+   casual visitors out; it is not access control.
+   Unlocking is remembered in localStorage, so it asks once per browser.
+   ============================================================ */
+.gate{
+  position:fixed;inset:0;z-index:999;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--cream);padding:24px;
+}
+html.gate-open .gate{display:none}
+html:not(.gate-open) body{overflow:hidden}
+
+.gate__box{width:100%;max-width:360px;text-align:center}
+.gate__logo{height:30px;width:auto;margin:0 auto 28px}
+.gate__title{font-family:var(--f-display);font-weight:400;font-size:28px;line-height:1.05;
+  text-transform:uppercase;color:var(--ink);margin:0}
+.gate__sub{font-size:15px;line-height:1.4;color:var(--ink-2);margin:10px 0 24px}
+.gate__form{display:flex;flex-direction:column;gap:10px}
+.gate__input{
+  width:100%;height:48px;border-radius:100px;
+  border:1.5px solid var(--line);background:#fff;
+  padding:0 20px;font:inherit;font-size:16px;color:var(--ink);text-align:center;
+}
+.gate__input::placeholder{color:var(--ink-2)}
+.gate__input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-color:var(--accent)}
+.gate[data-error="1"] .gate__input{border-color:#C2402F}
+.gate__btn{
+  height:48px;border-radius:100px;background:var(--ink);color:#fff;
+  font-size:15px;font-weight:700;
+  transition:filter .2s var(--ease),transform .2s var(--ease);
+}
+.gate__btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.gate__err{min-height:18px;font-size:13px;color:#C2402F}
+
+/* ============================================================
    NAV
    ============================================================ */
 .nav{
@@ -558,8 +595,27 @@ body.sheet-on{padding-bottom:86px}
     transition-duration:.01ms !important;scroll-behavior:auto !important}
 }
 </style>
+<!-- Runs before the body paints, so an already-unlocked visitor never sees a flash
+     of the gate. Class on <html> because <body> does not exist yet. -->
+<script>try{if(localStorage.getItem("wb-gate")==="1")document.documentElement.className+=" gate-open"}catch(e){}</script>
 </head>
 <body>
+
+<!-- ================= PASSWORD GATE ================= -->
+<div class="gate" id="gate" data-error="0">
+  <div class="gate__box">
+    <img class="gate__logo" src="assets/img/logo-woobles.svg" alt="The Woobles">
+    <h1 class="gate__title">Private Preview</h1>
+    <p class="gate__sub">Enter the password to view this page.</p>
+    <form class="gate__form" id="gateForm">
+      <label class="sr-only" for="gatePw">Password</label>
+      <input class="gate__input" id="gatePw" type="password" placeholder="Password"
+             autocomplete="current-password" autofocus required>
+      <button class="gate__btn" type="submit">View Page</button>
+      <p class="gate__err" id="gateErr" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</div>
 
 <!-- ================= NAV ================= -->
 <header class="nav">
@@ -1028,6 +1084,30 @@ body.sheet-on{padding-bottom:86px}
 <script>
 (function(){
   "use strict";
+
+  /* ---------------- password gate ----------------
+     To change the password, edit PASS. Nothing here is secret — the
+     comparison happens in the browser, so treat this as a doormat, not a lock. */
+  var PASS = "woobles";
+  var gate = document.getElementById("gate");
+  var form = document.getElementById("gateForm");
+  var pw   = document.getElementById("gatePw");
+  var err  = document.getElementById("gateErr");
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    if (pw.value.trim().toLowerCase() === PASS){
+      try { localStorage.setItem("wb-gate","1"); } catch(e2){}
+      document.documentElement.classList.add("gate-open");
+    } else {
+      gate.dataset.error = "1";
+      err.textContent = "That password isn't right. Try again.";
+      pw.select();
+    }
+  });
+  pw.addEventListener("input", function(){
+    if (gate.dataset.error === "1"){ gate.dataset.error = "0"; err.textContent = ""; }
+  });
 
   /* ---------------- Pick A Wooble ----------------
      36 kits. 10 render first, Load More reveals the rest. Levels are
