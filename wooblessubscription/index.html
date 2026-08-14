@@ -315,6 +315,18 @@ body.sheet-on{padding-bottom:86px}
 .ugc__track img{width:192px;height:256px;object-fit:cover;border-radius:8px;flex:0 0 auto}
 
 /* ============================================================
+   VALUE-PROP STRIP — scrolling text above the bag section
+   ============================================================ */
+.strip{background:var(--navy);overflow:hidden;padding:15px 0}
+.strip__track{display:flex;align-items:center;gap:22px;width:max-content;
+  animation:slide 34s linear infinite}
+.strip__track span{
+  font-family:var(--f-display);font-weight:400;font-size:18px;line-height:1.05;
+  letter-spacing:.6px;text-transform:uppercase;color:var(--cream);white-space:nowrap;
+}
+.strip__dot{color:var(--accent)}
+
+/* ============================================================
    A BAG THAT HOLDS IT ALL
    ============================================================ */
 .bag{background:var(--butter);padding:36px 0 44px}
@@ -511,7 +523,10 @@ body.sheet-on{padding-bottom:86px}
   .btn-checkout{min-width:0;width:100%}
   body.sheet-on{padding-bottom:150px}
 
-  /* --- bag --- */
+  /* --- strip + bag --- */
+  .strip{padding:12px 0}
+  .strip__track{gap:16px}
+  .strip__track span{font-size:15px}
   .bag__row{grid-template-columns:repeat(2,1fr);row-gap:28px}
   .bag__item img{height:118px}
 
@@ -717,6 +732,15 @@ body.sheet-on{padding-bottom:86px}
     <img src="assets/img/ugc-6.png" alt="" loading="lazy">
     <img src="assets/img/ugc-3.png" alt="" loading="lazy">
     <img src="assets/img/ugc-1.png" alt="" loading="lazy">
+  </div>
+</section>
+
+<!-- ================= VALUE-PROP STRIP ================= -->
+<section class="strip" aria-label="Beginner friendly. Everything you need in the bag. Step-by-step instructions.">
+  <div class="strip__track" id="stripTrack" aria-hidden="true">
+    <span>Beginner Friendly</span><span class="strip__dot">&bull;</span>
+    <span>Everything You Need In The Bag</span><span class="strip__dot">&bull;</span>
+    <span>Step-by-step instructions</span><span class="strip__dot">&bull;</span>
   </div>
 </section>
 
@@ -1121,7 +1145,7 @@ body.sheet-on{padding-bottom:86px}
 
   /* ---------------- marquees ----------------
      Duplicate the children once so the -50% keyframe loops seamlessly. */
-  ["pressTrack","ugcTrack"].forEach(function(id){
+  ["pressTrack","ugcTrack","stripTrack"].forEach(function(id){
     var t = document.getElementById(id);
     if (!t) return;
     t.innerHTML += t.innerHTML;
