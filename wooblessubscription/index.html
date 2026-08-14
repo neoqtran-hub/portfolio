@@ -351,7 +351,9 @@ body.sheet-on{padding-bottom:86px}
 .steps{background:var(--butter-2);padding:36px 0 44px}
 .steps__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:32px}
 .steps__card{background:#fff;border-radius:16px;padding:14px 14px 20px;text-align:center}
-.steps__card img{width:100%;aspect-ratio:262/247;object-fit:cover;border-radius:6px}
+/* height:auto is required — the GIFs carry a height attribute, and
+   aspect-ratio is ignored unless one dimension resolves to auto */
+.steps__media img{width:100%;height:auto;aspect-ratio:262/247;object-fit:cover;border-radius:6px}
 .steps__card h3{font-size:24px;font-weight:600;line-height:1.3;color:#111;margin:16px 0 0}
 .steps__card p{font-size:13px;line-height:1.4;color:#111;margin:6px 0 0}
 
@@ -530,9 +532,20 @@ body.sheet-on{padding-bottom:86px}
   .bag__row{grid-template-columns:repeat(2,1fr);row-gap:28px}
   .bag__item img{height:118px}
 
-  /* --- reviews --- */
-  .review{flex-basis:262px;grid-template-columns:1fr}
-  .review__img{min-height:200px;aspect-ratio:262/200}
+  /* --- how it works: row cards, media 38% left / copy right (matches the
+         easy-peasy bundle page's mobile treatment) --- */
+  .steps__grid{grid-template-columns:1fr;gap:16px;max-width:none}
+  .steps__card{display:flex;align-items:stretch;gap:14px;padding:0;text-align:center;
+    overflow:hidden}
+  .steps__media{flex:0 0 38%;min-width:0;display:flex}
+  .steps__media img{height:100%;aspect-ratio:auto;object-fit:cover;border-radius:0}
+  .steps__body{flex:1 1 auto;min-width:0;padding:16px}
+  .steps__card h3{margin:0;font-size:20px}
+  .steps__card p{font-size:14px}
+
+  /* --- reviews: one near-full-width card per view, image stacked on top --- */
+  .review{flex-basis:calc(100vw - 42px);grid-template-columns:1fr}
+  .review__img{min-height:0;aspect-ratio:4/3}
   .review__body{padding:24px 20px}
 
   /* --- footer --- */
@@ -766,19 +779,40 @@ body.sheet-on{padding-bottom:86px}
     <h2 class="h-sec">How It Works</h2>
     <div class="steps__grid">
       <div class="steps__card">
-        <img src="assets/img/hiw-open.png" alt="Hands holding a crochet hook over an open Woobles kit" loading="lazy">
-        <h3>Open Your Kit</h3>
-        <p>Everything you need is inside</p>
+        <div class="steps__media">
+          <img src="https://thewoobles.com/cdn/shop/files/2nd_1.gif?v=1773817002&amp;width=320"
+               srcset="https://thewoobles.com/cdn/shop/files/2nd_1.gif?v=1773817002&amp;width=240 240w, https://thewoobles.com/cdn/shop/files/2nd_1.gif?v=1773817002&amp;width=320 320w, https://thewoobles.com/cdn/shop/files/2nd_1.gif?v=1773817002&amp;width=480 480w"
+               sizes="(max-width: 749px) 38vw, 33vw"
+               alt="Hands opening a Woobles kit" loading="lazy" width="720" height="720">
+        </div>
+        <div class="steps__body">
+          <h3>Open Your Kit</h3>
+          <p>Everything you need is inside</p>
+        </div>
       </div>
       <div class="steps__card">
-        <img src="assets/img/hiw-scan.png" alt="Hands holding the Make Pierre card with a QR code" loading="lazy">
-        <h3>Scan the QR</h3>
-        <p>Unlock the step-by-step tutorial</p>
+        <div class="steps__media">
+          <img src="https://thewoobles.com/cdn/shop/files/3rd_1.gif?v=1773817086&amp;width=320"
+               srcset="https://thewoobles.com/cdn/shop/files/3rd_1.gif?v=1773817086&amp;width=240 240w, https://thewoobles.com/cdn/shop/files/3rd_1.gif?v=1773817086&amp;width=320 320w, https://thewoobles.com/cdn/shop/files/3rd_1.gif?v=1773817086&amp;width=480 480w"
+               sizes="(max-width: 749px) 38vw, 33vw"
+               alt="Scanning the QR code on the kit card" loading="lazy" width="720" height="720">
+        </div>
+        <div class="steps__body">
+          <h3>Scan the QR</h3>
+          <p>Unlock the step-by-step tutorial</p>
+        </div>
       </div>
       <div class="steps__card">
-        <img src="assets/img/hiw-crochet.png" alt="Hands crocheting along with a laptop tutorial" loading="lazy">
-        <h3>Start Crocheting</h3>
-        <p>Told you it was easy!</p>
+        <div class="steps__media">
+          <img src="https://thewoobles.com/cdn/shop/files/1st_1.gif?v=1773816969&amp;width=320"
+               srcset="https://thewoobles.com/cdn/shop/files/1st_1.gif?v=1773816969&amp;width=240 240w, https://thewoobles.com/cdn/shop/files/1st_1.gif?v=1773816969&amp;width=320 320w, https://thewoobles.com/cdn/shop/files/1st_1.gif?v=1773816969&amp;width=480 480w"
+               sizes="(max-width: 749px) 38vw, 33vw"
+               alt="Hands crocheting along with the tutorial" loading="lazy" width="720" height="720">
+        </div>
+        <div class="steps__body">
+          <h3>Start Crocheting</h3>
+          <p>Told you it was easy!</p>
+        </div>
       </div>
     </div>
   </div>
@@ -792,7 +826,7 @@ body.sheet-on{padding-bottom:86px}
     <div class="reviews__viewport" id="reviewTrack" tabindex="0" aria-label="Customer reviews, scrollable">
 
       <article class="review">
-        <img class="review__img" src="assets/img/review-1.png" alt="" loading="lazy">
+        <img class="review__img" src="https://thewoobles.com/cdn/shop/files/emilio_the_turtle_-_review2.webp?v=1784239003&amp;width=800" alt="" loading="lazy">
         <div class="review__body">
           <h3 class="review__title">Fun for me and my kitten!</h3>
           <p class="review__text">Absolutely in love with woobles! I've been crocheting for a few years now, but have not been able to figure out how to crochet a 3rd object until Woobles. It's opened a whole new world for me! Not only do i love to do them, but my kitties love to snuggle them &#128149;</p>
@@ -802,7 +836,7 @@ body.sheet-on{padding-bottom:86px}
       </article>
 
       <article class="review">
-        <img class="review__img" src="assets/img/review-2.png" alt="" loading="lazy">
+        <img class="review__img" src="https://thewoobles.com/cdn/shop/files/fox_-_review7.webp?v=1784239058&amp;width=800" alt="" loading="lazy">
         <div class="review__body">
           <h3 class="review__title">Choose Woobles</h3>
           <p class="review__text">This company has the best crochet of all! It has everything you need! It has the yarn you need, online instructions, a pre started piece, and an extra eye! I had no problems making Felix and he is so cute when finished! I love how he is part of the OG crew. Will definitely support Woobles!</p>
@@ -812,7 +846,7 @@ body.sheet-on{padding-bottom:86px}
       </article>
 
       <article class="review">
-        <img class="review__img" src="assets/img/review-3.png" alt="" loading="lazy">
+        <img class="review__img" src="https://thewoobles.com/cdn/shop/files/fred_the_dino-_review1.webp?v=1784238918&amp;width=800" alt="" loading="lazy">
         <div class="review__body">
           <h3 class="review__title">Great Crochet Kit for Beginners!</h3>
           <p class="review__text">This was my first time making a Wooble, and I have to say it was really simple and easy to learn. The instructions were easy to follow along compared to other kits. It was very fun</p>
@@ -822,7 +856,7 @@ body.sheet-on{padding-bottom:86px}
       </article>
 
       <article class="review">
-        <img class="review__img" src="assets/img/review-4.png" alt="" loading="lazy">
+        <img class="review__img" src="https://thewoobles.com/cdn/shop/files/sebastian_the_lion_-_review4.webp?v=1784239373&amp;width=800" alt="" loading="lazy">
         <div class="review__body">
           <h3 class="review__title">Love it</h3>
           <p class="review__text">My daughter absolutely adores Sebastian she worked so hard, and I love how she didn't compare her mistakes to the example, even though it was her first ever wooble. My daughter usually forgets about or gets frustrated with projects but this crochet set kept her hooked! This is a company that truly cares about its customers!</p>
@@ -832,7 +866,7 @@ body.sheet-on{padding-bottom:86px}
       </article>
 
       <article class="review">
-        <img class="review__img" src="assets/img/review-5.png" alt="" loading="lazy">
+        <img class="review__img" src="https://thewoobles.com/cdn/shop/files/Bjorn_the_Narwhal_-_review5.webp?v=1784239441&amp;width=800" alt="" loading="lazy">
         <div class="review__body">
           <h3 class="review__title">Kept my hands busy</h3>
           <p class="review__text">I've been wanting to crochet for a while but it was overwhelming to start. My partner surprised me with this kit, and it was so much fun! The video instructions are perfect and I love I can set my account to left handed.</p>
@@ -842,7 +876,7 @@ body.sheet-on{padding-bottom:86px}
       </article>
 
       <article class="review">
-        <img class="review__img" src="assets/img/review-6.png" alt="" loading="lazy">
+        <img class="review__img" src="https://thewoobles.com/cdn/shop/files/Bacon_the_Pig_-_Review6.webp?v=1784239488&amp;width=800" alt="" loading="lazy">
         <div class="review__body">
           <h3 class="review__title">First wooble</h3>
           <p class="review__text">This was my first, a lot easier than I thought. The videos are great explaining all the stitches and steps! Can't wait to do the next one..</p>
