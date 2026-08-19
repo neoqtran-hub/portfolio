@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-label="Case Knowledge Extraction placeholder">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#0e1322"/><stop offset="1" stop-color="#080a12"/>
+</linearGradient>
+<pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+<path d="M50 0H0V50" fill="none" stroke="rgba(255,255,255,0.045)" stroke-width="1"/>
+</pattern>
+</defs>
+<rect width="1200" height="750" fill="url(#bg)"/>
+<rect width="1200" height="750" fill="url(#grid)"/>
+<g opacity="1"><rect x="90" y="150" width="300" height="420" rx="10" fill="#141a2e" stroke="rgba(255,255,255,0.12)"/><rect x="112" y="172" width="126" height="9" rx="4.5" fill="#7f98ff"/><rect x="112" y="196" width="256" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="112" y="218" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="112" y="240" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="112" y="262" width="256" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="112" y="284" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="112" y="306" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="112" y="328" width="256" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="112" y="350" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="112" y="372" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="112" y="394" width="256" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="112" y="416" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="112" y="438" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="112" y="460" width="256" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="112" y="482" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="112" y="504" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/></g><g opacity="0.55"><rect x="150" y="120" width="300" height="420" rx="10" fill="#141a2e" stroke="rgba(255,255,255,0.12)"/><rect x="172" y="142" width="126" height="9" rx="4.5" fill="#7f98ff"/><rect x="172" y="166" width="256" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="172" y="188" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="172" y="210" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="172" y="232" width="256" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="172" y="254" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="172" y="276" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="172" y="298" width="256" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="172" y="320" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="172" y="342" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="172" y="364" width="256" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="172" y="386" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="172" y="408" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="172" y="430" width="256" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="172" y="452" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/><rect x="172" y="474" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.20)"/></g>
+<path d="M470 330 H560 M470 330 l-14 -12 M470 330 l-14 12" stroke="#7f98ff" stroke-width="3" fill="none" transform="translate(70,0)"/>
+<g>
+<rect x="640" y="150" width="470" height="420" rx="12" fill="#141a2e" stroke="rgba(255,255,255,0.12)"/>
+<circle cx="678" cy="205" r="9" fill="#2845D2"/>
+<rect x="706" y="198" width="300" height="9" rx="4.5" fill="rgba(255,255,255,0.30)"/>
+<rect x="706" y="216" width="190" height="7" rx="3.5" fill="rgba(255,255,255,0.14)"/>
+<path d="M678 214 V 267" stroke="rgba(255,255,255,0.16)" stroke-width="2"/><circle cx="678" cy="283" r="9" fill="#2845D2"/>
+<rect x="706" y="276" width="265" height="9" rx="4.5" fill="rgba(255,255,255,0.30)"/>
+<rect x="706" y="294" width="170" height="7" rx="3.5" fill="rgba(255,255,255,0.14)"/>
+<path d="M678 292 V 345" stroke="rgba(255,255,255,0.16)" stroke-width="2"/><circle cx="678" cy="361" r="9" fill="#2845D2"/>
+<rect x="706" y="354" width="230" height="9" rx="4.5" fill="rgba(255,255,255,0.30)"/>
+<rect x="706" y="372" width="150" height="7" rx="3.5" fill="rgba(255,255,255,0.14)"/>
+<path d="M678 370 V 423" stroke="rgba(255,255,255,0.16)" stroke-width="2"/><circle cx="678" cy="439" r="9" fill="#2845D2"/>
+<rect x="706" y="432" width="195" height="9" rx="4.5" fill="rgba(255,255,255,0.30)"/>
+<rect x="706" y="450" width="130" height="7" rx="3.5" fill="rgba(255,255,255,0.14)"/>
+<path d="M678 448 V 501" stroke="rgba(255,255,255,0.16)" stroke-width="2"/><circle cx="678" cy="517" r="9" fill="#2845D2"/>
+<rect x="706" y="510" width="160" height="9" rx="4.5" fill="rgba(255,255,255,0.30)"/>
+<rect x="706" y="528" width="110" height="7" rx="3.5" fill="rgba(255,255,255,0.14)"/>
+<path d="M678 526 V 579" stroke="rgba(255,255,255,0.16)" stroke-width="2"/></g>
+<g font-family="Graphik, Arial, sans-serif">
+<rect x="48" y="654" width="150" height="26" rx="13" fill="#2845D2" fill-opacity="0.18"/>
+<text x="60" y="672" font-size="12" font-weight="800" letter-spacing="2.2" fill="#7f98ff">PLACEHOLDER</text>
+<text x="48" y="710" font-size="22" font-weight="800" fill="#ffffff" letter-spacing="-0.4">Case Knowledge Extraction</text>
+</g>
+</svg>

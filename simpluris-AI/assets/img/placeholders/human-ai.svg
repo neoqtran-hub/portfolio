@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-label="Human Expertise + AI Innovation placeholder">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#0e1322"/><stop offset="1" stop-color="#080a12"/>
+</linearGradient>
+<pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+<path d="M50 0H0V50" fill="none" stroke="rgba(255,255,255,0.045)" stroke-width="1"/>
+</pattern>
+</defs>
+<rect width="1200" height="750" fill="url(#bg)"/>
+<rect width="1200" height="750" fill="url(#grid)"/>
+
+<g>
+<circle cx="330" cy="300" r="130" fill="#2845D2" fill-opacity="0.14" stroke="rgba(255,255,255,0.14)"/>
+<circle cx="330" cy="258" r="46" fill="#7f98ff"/>
+<path d="M248 392 a82 68 0 0 1 164 0 z" fill="#7f98ff"/>
+<text x="330" y="500" font-family="Graphik, Arial, sans-serif" font-size="17" font-weight="800" letter-spacing="2" fill="rgba(255,255,255,0.62)" text-anchor="middle">HUMAN REVIEW</text>
+</g>
+<g stroke="#7f98ff" stroke-width="2.5" fill="none" opacity="0.75">
+<path d="M486 300 H600 M600 300 l-16 -13 M600 300 l-16 13"/>
+</g>
+<g>
+<rect x="640" y="170" width="470" height="380" rx="16" fill="#141a2e" stroke="rgba(255,255,255,0.12)"/>
+<circle cx="875" cy="290" r="86" fill="none" stroke="#2845D2" stroke-width="2.5" stroke-dasharray="7 9"/>
+<circle cx="875" cy="290" r="46" fill="#2845D2" fill-opacity="0.30"/>
+<text x="875" y="300" font-family="Graphik, Arial, sans-serif" font-size="30" font-weight="800" fill="#fff" text-anchor="middle">AI</text>
+<circle cx="875" cy="204" r="8" fill="#7f98ff"/><circle cx="961" cy="290" r="8" fill="#7f98ff"/><circle cx="875" cy="376" r="8" fill="#7f98ff"/><circle cx="789" cy="290" r="8" fill="#7f98ff"/>
+<rect x="700" y="430" width="350" height="9" rx="4.5" fill="rgba(255,255,255,0.24)"/>
+<rect x="760" y="458" width="230" height="7" rx="3.5" fill="rgba(255,255,255,0.13)"/>
+</g>
+<g font-family="Graphik, Arial, sans-serif">
+<rect x="48" y="654" width="150" height="26" rx="13" fill="#2845D2" fill-opacity="0.18"/>
+<text x="60" y="672" font-size="12" font-weight="800" letter-spacing="2.2" fill="#7f98ff">PLACEHOLDER</text>
+<text x="48" y="710" font-size="22" font-weight="800" fill="#ffffff" letter-spacing="-0.4">Human Expertise + AI Innovation</text>
+</g>
+</svg>
