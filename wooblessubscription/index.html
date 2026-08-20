@@ -261,20 +261,29 @@ html:not(.gate-open) body{overflow:hidden}
 .kit__level{font-size:13px;line-height:1.5;color:var(--ink-2)}
 .kit__name{font-size:16px;font-weight:600;line-height:1.4;color:var(--ink)}
 
-/* inactive: filled ink disc with a white +   ·   active: bare ink tick */
+/* inactive: filled ink disc with a white +   ·   active: bare ink tick.
+   Both icons share one grid cell so the swap can cross-fade — the old
+   display:none had nothing to transition and the tick just popped in. */
 .kit__add{
   position:absolute;right:16px;bottom:16px;
   width:36px;height:36px;border-radius:50%;background:var(--ink);
   display:grid;place-items:center;
-  transition:background .18s var(--ease);
+  transition:background-color .18s var(--ease);
 }
-.kit__add svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.2;
-  stroke-linecap:round;stroke-linejoin:round}
-.kit__add .tick{display:none}
-.kit[aria-pressed="true"] .kit__add{background:none}
-.kit[aria-pressed="true"] .kit__add .plus{display:none}
-.kit[aria-pressed="true"] .kit__add .tick{display:block;width:26px;height:26px;
-  stroke:var(--ink);stroke-width:2}
+.kit__add svg{grid-area:1/1;width:18px;height:18px;stroke:#fff;fill:none;
+  stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;
+  transition:opacity .16s var(--ease),transform .16s var(--ease)}
+.kit__add .tick{width:26px;height:26px;stroke:var(--ink);stroke-width:2;
+  opacity:0;transform:scale(.72)}
+.kit[aria-pressed="true"] .kit__add{background-color:transparent}
+.kit[aria-pressed="true"] .kit__add .plus{opacity:0;transform:scale(.72)}
+.kit[aria-pressed="true"] .kit__add .tick{opacity:1;transform:none}
+
+/* the grid is rebuilt wholesale on filter / Load More, so every card is a
+   fresh node — a plain animation with no fill mode lets it settle back to
+   its normal styles (and its hover lift) the moment it finishes. */
+@keyframes kit-in{from{opacity:0;transform:translateY(3px)}}
+.kits__grid .kit{animation:kit-in .2s var(--ease)}
 
 .kits__more{display:flex;justify-content:center;padding:32px 0 0}
 .load-more{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;
@@ -1230,7 +1239,11 @@ body.sheet-on{padding-bottom:86px}
       pickThumb.src         = THUMB(KITS[selected]);
       pickThumb.alt         = KITS[selected].name;
     }
-    render();
+    /* flip the state on the live nodes rather than re-rendering — a
+       replaced element has no previous value to transition from */
+    Array.prototype.forEach.call(grid.children, function(b){
+      b.setAttribute("aria-pressed", String(+b.dataset.i === selected));
+    });
   }
 
   grid.addEventListener("click", function(e){
