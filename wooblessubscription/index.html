@@ -597,6 +597,18 @@ body.sheet-on{padding-bottom:86px}
   *{animation-duration:.01ms !important;animation-iteration-count:1 !important;
     transition-duration:.01ms !important;scroll-behavior:auto !important}
 }
+
+/* --- PREVIEW ONLY: focus the picker -----------------------------------
+   Every section outside Pick A Wooble sits under a 50% white veil so the
+   picker reads as the subject of the review. The veil is inert, so links
+   and the marquees still behave normally. To restore the page, delete
+   this block and the .dim classes in the markup. */
+.dim{position:relative}
+.nav.dim{position:sticky}          /* .dim must not undo the sticky nav */
+.dim::after{
+  content:"";position:absolute;inset:0;z-index:5;
+  pointer-events:none;background:rgba(255,255,255,.5);
+}
 </style>
 <!-- Runs before the body paints, so an already-unlocked visitor never sees a flash
      of the gate. Class on <html> because <body> does not exist yet. -->
@@ -621,7 +633,7 @@ body.sheet-on{padding-bottom:86px}
 </div>
 
 <!-- ================= NAV ================= -->
-<header class="nav">
+<header class="nav dim">
   <button class="nav__menu" type="button" aria-label="Open menu">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
     Menu
@@ -641,7 +653,7 @@ body.sheet-on{padding-bottom:86px}
 </header>
 
 <!-- ================= HERO ================= -->
-<section class="hero" id="top">
+<section class="hero dim" id="top">
   <div class="hero__inner">
     <div class="hero__col">
 
@@ -679,7 +691,7 @@ body.sheet-on{padding-bottom:86px}
 </section>
 
 <!-- ================= PRESS MARQUEE ================= -->
-<section class="press" aria-label="As seen in">
+<section class="press dim" aria-label="As seen in">
   <div class="press__track" id="pressTrack">
     <img src="assets/img/press-usatoday.svg" alt="USA Today">
     <img src="assets/img/press-sharktank.svg" alt="Shark Tank" data-tall>
@@ -691,7 +703,7 @@ body.sheet-on{padding-bottom:86px}
 </section>
 
 <!-- ================= HOW IT WORKS ================= -->
-<section class="hiw">
+<section class="hiw dim">
   <div class="wrap">
     <h2 class="hiw__title">How It Works</h2>
     <div class="hiw__grid">
@@ -782,7 +794,7 @@ body.sheet-on{padding-bottom:86px}
 </div>
 
 <!-- ================= EXCLUSIVE DROPS ================= -->
-<section class="exclusive">
+<section class="exclusive dim">
   <div class="exclusive__art" role="img" aria-label="Pattern of mystery kit pouches marked exclusive"></div>
   <div class="exclusive__body">
     <p class="exclusive__eyebrow">Exclusive Drops, Just for Members</p>
@@ -792,7 +804,7 @@ body.sheet-on{padding-bottom:86px}
 </section>
 
 <!-- ================= UGC ================= -->
-<section class="ugc">
+<section class="ugc dim">
   <h2 class="h-sec">Our Community is Hooked!</h2>
   <div class="ugc__track" id="ugcTrack">
     <img src="assets/img/ugc-7.png" alt="" loading="lazy">
@@ -806,7 +818,7 @@ body.sheet-on{padding-bottom:86px}
 </section>
 
 <!-- ================= VALUE-PROP STRIP ================= -->
-<section class="strip" aria-label="Beginner friendly. Everything you need in the bag. Step-by-step instructions.">
+<section class="strip dim" aria-label="Beginner friendly. Everything you need in the bag. Step-by-step instructions.">
   <div class="strip__track" id="stripTrack" aria-hidden="true">
     <span>Beginner Friendly</span><span class="strip__dot">&bull;</span>
     <span>Everything You Need In The Bag</span><span class="strip__dot">&bull;</span>
@@ -815,7 +827,7 @@ body.sheet-on{padding-bottom:86px}
 </section>
 
 <!-- ================= A BAG THAT HOLDS IT ALL ================= -->
-<section class="bag">
+<section class="bag dim">
   <div class="wrap">
     <h2 class="h-sec">A Bag That Holds It All</h2>
     <p class="bag__sub">Everything you need, All in one bag.</p>
@@ -831,7 +843,7 @@ body.sheet-on{padding-bottom:86px}
 </section>
 
 <!-- ================= HOW IT WORKS (PHOTOS) ================= -->
-<section class="steps">
+<section class="steps dim">
   <div class="wrap">
     <h2 class="h-sec">How It Works</h2>
     <div class="steps__grid">
@@ -876,7 +888,7 @@ body.sheet-on{padding-bottom:86px}
 </section>
 
 <!-- ================= REVIEWS ================= -->
-<section class="reviews">
+<section class="reviews dim">
   <div class="wrap">
     <h2 class="h-sec">Beginners Love The Woobles</h2>
 
@@ -956,7 +968,7 @@ body.sheet-on{padding-bottom:86px}
 </section>
 
 <!-- ================= FAQ ================= -->
-<section class="faq">
+<section class="faq dim">
   <div class="wrap">
     <h2 class="h-sec">FAQs</h2>
     <div class="faq__list">
@@ -991,7 +1003,7 @@ body.sheet-on{padding-bottom:86px}
 </section>
 
 <!-- ================= FOOTER ================= -->
-<footer class="footer">
+<footer class="footer dim">
   <div class="footer__inner">
 
     <div class="signup">
