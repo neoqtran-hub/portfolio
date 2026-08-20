@@ -234,7 +234,7 @@ html:not(.gate-open) body{overflow:hidden}
 .filters button:hover{background:var(--sand)}
 .filters button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--ink)}
 
-.kits{padding:24px 0 0}
+.kits{padding:24px 0 40px}
 .kits__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 
 .kit{
@@ -242,9 +242,9 @@ html:not(.gate-open) body{overflow:hidden}
   border:1px solid rgba(176,196,194,.5);   /* Lines #B0C4C2 @ 50% */
   padding:12px 16px 16px;text-align:left;width:100%;
   display:flex;flex-direction:column;
-  transition:border-color .18s var(--ease),box-shadow .18s var(--ease),transform .18s var(--ease);
+  transition:border-color .18s var(--ease),transform .18s var(--ease);
 }
-.kit:hover{box-shadow:0 6px 20px rgba(0,69,66,.10);transform:translateY(-2px)}
+.kit:hover{transform:translateY(-2px)}
 .kit[aria-pressed="true"]{border-color:var(--ink)}
 .kit__img{position:relative;height:96px;display:flex;align-items:flex-end;
   justify-content:center;margin-bottom:10px}
@@ -281,8 +281,6 @@ html:not(.gate-open) body{overflow:hidden}
   font-size:16px;font-weight:600;color:var(--ink)}
 .load-more svg{width:16px;height:16px}
 .load-more:hover{text-decoration:underline}
-.kits__note{text-align:center;font-size:16px;line-height:1.25;color:var(--ink-2);
-  max-width:301px;margin:16px auto 0;padding-bottom:24px}
 
 /* --- sticky bottom sheet ---------------------------------------------
    Pinned to the viewport once the picker is reached, and it stays pinned
@@ -550,6 +548,11 @@ body.sheet-on{padding-bottom:86px}
   .filters{gap:8px;padding:16px 0;overflow-x:auto;justify-content:flex-start;
     flex-wrap:nowrap;padding-inline:var(--gutter);scrollbar-width:none}
   .filters::-webkit-scrollbar{display:none}
+  /* auto margins centre the row while it fits and collapse to 0 once it
+     overflows — justify-content:center would put the first pill out of
+     reach on the scroll axis */
+  .filters button:first-child{margin-left:auto}
+  .filters button:last-child{margin-right:auto}
   .filters button{flex:0 0 auto;font-size:14px;padding:8px 16px}
   /* mobile sheet: name left / level right on one row, CTA full width below */
   .checkout__inner{flex-direction:column;align-items:stretch;gap:10px;padding:12px var(--gutter)}
@@ -741,9 +744,8 @@ body.sheet-on{padding-bottom:86px}
 
   <div class="filters" id="filters" role="group" aria-label="Filter kits by skill level">
     <button type="button" data-filter="all" aria-pressed="true">All Kits</button>
-    <button type="button" data-filter="beginner" aria-pressed="false">Beginners</button>
-    <button type="button" data-filter="beginner-plus" aria-pressed="false">Beginners+</button>
-    <button type="button" data-filter="intermediate" aria-pressed="false">Intermediate</button>
+    <button type="button" data-filter="beginner" aria-pressed="false">Beginner</button>
+    <button type="button" data-filter="beginner-plus" aria-pressed="false">Beginner+</button>
   </div>
 
   <div class="kits">
@@ -757,7 +759,6 @@ body.sheet-on{padding-bottom:86px}
         </button>
       </div>
 
-      <p class="kits__note">More kits are available in your subscription dashboard for later months</p>
     </div>
   </div>
 
@@ -1111,52 +1112,51 @@ body.sheet-on{padding-bottom:86px}
 
   /* ---------------- Pick A Wooble ----------------
      36 kits. 10 render first, Load More reveals the rest. Levels are
-     spread across the three chips so every filter has stock in the
-     opening 10 — they're fixed rather than randomised at runtime so a
-     kit doesn't change level between reloads. */
+     spread across both chips so every filter has stock in the opening
+     10 — they're fixed rather than randomised at runtime so a kit
+     doesn't change level between reloads. */
   var KITS = [
     {name:"Pierre",                          level:"beginner",      img:"pierre"},
     {name:"Jojo",                            level:"beginner",      img:"jojo"},
     {name:"Felix",                           level:"beginner-plus", img:"felix"},
-    {name:"Kiki",                            level:"intermediate",  img:"kiki"},
+    {name:"Kiki",                            level:"beginner-plus", img:"kiki"},
     {name:"Fred",                            level:"beginner",      img:"fred"},
     {name:"Narwhal",                         level:"beginner-plus", img:"narwhal"},
     {name:"Turtle",                          level:"beginner-plus", img:"turtle"},
-    {name:"Coffee Mug",                      level:"intermediate",  img:"coffee-mug"},
-    {name:"Ophelia",                         level:"intermediate",  img:"ophelia"},
+    {name:"Coffee Mug",                      level:"beginner-plus", img:"coffee-mug"},
+    {name:"Ophelia",                         level:"beginner-plus", img:"ophelia"},
     {name:"Kimi the Green Heron",            level:"beginner",      img:"kimi-green-heron"},
     {name:"Tate the Chickadee",              level:"beginner-plus", img:"tate-chickadee"},
     {name:"Ana the Sunflower",               level:"beginner",      img:"ana-sunflower"},
-    {name:"Hal the Jack O Lantern",          level:"intermediate",  img:"hal-jack-o-lantern"},
+    {name:"Hal the Jack O Lantern",          level:"beginner-plus", img:"hal-jack-o-lantern"},
     {name:"Luna the Bat",                    level:"beginner-plus", img:"luna-bat"},
-    {name:"Otis the Snake Plant",            level:"intermediate",  img:"otis-snake-plant"},
+    {name:"Otis the Snake Plant",            level:"beginner-plus", img:"otis-snake-plant"},
     {name:"Sebastian",                       level:"beginner",      img:"sebastian"},
     {name:"Scooter",                         level:"beginner-plus", img:"scooter"},
     {name:"Bacon",                           level:"beginner",      img:"bacon"},
-    {name:"Vlad the Kraken",                 level:"intermediate",  img:"vlad-kraken"},
+    {name:"Vlad the Kraken",                 level:"beginner-plus", img:"vlad-kraken"},
     {name:"Diego the Stingray",              level:"beginner-plus", img:"diego-stingray"},
-    {name:"Murphy the Electric Eel",         level:"intermediate",  img:"murphy-electric-eel"},
+    {name:"Murphy the Electric Eel",         level:"beginner-plus", img:"murphy-electric-eel"},
     {name:"Nico the Cat",                    level:"beginner",      img:"nico-cat"},
     {name:"Hugo the French Bulldog",         level:"beginner-plus", img:"hugo-french-bulldog"},
     {name:"Buster the Labrador",             level:"beginner",      img:"buster-labrador"},
-    {name:"Clint the Cactus",                level:"intermediate",  img:"clint-cactus"},
+    {name:"Clint the Cactus",                level:"beginner-plus", img:"clint-cactus"},
     {name:"Mimi the Snail",                  level:"beginner-plus", img:"mimi-snail"},
     {name:"Cornelius",                       level:"beginner",      img:"cornelius"},
     {name:"Jojo the Bunny: Sweetie Edition", level:"beginner",      img:"jojo-sweetie"},
     {name:"Narwhal: Sweetie Edition",        level:"beginner-plus", img:"narwhal-sweetie"},
     {name:"Sebastian the Lion Pastel",       level:"beginner-plus", img:"sebastian-pastel"},
-    {name:"Jerry the Jellyfish",             level:"intermediate",  img:"jerry-jellyfish"},
-    {name:"Fred the Dino Rainbow",           level:"intermediate",  img:"fred-rainbow"},
+    {name:"Jerry the Jellyfish",             level:"beginner-plus", img:"jerry-jellyfish"},
+    {name:"Fred the Dino Rainbow",           level:"beginner-plus", img:"fred-rainbow"},
     {name:"Willow the Fawn",                 level:"beginner-plus", img:"willow-fawn"},
-    {name:"Tank the Shark",                  level:"intermediate",  img:"tank-shark"},
+    {name:"Tank the Shark",                  level:"beginner-plus", img:"tank-shark"},
     {name:"Walter the Bear Pink",            level:"beginner",      img:"walter-bear-pink"},
-    {name:"Billy the Unicorn",               level:"intermediate",  img:"billy-unicorn"}
+    {name:"Billy the Unicorn",               level:"beginner-plus", img:"billy-unicorn"}
   ];
 
   var LABEL = {
     "beginner":"Beginner",
-    "beginner-plus":"Beginner+",
-    "intermediate":"Intermediate"
+    "beginner-plus":"Beginner+"
   };
   var THUMB = function(k){ return "assets/img/kits/" + k.img + ".png"; };
   var PAGE  = 10;
